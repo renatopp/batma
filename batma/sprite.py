@@ -116,7 +116,9 @@ class AnimatedSprite(pyglet.sprite.Sprite):
                                                     scale=1, 
                                                     opacity=255, 
                                                     color=(255, 255, 255), 
-                                                    anchor=None):
+                                                    anchor=None,
+                                                    batch=None,
+                                                    group=None):
         '''
         Create an animated sprite.
 
@@ -164,7 +166,9 @@ class AnimatedSprite(pyglet.sprite.Sprite):
             
         self._frame_index = initial_frame
         
-        super(AnimatedSprite, self).__init__(self.frames[initial_frame])
+        super(AnimatedSprite, self).__init__(self.frames[initial_frame],
+                                             batch=batch,
+                                             group=group)
         anchor = anchor or "center"
         _anchor_animation(self.frames, anchor)
 

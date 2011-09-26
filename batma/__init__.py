@@ -44,7 +44,6 @@ from batma.sprite import *
 from batma.text import *
 from batma.euclid import *
 from batma import colors
-from batma.maps import *
 import pyglet.window.key as key
 import pyglet.window.mouse as buttons
 
