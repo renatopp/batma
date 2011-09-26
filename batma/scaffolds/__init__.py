@@ -19,37 +19,46 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''Batma 2D game engine provides an intuitive structure for game development and 
-other graphical applications.
-
-Features includes:
-
-    * Automatic import regular image atlas in a list of images
-    * Animated Sprites creation from image atlas or gifs
-    * Easy-to-use pyglet components, e.g., sprites, texts and resource locations
-    * Input state for keyboard and mouse (also inspired by XNA)
-
+'''
+First version of robi scaffolding
 '''
 
-__docformat__ = 'restructuredtext en'
-__version__ = "0.0.1-beta"
-__author__ = "Renato de Pontes Pereira"
-version = __version__
+import sys, os
 
-import pyglet
+game = '''
+import batma
 
-from batma.engine import *
-from batma.resource import *
-from batma.sprite import *
-from batma.text import *
-from batma.euclid import *
-from batma import colors
-from batma.maps import *
-import pyglet.window.key as key
-import pyglet.window.mouse as buttons
+class MyGame(batma.Game):
+    def initialize(self):
+        batma.add_resource_path('resources')
+    
+    def load_content(self):
+        pass
 
-def run():
-    '''
-    Starts the game.
-    '''
-    pyglet.app.run()
+    def update(self, tick):
+        pass
+
+    def draw(self):
+        pass
+
+game = MyGame()
+batma.run()
+'''
+
+cwd = os.getcwd()
+
+def robi():
+    if len(sys.argv) > 1:
+        project_name = sys.argv[1].replace(' ', '')
+    else:
+        project_name = raw_input('Project name: ').replace(' ', '')
+    
+    project_dir = os.path.join(cwd, project_name)
+    resource_dir = os.path.join(project_dir, 'resources')
+    game_file = os.path.join(project_dir, project_name+'.py')
+
+    os.mkdir(project_dir)
+    os.mkdir(resource_dir)
+    f = open(game_file, 'w')
+    f.write(game)
+    f.close()

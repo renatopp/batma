@@ -55,6 +55,19 @@ __docformat__ = 'restructuredtext'
 import pyglet
 from batma.input import KeyboardState
 from batma.input import MouseState
+from batma.util import singleton
+from batma import colors
+
+@singleton
+class Batch(pyglet.graphics.Batch):
+    def __init__(self):
+        pyglet.graphics.Batch.__init__(self)
+
+        self.base_group = pyglet.graphics.OrderedGroup(2)
+        self.fringe_group = pyglet.graphics.OrderedGroup(4)
+        self.object_group = pyglet.graphics.OrderedGroup(8)
+        self.text_group = pyglet.graphics.OrderedGroup(16)
+
 
 class Game(pyglet.window.Window):
     '''
@@ -126,6 +139,9 @@ class Game(pyglet.window.Window):
 
         super(Game, self).__init__(*args, **kwargs)
 
+        self.batch = Batch()
+        self.background_color = colors.BLACK
+
         self.keyboard = KeyboardState()
         self.mouse = MouseState()
         self.push_handlers(self.keyboard)
@@ -148,6 +164,7 @@ class Game(pyglet.window.Window):
         ``pyglet.window.Window``.
         '''
         self.clear()
+        pyglet.gl.glClearColor(*(self.background_color+(1,)))
         self.draw()
 
     def initialize(self):

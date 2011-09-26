@@ -61,7 +61,9 @@ class Sprite(pyglet.sprite.Sprite):
                                                scale=1, 
                                                opacity=255, 
                                                color=(255, 255, 255), 
-                                               anchor=None):
+                                               anchor=None,
+                                               batch=None,
+                                               group=None):
         '''
         Create a sprite.
 
@@ -86,8 +88,8 @@ class Sprite(pyglet.sprite.Sprite):
         '''
         if isinstance(image, basestring):
             image = load_image(image)
-        
-        super(Sprite, self).__init__(image)
+
+        super(Sprite, self).__init__(image, batch=batch, group=group)
 
         anchor = anchor or "center"
 

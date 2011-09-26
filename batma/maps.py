@@ -28,7 +28,10 @@ Cell     - A portion of a tile-based map representing an area that is (for now)
 Map      - A collection of Cells that forms a complete tile map
 '''
 
+import pyglet
+
 from batma.sprite import Sprite
+from batma.engine import Batch
 
 class Tile(object):
     def __init__(self, id, image):
@@ -53,7 +56,8 @@ class TileSet(object):
 
 class Cell(Sprite):
     def __init__(self, position, tile):
-        super(Cell, self).__init__(tile, position, anchor=(0, 0))
+        batch = Batch()
+        super(Cell, self).__init__(tile, position, anchor=(0, 0), batch=batch, group=batch.base_group)
         self.tile = tile
 
 class TileMap(object):
@@ -67,7 +71,8 @@ class TileMap(object):
             col = []
             for y in xrange(height):
                 p = x*tileset.tile_width, y*tileset.tile_height
-                col.append(Cell(p, tileset[0]))
+                cell = Cell(p, tileset[0])
+                col.append(cell)
             self.cells.append(col)
         
         self.add_cell((0, 3), 3)
@@ -117,14 +122,3 @@ class TileMap(object):
 
     def get_rectangle(self):
         return self.cells
-
-    def draw(self):
-        rectangle = self.get_rectangle()
-        tile_width = self.tileset.tile_width
-        tile_height = self.tileset.tile_height
-        for i in rectangle:
-            for cell in i:
-                cell.draw()
-        
-        
-

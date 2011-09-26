@@ -44,4 +44,8 @@ setup(
     keywords='2d game engine opengl batma cocos2d xna pyglet',
     packages = find_packages(),
     install_requires=['pyglet>=1.1.4',],
+    entry_points="""
+      [console_scripts]
+      robi = batma.scaffolds:robi
+      """
     )
