@@ -15,6 +15,7 @@ Features
   - Animated Sprites creation from image atlas or gifs
   - Easy-to-use pyglet components, e.g., sprites, texts and resource locations
   - Input state for keyboard and mouse (also inspired by XNA)
+  - Primitives drawning (opengl defaults + circle)
 
 
 -------------
@@ -78,7 +79,6 @@ TODO
     - ParticleEngine
     - Particles
 
-  - Primitives (circle, squares, lines, points, etc... Backend to opengl) 
   - GUI
   - Genre specific modules (e.g. rpg, adventure, action, etc...)
   - Scaffolding system called "robi" lol 
