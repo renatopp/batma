@@ -68,7 +68,6 @@ class Batch(pyglet.graphics.Batch):
         self.object_group = pyglet.graphics.OrderedGroup(8)
         self.text_group = pyglet.graphics.OrderedGroup(16)
 
-
 class Game(pyglet.window.Window):
     '''
     Game flow control.

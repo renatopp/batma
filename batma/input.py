@@ -25,6 +25,8 @@ Classes and function for input handling.
 
 __docformat__ = 'restructuredtext'
 
+from batma.algebra import Vector2
+
 class AbstractInputState(dict):
     def __getitem__(self, key):
         return self.get(key, False)
@@ -53,7 +55,8 @@ class KeyboardState(AbstractInputState):
         '''
         Key release event.
         '''
-        del self[symbol]
+        if symbol in self:
+            del self[symbol]
 
 class MouseState(AbstractInputState):
     '''
@@ -82,6 +85,10 @@ class MouseState(AbstractInputState):
         self.in_screen = False
         self.scroll_value = 0
 
+    def __get_position(self):
+        return Vector2(self.x, self.y)
+    position = property(__get_position)
+
     def on_mouse_motion(self, x, y, dx, dy):
         '''
         Mouse motion event.
@@ -98,8 +105,9 @@ class MouseState(AbstractInputState):
         '''
         Mouse release event.
         '''
-        del self[button]
-    
+        if button in self:
+            del self[button]
+
     def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
         '''
         Mouse drag event.

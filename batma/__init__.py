@@ -32,7 +32,7 @@ Features includes:
 '''
 
 __docformat__ = 'restructuredtext en'
-__version__ = "0.0.1-beta"
+__version__ = "0.0.1"
 __author__ = "Renato de Pontes Pereira"
 version = __version__
 
@@ -42,9 +42,11 @@ from batma.engine import *
 from batma.resource import *
 from batma.sprite import *
 from batma.text import *
-from batma.euclid import *
+from batma import draw
+#from batma.euclid import *
+from batma.algebra import *
 from batma import colors
-import pyglet.window.key as key
+import pyglet.window.key as keys
 import pyglet.window.mouse as buttons
 
 def run():
