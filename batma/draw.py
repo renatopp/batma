@@ -70,12 +70,16 @@ def quad_strip(*vertices):
 def polygon(*vertices):
     __draw(vertices, pyglet.gl.GL_POLYGON)
 
-def circle(center, radius):
+def circle(center, radius, faces=16):
     vertices = []
-    angle, step = 0, math.pi/20
+    angle, step = 0, math.pi/faces
     while angle < 2*math.pi:
         d = Vector2(radius*math.sin(angle), radius*math.cos(angle))
         vertices.append(center+d)
         angle += step
     
+    line_loop(*vertices)
+
+def rectangle(p1, p2):
+    vertices = [p1, Vector2(p1[0], p2[1]), p2, Vector2(p2[0], p1[1])]
     line_loop(*vertices)
