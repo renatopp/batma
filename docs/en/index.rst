@@ -18,6 +18,8 @@ This is the official programming guide, the documentation for writing applicatio
    :maxdepth: 2
 
    getting_started
+   graphics
+   events
    changes
 
 

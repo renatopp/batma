@@ -4,16 +4,10 @@ Release 0.1 (in development)
 Features added
 --------------
 
-* Change 1:
+* First release:
 
-  - Change 1.1
-  - Change 1.2
-  - Change 1.3
-  - Change 1.4
-
-* Change 2:
-
-  - Change 2.1
-  - Change 2.2
-  - Change 2.3
-  - Change 2.4
+  - Automatic import regular (equally spaced) images atlas in a list of images;
+  - Animated sprites creation from image atlas or gifs;
+  - Easy-to-use pyglet components, e.g. sprites, texts and resource location;
+  - Input state for for keyboard and mouse (similar to XNA);
+  - Primitives drawning: opengl defaults, circle, rectangle;

@@ -8,4 +8,5 @@ Getting Started
 
    introduction
    installing
+   projects
    resources
