@@ -42,6 +42,7 @@ from batma.engine import *
 from batma.resource import *
 from batma.sprite import *
 from batma.text import *
+from batma.node import *
 from batma import draw
 #from batma.euclid import *
 from batma.algebra import *

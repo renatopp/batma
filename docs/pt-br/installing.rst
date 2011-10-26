@@ -6,7 +6,7 @@ Instalando o Batma
 Dependências
 ------------
 
-- Python 2.7 *~duh~* (não foi testado no 2.6 ou menorer)
+- Python 2.6 *~duh~* (não foi testado no 2.5 ou menores)
   (http://www.python.org)
 
 - Pyglet 1.1.4
@@ -36,7 +36,7 @@ Faça o download do último pacote [LINK AQUI!], descompacte em algum diretório
 Instalando pelo jeito difícil
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Faça o download do último pacote [LINK AQUI!], descompacte em algum diretório a execute::
+Faça o download do último pacote [LINK AQUI!], descompacte em algum diretório a execute:
 
 **No Windows**::
 

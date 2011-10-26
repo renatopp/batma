@@ -18,11 +18,14 @@ Esse é guia de programação oficial, a documentação para escrever aplicaçõ
    :maxdepth: 2
 
    getting_started
+   graphics
+   events
+   changes
 
 
------------------
-Indíces e tabelas
------------------
+------------------
+Indices and tables
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

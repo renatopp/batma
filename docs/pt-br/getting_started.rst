@@ -8,4 +8,5 @@ Primeiros Passos
 
    introduction
    installing
+   projects
    resources

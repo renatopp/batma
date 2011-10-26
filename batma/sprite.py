@@ -47,12 +47,13 @@ There are some ways to create sprites:
 __docformat__ = 'restructuredtext'
 
 import pyglet
+from batma.node import BatmaNode
 from batma.resource import load_image
 from batma.resource import load_atlas
 from batma.resource import _anchor_image
 from batma.resource import _anchor_animation
 
-class Sprite(pyglet.sprite.Sprite):
+class Sprite(BatmaNode, pyglet.sprite.Sprite):
     '''
     Sprite class for static and automatically animated sprites.
     '''
@@ -89,7 +90,8 @@ class Sprite(pyglet.sprite.Sprite):
         if isinstance(image, basestring):
             image = load_image(image)
 
-        super(Sprite, self).__init__(image, batch=batch, group=group)
+        BatmaNode.__init__(self)
+        pyglet.sprite.Sprite.__init__(self, image, batch=batch, group=group)
 
         anchor = anchor or "center"
 
@@ -104,6 +106,50 @@ class Sprite(pyglet.sprite.Sprite):
         self.opacity = opacity
         self.color = color
 
+    @property
+    def x(self):
+        return self._x
+    
+    @x.setter
+    def x(self, x):
+        diff = x - self._x
+        for c in self.children: c.x += diff
+        self._x = x
+        self._update_position()
+    
+    @property
+    def y(self):
+        return self._y
+    
+    @y.setter
+    def y(self, y):
+        diff = y - self._y
+        for c in self.children: c.y += diff
+        self._y = y
+        self._update_position()
+    
+    @property
+    def scale(self):
+        return self._scale
+    
+    @scale.setter
+    def scale(self, factor):
+        diff = factor - self._scale
+        for c in self.children: c.scale += diff
+        self._scale = factor
+        self._update_position()
+
+    @property
+    def rotation(self):
+        return self._rotation
+    
+    @rotation.setter
+    def rotation(self, angle):
+        diff = angle - self._rotation
+        for c in self.children: c.rotation += diff
+        self._rotation = angle
+        self._update_position()
+    
 class AnimatedSprite(pyglet.sprite.Sprite):
     '''
     Sprite class for manually animated sprites.
