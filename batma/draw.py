@@ -30,9 +30,12 @@ Example of usage::
 
 import pyglet
 import math
+import batma
 from batma.algebra import Vector2
 
-def __draw(vertices, mode):
+def __draw(vertices, mode, width=1, color=batma.colors.WHITE):
+    pyglet.gl.glLineWidth(width)
+    pyglet.gl.glColor3f(*color)
     v = []
     for vertex in vertices:
         v.append(vertex[0])
@@ -40,37 +43,37 @@ def __draw(vertices, mode):
 
     pyglet.graphics.draw(len(vertices), mode, ('v2f', v))
 
-def point(*vertices):
-    __draw(vertices, pyglet.gl.GL_POINTS)
+def point(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_POINTS, **kwargs)
 
-def line(*vertices):
-    __draw(vertices, pyglet.gl.GL_LINES)
+def line(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_LINES, **kwargs)
 
-def line_strip(*vertices):
-    __draw(vertices, pyglet.gl.GL_LINE_STRIP)
+def line_strip(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_LINE_STRIP, **kwargs)
 
-def line_loop(*vertices):
-    __draw(vertices, pyglet.gl.GL_LINE_LOOP)
+def line_loop(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_LINE_LOOP, **kwargs)
 
-def triangle(*vertices):
-    __draw(vertices, pyglet.gl.GL_TRIANGLES)
+def triangle(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_TRIANGLES, **kwargs)
 
-def triangle_strip(*vertices):
-    __draw(vertices, pyglet.gl.GL_TRIANGLE_STRIP)
+def triangle_strip(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_TRIANGLE_STRIP, **kwargs)
 
-def triangle_fan(*vertices):
-    __draw(vertices, pyglet.gl.GL_TRIANGLE_FAN)
+def triangle_fan(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_TRIANGLE_FAN, **kwargs)
 
-def quad(*vertices):
-    __draw(vertices, pyglet.gl.GL_QUADS)
+def quad(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_QUADS, **kwargs)
 
-def quad_strip(*vertices):
-    __draw(vertices, pyglet.gl.GL_QUAD_STRIP)
+def quad_strip(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_QUAD_STRIP, **kwargs)
 
-def polygon(*vertices):
-    __draw(vertices, pyglet.gl.GL_POLYGON)
+def polygon(*vertices, **kwargs):
+    __draw(vertices, pyglet.gl.GL_POLYGON, **kwargs)
 
-def circle(center, radius, faces=16):
+def circle(center, radius, faces=16, **kwargs):
     vertices = []
     angle, step = 0, math.pi/faces
     while angle < 2*math.pi:
@@ -78,8 +81,8 @@ def circle(center, radius, faces=16):
         vertices.append(center+d)
         angle += step
     
-    line_loop(*vertices)
+    line_loop(*vertices, **kwargs)
 
-def rectangle(p1, p2):
+def rectangle(p1, p2, **kwargs):
     vertices = [p1, Vector2(p1[0], p2[1]), p2, Vector2(p2[0], p1[1])]
-    line_loop(*vertices)
+    line_loop(*vertices, **kwargs)
