@@ -17,7 +17,7 @@ Dependências
 Instalação
 ----------
 
-Instalando usando easy_install
+Instalar usando o easy_install
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Via **easy_install** é o jeito mais fácil de instalar o Batma, ele também vai instalar o pyglet se não encontrá-lo no sistema::
@@ -25,18 +25,18 @@ Via **easy_install** é o jeito mais fácil de instalar o Batma, ele também vai
     easy_install batma
 
 
-Instalando usando o setup.py
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Instalar usando o setup.py
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Faça o download do último pacote [LINK AQUI!], descompacte em algum diretório a execute::
+Faça o download do último release do Batma [LINK AQUI!], descompacte em algum diretório e execute::
 
     python setup.py install
 
 
-Instalando pelo jeito difícil
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Instalar pelo jeito difícil
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Faça o download do último pacote [LINK AQUI!], descompacte em algum diretório a execute:
+Faça o download do último release do Batma [LINK AQUI!], descompacte em algum diretório e execute:
 
 **No Windows**::
 

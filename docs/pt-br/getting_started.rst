@@ -10,3 +10,4 @@ Primeiros Passos
    installing
    projects
    resources
+   hello_world

@@ -2,9 +2,9 @@
 Gerenciando os recursos
 =======================
 
-Basicamente, podemos definir os recursos como qualquer arquivo que não seja o código, por exemplo imagens, fontes e músicas. Para usar esses recursos no Batma é necessário especificar os diretórios onde eles se encontram. Nenhum arquivo fora dos diretórios de recursos pode ser carregado no jogo.
+Basicamente, podemos definir *"recurso"* como qualquer arquivo que não seja o código, por exemplo imagens, fontes e músicas. Para usar esses recursos no Batma é necessário especificar os diretórios onde eles se encontram. Nenhum arquivo fora dos diretórios de recursos pode ser carregado no jogo.
 
-Para projetos pequenos apenas um diretório para todos os recursos pode resolver mas com jogos ou aplicações maiores é interessante dividir em sub-diretórios, por exemplo ``resources/sprites``, ``resources/sons``, ``resources/fontes`` entre outros.
+Para projetos pequenos, apenas um diretório para todos os recursos pode ser suficiente, mas com jogos ou aplicações maiores é interessante dividir os recursos em mais de um diretório, por exemplo ``resources/sprites``, ``resources/sons``, ``resources/fontes`` entre outros.
 
 .. image:: _static/flow_horizontal_resources.png
    :alt: Batma data flow
@@ -13,15 +13,15 @@ Para projetos pequenos apenas um diretório para todos os recursos pode resolver
 O registro dos diretórios de recursos deve ser feito no método ``initialize`` para que o conteúdo deles seja indexado antes de seu uso (como pode ser observado na imagem acima). Isso é feito utilizando usado a função :py:func:`batma.resource.add_resource_path`::
 
     def initialize(self):
-        # Adicionando um por um
-        add_resource_path('resources')
-        add_resource_path('resources/imagens')
-        add_resource_path('resources/fontes')
-        add_resource_path('resources/sons')
-        add_resource_path('resources/whatever')
+        # Adicionando um por um:
+        batma.add_resource_path('resources')
+        batma.add_resource_path('resources/imagens')
+        batma.add_resource_path('resources/fontes')
+        batma.add_resource_path('resources/sons')
+        batma.add_resource_path('resources/whatever')
 
         # Ou adicionando tudo de uma vez:
-        add_resource_patch('resources', 'resources/imagens', 'resources/fontes')
+        batma.add_resource_patch('resources', 'resources/imagens', 'resources/fontes')
 
 
 ----------------------------
