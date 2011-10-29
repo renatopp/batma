@@ -44,7 +44,6 @@ from batma.sprite import *
 from batma.text import *
 from batma.node import *
 from batma import draw
-#from batma.euclid import *
 from batma.algebra import *
 from batma import colors
 import pyglet.window.key as keys

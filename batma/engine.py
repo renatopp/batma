@@ -53,9 +53,11 @@ Usage::
 __docformat__ = 'restructuredtext'
 
 import pyglet
+import batma
 from batma.input import KeyboardState
 from batma.input import MouseState
 from batma.util import singleton
+from batma.algebra import Vector2
 from batma import colors
 
 @singleton
@@ -141,6 +143,7 @@ class Game(pyglet.window.Window):
         self.batch = Batch()
         self.background_color = colors.BLACK
 
+        # Input
         self.keyboard = KeyboardState()
         self.mouse = MouseState()
         self.push_handlers(self.keyboard)
@@ -149,13 +152,29 @@ class Game(pyglet.window.Window):
         self.set_mouse_visible(True)
         self.set_exclusive_mouse(False)
 
+        # Callbacks
         pyglet.clock.schedule(self.update)
-        pyglet.resource.path = []
 
+        # Resources
+        pyglet.resource.path = []
+        batma.add_resource_path('.')
+
+        # Calls
         self.initialize()
         pyglet.resource.reindex()
-
         self.load_content()
+
+    @property
+    def size(self):
+        return Vector2(self.width, self.height)
+    
+    @size.setter
+    def size(self, value):
+        self.set_size(value[0], value[1])
+
+    @property
+    def center(self):
+        return Vector2(self.width/2.0, self.height/2.0) 
 
     def on_draw(self):
         '''
