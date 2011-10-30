@@ -19,40 +19,34 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''Batma 2D game engine provides an intuitive structure for game development and 
-other graphical applications.
+class Scene(object):
+    popup = False
+    game = None
 
-Features includes:
+    def __init__(self):
+        pass
 
-    * Automatic import regular image atlas in a list of images
-    * Animated Sprites creation from image atlas or gifs
-    * Easy-to-use pyglet components, e.g., sprites, texts and resource locations
-    * Input state for keyboard and mouse (also inspired by XNA)
+    @property
+    def center(self):
+        return self.game.center
 
-'''
+    @property
+    def mouse(self):
+        return self.game.mouse
+    
+    @property
+    def keyboard(self):
+        return self.game.keyboard
 
-__docformat__ = 'restructuredtext en'
-__version__ = "0.0.1"
-__author__ = "Renato de Pontes Pereira"
-version = __version__
+    @property
+    def batch(self):
+        return self.game.batch
 
-import pyglet
+    def load_content(self):
+        pass
 
-from batma.engine import *
-from batma.camera import *
-from batma.scene import *
-from batma.resource import *
-from batma.sprite import *
-from batma.text import *
-from batma.node import *
-from batma import draw
-from batma.algebra import *
-from batma import colors
-import pyglet.window.key as keys
-import pyglet.window.mouse as buttons
+    def update(self, tick):
+        pass
 
-def run():
-    '''
-    Starts the game.
-    '''
-    pyglet.app.run()
+    def draw(self):
+        pass

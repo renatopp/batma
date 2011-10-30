@@ -54,6 +54,7 @@ __docformat__ = 'restructuredtext'
 
 import pyglet
 import batma
+from batma.camera import Camera
 from batma.input import KeyboardState
 from batma.input import MouseState
 from batma.util import singleton
@@ -143,6 +144,11 @@ class Game(pyglet.window.Window):
         self.batch = Batch()
         self.background_color = colors.BLACK
 
+        # TESTES
+        self.__main_scene = None
+        self._scenes = []
+        self.camera = Camera(self.center)
+
         # Input
         self.keyboard = KeyboardState()
         self.mouse = MouseState()
@@ -153,7 +159,7 @@ class Game(pyglet.window.Window):
         self.set_exclusive_mouse(False)
 
         # Callbacks
-        pyglet.clock.schedule(self.update)
+        pyglet.clock.schedule(self.on_update)
 
         # Resources
         pyglet.resource.path = []
@@ -176,6 +182,13 @@ class Game(pyglet.window.Window):
     def center(self):
         return Vector2(self.width/2.0, self.height/2.0) 
 
+    def on_update(self, tick):
+        for scene in self._scenes:
+            scene.update(tick)
+
+        self.update(tick)
+        self.camera.update(tick)
+
     def on_draw(self):
         '''
         The window contents must be redrawn. Inherited from 
@@ -183,7 +196,31 @@ class Game(pyglet.window.Window):
         '''
         self.clear()
         pyglet.gl.glClearColor(*(self.background_color+(1,)))
+        
+        pyglet.gl.glPushMatrix()
+        self.camera.reset(self.center)
+
+        for scene in self._scenes:
+            scene.draw()
+
         self.draw()
+
+        self.camera.apply(self.center)
+        pyglet.gl.glPopMatrix()
+
+    def add_scene(self, scene):
+        scene.game = self
+        scene.load_content()
+        if not scene.popup:
+            if self.__main_scene:
+                self.remove_scene(self.__main_scene)
+            self.__main_scene = scene
+            self._scenes.insert(0, scene)
+        else:
+            self._scenes.append(scene)
+    
+    def remove_scene(self, scene):
+        self._scenes.remove(scene)
 
     def initialize(self):
         '''
