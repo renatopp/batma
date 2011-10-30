@@ -106,49 +106,56 @@ class Sprite(BatmaNode, pyglet.sprite.Sprite):
         self.opacity = opacity
         self.color = color
 
-    @property
-    def x(self):
-        return self._x
-    
-    @x.setter
-    def x(self, x):
-        diff = x - self._x
-        for c in self.children: c.x += diff
-        self._x = x
-        self._update_position()
-    
-    @property
-    def y(self):
-        return self._y
-    
-    @y.setter
-    def y(self, y):
-        diff = y - self._y
-        for c in self.children: c.y += diff
-        self._y = y
-        self._update_position()
-    
-    @property
-    def scale(self):
-        return self._scale
-    
-    @scale.setter
-    def scale(self, factor):
-        diff = factor - self._scale
-        for c in self.children: c.scale += diff
-        self._scale = factor
-        self._update_position()
+        self.__must_update = True
 
-    @property
-    def rotation(self):
-        return self._rotation
+
+    def get_x(self):
+        return self._x
+    def set_x(self, x):
+        BatmaNode.set_x(self, x)
+        self.__must_update = True
+    x = property(get_x, set_x)       
     
-    @rotation.setter
-    def rotation(self, angle):
-        diff = angle - self._rotation
-        for c in self.children: c.rotation += diff
-        self._rotation = angle
-        self._update_position()
+
+    def get_y(self):
+        return self._y
+    def set_y(self, y):
+        BatmaNode.set_y(self, y)
+        self.__must_update = True
+    y = property(get_y, set_y)
+
+
+    def get_scale(self):
+        return self._scale
+    def set_scale(self, factor):
+        BatmaNode.set_scale(self, factor)
+        self.__must_update = True
+    scale = property(get_scale, set_scale)
+
+
+    def get_rotation(self):
+        return self._rotation
+    def set_rotation(self, angle):
+        BatmaNode.set_rotation(self, angle)
+        self.__must_update = True
+    rotation = property(get_rotation, set_rotation)
+
+
+    def draw(self):
+        if self.__must_update: 
+            self._update_position()
+            self.__must_update = False
+
+        pyglet.gl.glPushMatrix()
+        for rotation, position, anchor in self._parent_rotations.values():
+            pyglet.gl.glTranslatef(position[0]+anchor[0], position[1]+anchor[1], 0)
+            pyglet.gl.glRotatef(-rotation, 0, 0, 1)
+            pyglet.gl.glTranslatef(-(position[0]+anchor[0]), -(position[1]+anchor[1]), 0)
+        
+        pyglet.sprite.Sprite.draw(self)
+        
+        pyglet.gl.glPopMatrix()
+
     
 class AnimatedSprite(pyglet.sprite.Sprite):
     '''
