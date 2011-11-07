@@ -11,3 +11,5 @@ Features added
   - Easy-to-use pyglet components, e.g. sprites, texts and resource location;
   - Input state for for keyboard and mouse (similar to XNA);
   - Primitives drawning: opengl defaults, circle, rectangle;
+  - Camera 2D handling
+  - Scenes based games

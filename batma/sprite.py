@@ -44,8 +44,6 @@ There are some ways to create sprites:
 
 '''
 
-__docformat__ = 'restructuredtext'
-
 import pyglet
 from batma.node import BatmaNode
 from batma.resource import load_image

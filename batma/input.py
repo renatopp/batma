@@ -23,8 +23,6 @@
 Classes and function for input handling.
 '''
 
-__docformat__ = 'restructuredtext'
-
 from batma.algebra import Vector2
 
 class AbstractInputState(dict):

@@ -31,21 +31,21 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
----
-API
----
+------------
+API (Inglês)
+------------
 
 .. toctree::
    :maxdepth: 2
 
    api/batma
-   api/batma.scaffolds
    api/batma.algebra
    api/batma.colors
    api/batma.draw
    api/batma.engine
    api/batma.input
    api/batma.resource
+   api/batma.scaffolds
    api/batma.sprite
    api/batma.text
    api/batma.util

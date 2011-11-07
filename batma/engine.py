@@ -19,8 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''
-Contains the main classes for game flow control.
+'''This module contains the main classes for game creation
 
 A game that inherits the Game class have the following flow:
 
@@ -30,27 +29,7 @@ A game that inherits the Game class have the following flow:
 
        1. update
        2. draw
-
-Usage::
-
-    class MyBatmaGame(batma.Game):
-        def initialize(self):
-            pass
-        
-        def load_content(self):
-            pass
-        
-        def update(self):
-            pass
-        
-        def draw(self):
-            pass
-    
-    game = MyBatmaGame()
-    batma.run()
 '''
-
-__docformat__ = 'restructuredtext'
 
 import pyglet
 import batma
@@ -142,8 +121,8 @@ class Game(pyglet.window.Window):
         super(Game, self).__init__(*args, **kwargs)
 
         self.batch = Batch()
-        self.background_color = colors.BLACK
-
+        self.__background_color = (0, 0, 0, 1)
+        
         # TESTES
         self.__main_scene = None
         self._scenes = []
@@ -170,6 +149,22 @@ class Game(pyglet.window.Window):
         pyglet.resource.reindex()
         self.load_content()
 
+    def get_background_color(self):
+        return batma.Color(int(self.__background_color[0]*255),
+                           int(self.__background_color[1]*255),
+                           int(self.__background_color[2]*255),
+                           int(self.__background_color[3]*255))
+    def set_background_color(self, value):
+        alpha = value[3] if len(value) > 3 else 255
+        self.__background_color = (
+            value[0]/255.0,
+            value[1]/255.0,
+            value[2]/255.0,
+            alpha/255.0
+        )
+    background_color = property(get_background_color, set_background_color)
+
+
     @property
     def size(self):
         return Vector2(self.width, self.height)
@@ -195,7 +190,7 @@ class Game(pyglet.window.Window):
         ``pyglet.window.Window``.
         '''
         self.clear()
-        pyglet.gl.glClearColor(*(self.background_color+(1,)))
+        pyglet.gl.glClearColor(*self.__background_color)
         
         pyglet.gl.glPushMatrix()
         self.camera.reset(self.center)

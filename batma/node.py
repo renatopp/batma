@@ -2,14 +2,14 @@ import pyglet
 from batma.algebra import Vector2
 
 class BatmaNode(object):
-    def __init__(self):
+    def __init__(self, position=(0, 0), rotation=0.0, scale=1.0):
         self.children = []
         self.parent = None
 
-        self._x = 0
-        self._y = 0
-        self._scale = 1.0
-        self._rotation = 0.0
+        self._x = position[0]
+        self._y = position[1]
+        self._rotation = rotation
+        self._scale = scale
         self.anchor_x = 0
         self.anchor_y = 0
         

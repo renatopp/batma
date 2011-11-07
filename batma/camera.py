@@ -20,20 +20,18 @@
 # SOFTWARE.
 
 import pyglet
+from batma.node import BatmaNode
 from batma.algebra import Vector2
 
-class Camera(object):
+class Camera(BatmaNode):
     def __init__(self, position=(0, 0), rotation=0.0, scale=1.0, following=None):
-        self.x, self.y = position
-        self.following = following
+        super(Camera, self).__init__()
+        self.position = position
         self.rotation = rotation
         self.scale = scale
+        
+        self.following = following
     
-    @property
-    def position(self): return Vector2(self.x, self.y)
-    @position.setter
-    def position(self, pos): self.x, self.y = pos
-
     def look_at(self, x, y):
         self.position = x, y
 

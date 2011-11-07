@@ -23,8 +23,6 @@
 This module provides an interface to pyglet resources.
 '''
 
-__docformat__ = 'restructuredtext'
-
 import pyglet
 
 def add_resource_path(*path):

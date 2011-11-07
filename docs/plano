@@ -1,0 +1,24 @@
+
+Getting Start
+- Introduction
+- Installing (ok)
+- Creating your first Batma game
+- Managing resources (ok)
+
+Graphics
+- Windowing
+  - Fullscreen, size (minimum, maximum, position, windows style, caption, icon,
+    visibility, double buffering, vsync
+- Working with sprites             #Loading sprites, performance improviments
+- Working with animated sprites
+- Working with texts
+- Drawing primitives
+- Scenes
+- Cameras
+
+Events Handling
+- Keyboard input
+- Mouse input
+
+
+Resources

@@ -19,8 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-__docformat__ = 'restructuredtext'
-
 import math
 import operator
 from batma.util import classproperty
@@ -63,6 +61,18 @@ class Vector2(list):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __ge__(self, other):
+        try:
+            return self[0] > other[0] and self[1] > other[1]
+        except TypeError:
+            return self[0] > other and self[1] > other
+
+    def __le__(self, other):
+        try:
+            return self[0] < other[0] and self[1] < other[1]
+        except TypeError:
+            return self[0] < other and self[1] < other
 
     def __nonzero__(self):
         return self[0] != 0 or self[1] != 0

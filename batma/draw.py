@@ -19,7 +19,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-"""
+"""Draw directives
+
+All methods of this module draw directly on screen.
+
 Example of usage::
 
     draw.point(Vector2(10, 20))
@@ -44,15 +47,59 @@ def __draw(vertices, mode, width=1, color=batma.colors.WHITE):
     pyglet.graphics.draw(len(vertices), mode, ('v2f', v))
 
 def point(*vertices, **kwargs):
+    '''Receive a list of vertices and draw the points.
+
+    This function uses the GL_POINT mode to draw.
+
+    :param vertices: list of vertices, it can be a tuple, list or 
+                     :py:class:`batma.algebra.Vector2`.
+    :param width: an integer with the points width.
+    :param color: the color of points. E.g. (0, 0, 255) or 
+                  :py:const:`batma.colors.BLUE`.
+    '''
     __draw(vertices, pyglet.gl.GL_POINTS, **kwargs)
 
 def line(*vertices, **kwargs):
+    '''Receive a list of vertices and draw the lines. 
+
+    This function uses the GL_LINE mode to draw.
+
+    Vertices list length always must be multiple of 2. E.g.::
+
+        line((point1), (point2), (point1), (point2)) # draw 2 lines
+
+    :param vertices: list of vertices, it can be a tuple, list or 
+                     :py:class:`batma.algebra.Vector2`.
+    :param width: an integer with the lines width.
+    :param color: the color of lines. E.g. (0, 0, 255) or 
+                  :py:const:`batma.colors.BLUE`.
+    '''
     __draw(vertices, pyglet.gl.GL_LINES, **kwargs)
 
 def line_strip(*vertices, **kwargs):
+    '''Receive a list of vertices and draw the lines. 
+
+    This function uses the GL_LINE_STRIP mode to draw.
+
+    :param vertices: list of vertices, it can be a tuple, list or 
+                     :py:class:`batma.algebra.Vector2`.
+    :param width: an integer with the lines width.
+    :param color: the color of lines. E.g. (0, 0, 255) or 
+                  :py:const:`batma.colors.BLUE`.
+    '''
     __draw(vertices, pyglet.gl.GL_LINE_STRIP, **kwargs)
 
 def line_loop(*vertices, **kwargs):
+    '''Receive a list of vertices and draw the lines. 
+
+    This function uses the GL_LINE_LOOP mode to draw.
+
+    :param vertices: list of vertices, it can be a tuple, list or 
+                     :py:class:`batma.algebra.Vector2`.
+    :param width: an integer with the lines width.
+    :param color: the color of lines. E.g. (0, 0, 255) or 
+                  :py:const:`batma.colors.BLUE`.
+    '''
     __draw(vertices, pyglet.gl.GL_LINE_LOOP, **kwargs)
 
 def triangle(*vertices, **kwargs):
