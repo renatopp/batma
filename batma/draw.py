@@ -36,7 +36,7 @@ import math
 import batma
 from batma.algebra import Vector2
 
-def __draw(vertices, mode, width=1, color=batma.colors.WHITE):
+def __draw(vertices, mode, width=1, color=batma.colors.BLACK):
     pyglet.gl.glLineWidth(width)
     pyglet.gl.glColor3f(*color)
     v = []
@@ -120,7 +120,8 @@ def quad_strip(*vertices, **kwargs):
 def polygon(*vertices, **kwargs):
     __draw(vertices, pyglet.gl.GL_POLYGON, **kwargs)
 
-def circle(center, radius, faces=16, **kwargs):
+
+def circle(center, radius, faces=16, fill=False, **kwargs):
     vertices = []
     angle, step = 0, math.pi/faces
     while angle < 2*math.pi:
@@ -128,8 +129,16 @@ def circle(center, radius, faces=16, **kwargs):
         vertices.append(center+d)
         angle += step
     
-    line_loop(*vertices, **kwargs)
+    if fill:
+        polygon(*vertices, **kwargs)
+    else:
+        line_loop(*vertices, **kwargs)
 
-def rectangle(p1, p2, **kwargs):
+
+def rectangle(p1, p2, fill=False, **kwargs):
     vertices = [p1, Vector2(p1[0], p2[1]), p2, Vector2(p2[0], p1[1])]
-    line_loop(*vertices, **kwargs)
+
+    if fill:
+        polygon(*vertices, **kwargs)
+    else:
+        line_loop(*vertices, **kwargs)

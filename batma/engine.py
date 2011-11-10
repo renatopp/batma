@@ -121,7 +121,7 @@ class Game(pyglet.window.Window):
         super(Game, self).__init__(*args, **kwargs)
 
         self.batch = Batch()
-        self.__background_color = (0, 0, 0, 1)
+        self.background_color = batma.colors.LAVANDERBLUE
         
         # TESTES
         self.__main_scene = None
