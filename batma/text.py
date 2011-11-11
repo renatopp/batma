@@ -52,7 +52,7 @@ class TextElement(BatmaNode):
 class Label(TextElement):
     klass = pyglet.text.Label
 
-    def __init__(self, text='', position=(0, 0), color=(255, 255, 255), **kwargs):
+    def __init__(self, text='', position=(0, 0), color=(0, 0, 0), **kwargs):
         if len(color) == 3:
             color = color+(255,)
         kwargs['text'] = text

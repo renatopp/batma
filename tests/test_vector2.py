@@ -172,6 +172,36 @@ class Test_Vector2(unittest.TestCase):
         v = -self.get_target(4, -2)
         assert v.x == -4
         assert v.y == 2
+    
+    def test_ge(self):
+        v = self.get_target(1, 1)
+        assert v >= (0, 0)
+        assert v >= (1, 1)
+        assert v >= 0
+        assert v >= 1
+        assert not v >= (4, 0)
+
+    def test_gt(self):
+        v = self.get_target(1, 1)
+        assert v > (0, 0)
+        assert not v > (1, 1)
+        assert v > 0
+        assert not v > 1
+
+    def test_le(self):
+        v = self.get_target(1, 1)
+        assert v <= (4, 4)
+        assert v <= (1, 1)
+        assert v <= 2
+        assert v <= 1
+        assert not v <= (4, 0)
+
+    def test_gt(self):
+        v = self.get_target(1, 1)
+        assert v < (3, 2)
+        assert not v < (1, 1)
+        assert v < 2
+        assert not v < 1
 
     def test_abs(self):
         v = self.get_target(2, 3)

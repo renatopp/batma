@@ -199,6 +199,36 @@ class Test_Vector3(unittest.TestCase):
         assert v.y == 2
         assert v.z == -1
 
+    def test_ge(self):
+        v = self.get_target(1, 1, 1)
+        assert v >= (0, 0, 0)
+        assert v >= (1, 1, 1)
+        assert v >= 0
+        assert v >= 1
+        assert not v >= (4, 0, 0)
+
+    def test_gt(self):
+        v = self.get_target(1, 1, 1)
+        assert v > (0, 0, 0)
+        assert not v > (1, 1, 1)
+        assert v > 0
+        assert not v > 1
+
+    def test_le(self):
+        v = self.get_target(1, 1, 1)
+        assert v <= (4, 4, 4)
+        assert v <= (1, 1, 1)
+        assert v <= 2
+        assert v <= 1
+        assert not v <= (4, 0, 0)
+
+    def test_gt(self):
+        v = self.get_target(1, 1, 1)
+        assert v < (3, 2, 2)
+        assert not v < (1, 1, 1)
+        assert v < 2
+        assert not v < 1
+
     def test_abs(self):
         v = self.get_target(2, 3, 2)
         result = abs(v)

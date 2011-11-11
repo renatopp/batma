@@ -64,11 +64,23 @@ class Vector2(list):
 
     def __ge__(self, other):
         try:
+            return self[0] >= other[0] and self[1] >= other[1]
+        except TypeError:
+            return self[0] >= other and self[1] >= other
+
+    def __gt__(self, other):
+        try:
             return self[0] > other[0] and self[1] > other[1]
         except TypeError:
             return self[0] > other and self[1] > other
 
     def __le__(self, other):
+        try:
+            return self[0] <= other[0] and self[1] <= other[1]
+        except TypeError:
+            return self[0] <= other and self[1] <= other
+
+    def __lt__(self, other):
         try:
             return self[0] < other[0] and self[1] < other[1]
         except TypeError:
@@ -219,7 +231,6 @@ class Vector2(list):
         n = other.normalized()
         return self.dot(n)*n
 
-
 class Vector3(list):
     def __init__(self, x=0, y=0, z=0):
         super(Vector3, self).__init__((x, y, z))
@@ -266,6 +277,31 @@ class Vector3(list):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    
+    def __ge__(self, other):
+        try:
+            return self[0]>=other[0] and self[1]>=other[1] and self[2]>=other[2]
+        except TypeError:
+            return self[0] >= other and self[1] >= other and self[2] >= other
+
+    def __gt__(self, other):
+        try:
+            return self[0]>other[0] and self[1]>other[1] and self[2]>other[2]
+        except TypeError:
+            return self[0] > other and self[1] > other and self[2] > other
+
+    def __le__(self, other):
+        try:
+            return self[0]<=other[0] and self[1]<=other[1] and self[2]<=other[2]
+        except TypeError:
+            return self[0] <= other and self[1] <= other and self[2] <= other
+
+    def __lt__(self, other):
+        try:
+            return self[0]<other[0] and self[1]<other[1] and self[2]<other[2]
+        except TypeError:
+            return self[0] < other and self[1] < other and self[2] < other
 
     def __nonzero__(self):
         return self[0] != 0 or self[1] != 0 or self[2] != 0
