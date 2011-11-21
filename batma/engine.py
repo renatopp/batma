@@ -32,6 +32,7 @@ A game that inherits the Game class have the following flow:
 '''
 
 import pyglet
+from pyglet import gl
 import batma
 from batma.camera import Camera
 from batma.input import KeyboardState
@@ -50,7 +51,109 @@ class Batch(pyglet.graphics.Batch):
         self.object_group = pyglet.graphics.OrderedGroup(8)
         self.text_group = pyglet.graphics.OrderedGroup(16)
 
-class Game(pyglet.window.Window):
+class WindowProxy(pyglet.window.Window):
+    def __init__(self, *args, **kwargs):
+        self._background_color = (0, 0, 0, 0)
+        super(WindowProxy, self).__init__(*args, **kwargs)
+
+        self._virtual_width = self.width
+        self._virtual_height = self.height
+        self._offset_x = 0
+        self._offset_y = 0
+        self._usable_width = self.width
+        self._usable_height = self.height
+
+        self.set_alpha_blending()
+
+
+    def get_background_color(self):
+        return batma.Color(int(self._background_color[0]*255),
+                           int(self._background_color[1]*255),
+                           int(self._background_color[2]*255),
+                           int(self._background_color[3]*255))
+    def set_background_color(self, value):
+        alpha = value[3] if len(value) > 3 else 255
+        self._background_color = (
+            value[0]/255.0,
+            value[1]/255.0,
+            value[2]/255.0,
+            alpha/255.0
+        )
+    background_color = property(get_background_color, set_background_color)
+
+    @property
+    def size(self):
+        return Vector2(self.width, self.height)
+    
+    @size.setter
+    def size(self, value):
+        self.set_size(value[0], value[1])
+
+    @property
+    def center(self):
+        return Vector2(self.width/2.0, self.height/2.0)
+
+    def get_virtual_size(self):
+        return Vector2(self._virtual_width, self._virtual_height)
+
+    def on_resize(self, width, height):
+        pw, ph = width, height
+        vw, vh = self.get_virtual_size()
+        v_aratio = vw/float(vh)
+        uw = int(min(pw, ph*v_aratio))
+        uh = int(min(ph, pw/v_aratio))
+        ox = (pw-uw)//2
+        oy = (ph-uh)//2
+        self._offset_x = ox
+        self._offset_y = oy
+        self._usable_width = uw
+        self._usable_height = uh
+        self.set_projection()
+
+    def set_projection(self):
+        '''Set 3D porjection'''
+
+        vw, vh = self.get_virtual_size()
+        aratio = self._usable_width/float(self._usable_height)
+
+        gl.glViewport(self._offset_x, self._offset_y, self._usable_width, self._usable_height)
+        gl.glMatrixMode(gl.GL_PROJECTION)
+        gl.glLoadIdentity()
+        gl.gluPerspective(60, aratio, 0.1, 3000.0)
+        gl.glMatrixMode(gl.GL_MODELVIEW)
+        gl.glLoadIdentity()
+        gl.gluLookAt(
+            vw/2.0, vh/2.0, vh/1.1566,   # eye
+            vw/2.0, vh/2.0, 0,           # center
+            0.0, 1.0, 0.0                # up vector
+        )
+
+    def set_alpha_blending(self, on=True):
+        """
+        Enables/Disables alpha blending in OpenGL
+        using the GL_ONE_MINUS_SRC_ALPHA algorithm.
+        On by default.
+        """
+        if on:
+            gl.glEnable(gl.GL_BLEND)
+            gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+        else:
+            gl.glDisable(gl.GL_BLEND)
+
+    def set_depth_test(sefl, on=True):
+        '''Enables z test. On by default
+        '''
+        if on:
+            gl.glClearDepth(1.0)
+            gl.glEnable(GL_DEPTH_TEST)
+            gl.glDepthFunc(GL_LEQUAL)
+            gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
+        else:
+            gl.glDisable(gl.GL_DEPTH_TEST)
+
+
+
+class Game(WindowProxy):
     '''
     Game flow control.
 
@@ -149,34 +252,6 @@ class Game(pyglet.window.Window):
         pyglet.resource.reindex()
         self.load_content()
 
-    def get_background_color(self):
-        return batma.Color(int(self.__background_color[0]*255),
-                           int(self.__background_color[1]*255),
-                           int(self.__background_color[2]*255),
-                           int(self.__background_color[3]*255))
-    def set_background_color(self, value):
-        alpha = value[3] if len(value) > 3 else 255
-        self.__background_color = (
-            value[0]/255.0,
-            value[1]/255.0,
-            value[2]/255.0,
-            alpha/255.0
-        )
-    background_color = property(get_background_color, set_background_color)
-
-
-    @property
-    def size(self):
-        return Vector2(self.width, self.height)
-    
-    @size.setter
-    def size(self, value):
-        self.set_size(value[0], value[1])
-
-    @property
-    def center(self):
-        return Vector2(self.width/2.0, self.height/2.0) 
-
     def on_update(self, tick):
         for scene in self._scenes:
             scene.update(tick)
@@ -190,7 +265,7 @@ class Game(pyglet.window.Window):
         ``pyglet.window.Window``.
         '''
         self.clear()
-        pyglet.gl.glClearColor(*self.__background_color)
+        pyglet.gl.glClearColor(*self._background_color)
         
         pyglet.gl.glPushMatrix()
         self.camera.reset(self.center)
