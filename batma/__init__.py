@@ -39,8 +39,6 @@ __version__ = "0.1"
 __author__ = "Renato de Pontes Pereira"
 version = __version__
 
-import pyglet
-
 from batma.engine import *
 from batma.camera import *
 from batma.scene import *
@@ -51,6 +49,7 @@ from batma.node import *
 from batma.algebra import *
 from batma import draw
 from batma import colors
+from pyglet import gl
 import pyglet.window.key as keys
 import pyglet.window.mouse as buttons
 

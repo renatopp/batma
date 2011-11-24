@@ -53,9 +53,9 @@ class Batch(pyglet.graphics.Batch):
 
 class WindowProxy(pyglet.window.Window):
     def __init__(self, *args, **kwargs):
-        self._background_color = (0, 0, 0, 0)
         super(WindowProxy, self).__init__(*args, **kwargs)
 
+        self._background_color = (0, 0, 0, 0)
         self._virtual_width = self.width
         self._virtual_height = self.height
         self._offset_x = 0
@@ -64,7 +64,6 @@ class WindowProxy(pyglet.window.Window):
         self._usable_height = self.height
 
         self.set_alpha_blending()
-
 
     def get_background_color(self):
         return batma.Color(int(self._background_color[0]*255),
@@ -93,8 +92,9 @@ class WindowProxy(pyglet.window.Window):
     def center(self):
         return Vector2(self.width/2.0, self.height/2.0)
 
-    def get_virtual_size(self):
-        return Vector2(self._virtual_width, self._virtual_height)
+    def clear(self):
+        super(WindowProxy, self).clear()
+        pyglet.gl.glClearColor(*self._background_color)
 
     def on_resize(self, width, height):
         pw, ph = width, height
@@ -109,6 +109,9 @@ class WindowProxy(pyglet.window.Window):
         self._usable_width = uw
         self._usable_height = uh
         self.set_projection()
+
+    def get_virtual_size(self):
+        return Vector2(self._virtual_width, self._virtual_height)
 
     def set_projection(self):
         '''Set 3D porjection'''
@@ -150,7 +153,6 @@ class WindowProxy(pyglet.window.Window):
             gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
         else:
             gl.glDisable(gl.GL_DEPTH_TEST)
-
 
 
 class Game(WindowProxy):
@@ -227,9 +229,13 @@ class Game(WindowProxy):
         self.background_color = batma.colors.LAVANDERBLUE
         
         # TESTES
-        self.__main_scene = None
+        self._main_scene = None
         self._scenes = []
+        self._fps_display = pyglet.clock.ClockDisplay()
+
         self.camera = Camera(self.center)
+        self.auto_clear = True
+        self.show_fps = False
 
         # Input
         self.keyboard = KeyboardState()
@@ -251,7 +257,7 @@ class Game(WindowProxy):
         self.initialize()
         pyglet.resource.reindex()
         self.load_content()
-
+        
     def on_update(self, tick):
         for scene in self._scenes:
             scene.update(tick)
@@ -264,33 +270,38 @@ class Game(WindowProxy):
         The window contents must be redrawn. Inherited from 
         ``pyglet.window.Window``.
         '''
-        self.clear()
-        pyglet.gl.glClearColor(*self._background_color)
-        
+        if self.auto_clear:
+            self.clear()
+            
         pyglet.gl.glPushMatrix()
         self.camera.reset(self.center)
+
+        self.draw()
 
         for scene in self._scenes:
             scene.draw()
 
-        self.draw()
-
         self.camera.apply(self.center)
         pyglet.gl.glPopMatrix()
+
+        if self.show_fps:
+            self._fps_display.draw()
+
 
     def add_scene(self, scene):
         scene.game = self
         scene.load_content()
         if not scene.popup:
-            if self.__main_scene:
-                self.remove_scene(self.__main_scene)
-            self.__main_scene = scene
+            if self._main_scene:
+                self.remove_scene(self._main_scene)
+            self._main_scene = scene
             self._scenes.insert(0, scene)
         else:
             self._scenes.append(scene)
     
     def remove_scene(self, scene):
         self._scenes.remove(scene)
+
 
     def initialize(self):
         '''
