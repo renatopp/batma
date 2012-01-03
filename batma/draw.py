@@ -33,7 +33,7 @@ Example of usage::
 
 import pyglet
 import math
-import batma
+import batma.colors
 from batma.algebra import Vector2
 
 def __draw(vertices, mode, width=1, color=batma.colors.BLACK):

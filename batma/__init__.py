@@ -31,31 +31,35 @@ Main features:
   - Easy-to-use pyglet components, e.g. sprites, texts and resource location;
   - Input state for for keyboard and mouse (similar to XNA);
   - Primitives drawning: opengl defaults, circle, rectangle;
-  - 2D cameras handling
-  - Scenes based games
+  - 2D cameras handling;
+  - Scenes based games;
 '''
 
 __version__ = "0.1"
 __author__ = "Renato de Pontes Pereira"
 version = __version__
 
-from batma.engine import *
-from batma.camera import *
-from batma.scene import *
-from batma.resource import *
-from batma.sprite import *
-from batma.text import *
-from batma.node import *
-from batma.algebra import *
-from batma import draw
-from batma import colors
+# from batma.camera import *
+#
+# from batma.node import *
+# from batma.algebra import *
+
 from pyglet import gl
 import pyglet.window.key as keys
 import pyglet.window.mouse as buttons
 
-def run():
-    '''Starts the game.
+from batma import draw
+from batma import colors
+from batma.game import Game
+from batma.text import *
+from batma.scene import Scene
+from batma.sprite import *
+from batma.engine import Engine
+from batma.engine import Window
+from batma.algebra import Vector2
+from batma.algebra import Vector3
+from batma.resource import *
 
-    It's the same of ``pyglet.app.run()``
-    '''
-    pyglet.app.run()
+
+
+engine = Engine()

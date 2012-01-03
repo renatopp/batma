@@ -94,9 +94,3 @@ class BatmaNode(object):
 
         if self.anchor != (0, 0):
             pyglet.gl.glTranslatef(-self.anchor_x, -self.anchor_y, 0)
-
-        # for rotation, position, anchor in self._parent_rotations.values():
-        #     pyglet.gl.glTranslatef(position[0]+anchor[0], position[1]+anchor[1], 0)
-        #     pyglet.gl.glRotatef(-rotation, 0, 0, 1)
-        #     pyglet.gl.glTranslatef(-(position[0]+anchor[0]), -(position[1]+anchor[1]), 0)        
-        #     
