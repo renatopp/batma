@@ -25,17 +25,20 @@ from batma.algebra import Vector2
 class Scene(object):
     popup = False
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self.engine = Engine()
         self.window = self.engine.window
+        self.game = self.engine.game
 
         self._main_scene = None
         self._scenes = []
         self.scheduled_calls = []
         self.scheduled_interval_calls = []
+        self._init(*args, **kwargs)
 
-        # self.initialize()
-        # self.load_content()
+    def _init(self, *args, **kwargs):
+        self.initialize(*args, **kwargs)
+        self.load_content()
 
     #shortcuts
     @property
@@ -166,6 +169,8 @@ class Scene(object):
 
 
     def add_scene(self, scene):
+        self.window.push_handlers(scene)
+
         if not scene.popup:
             if self._main_scene:
                 self.remove_scene(self._main_scene)
@@ -173,10 +178,10 @@ class Scene(object):
             self._scenes.insert(0, scene)
         else:
             self._scenes.append(scene)
-    
-    def remove_scene(self, scene):
-        self._scenes.remove(scene)
 
+    def remove_scene(self, scene):
+        self.window.remove_handlers(scene)
+        self._scenes.remove(scene)
 
     def _unload_content(self):
         self.unload_content()

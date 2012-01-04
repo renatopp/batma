@@ -13,7 +13,11 @@ class Game(Scene):
         self.show_fps = False
 
         self.window = Window(*args, **kwargs)
+        self.window.push_handlers(self)
         self.engine.config(self, self.window)
+    
+    def _init(self, *args, **kwargs):
+        pass
 
     def _draw(self):
         if self.auto_clear:

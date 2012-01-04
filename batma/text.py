@@ -42,6 +42,12 @@ class TextElement(BatmaNode):
         kwargs['text']=text
         self.element = self.klass(**self.kwargs)
 
+    def get_text(self):
+        return self.element.text
+    def set_text(self, value):
+        self.element.text = value
+    text = property(get_text, set_text)
+
     def draw(self):
         pyglet.gl.glPushMatrix()
         self.transform()

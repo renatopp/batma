@@ -36,9 +36,9 @@ import math
 import batma.colors
 from batma.algebra import Vector2
 
-def __draw(vertices, mode, width=1, color=batma.colors.BLACK):
+def __draw(vertices, mode, width=1, color=batma.colors.BLACK, alpha=1):
     pyglet.gl.glLineWidth(width)
-    pyglet.gl.glColor3f(*color)
+    pyglet.gl.glColor4f(color[0]/255.0, color[1]/255.0, color[2]/255.0, alpha)
     v = []
     for vertex in vertices:
         v.append(vertex[0])
