@@ -19,47 +19,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''Batma's main module.
-
-Batma 2D game engine provides an intuitive structure for game development and 
-other graphical applications.
-
-Main features:
-
-  - Automatic import regular (equally spaced) images atlas in a list of images;
-  - Animated sprites creation from image atlas or gifs;
-  - Easy-to-use pyglet components, e.g. sprites, texts and resource location;
-  - Input state for for keyboard and mouse (similar to XNA);
-  - Primitives drawning: opengl defaults, circle, rectangle;
-  - 2D cameras handling;
-  - Scenes based games;
-'''
-
-__version__ = "0.1"
-__author__ = "Renato de Pontes Pereira"
-version = __version__
-
-# from batma.camera import *
-#
-# from batma.node import *
-# from batma.algebra import *
-
-from pyglet import gl
-import pyglet.window.key as keys
-import pyglet.window.mouse as buttons
-
-from batma import draw
-from batma import colors
-from batma.game import Game
-from batma.text import *
-from batma.scene import Scene
+from batma.algebra import *
+from batma.clock import *
+from batma.display import *
+from batma.engine import *
+from batma.scene import *
+from batma.input import *
 from batma.sprite import *
-from batma.engine import Engine
-from batma.engine import Window
-from batma.algebra import Vector2
-from batma.algebra import Vector3
-from batma.resource import *
+from batma.text import *
+from batma import buttons
+from batma import colors
+from batma import draw
+from batma import keys
 
-
-
+mouse = MouseState()
+keyboard = KeyboardState()
+display = Display()
 engine = Engine()
+clock = Clock()
+
+def run(*args, **kwargs):
+    engine.apply_config(*args, **kwargs)
+    engine.start()
+
+

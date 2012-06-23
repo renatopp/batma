@@ -19,113 +19,72 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''
-Classes and function for input handling.
-'''
+__all__ = ['KeyboardState', 'MouseState']
 
+import pygame
+import batma
 from batma.algebra import Vector2
+from batma.util import singleton
 
-class AbstractInputState(dict):
-    def __getitem__(self, key):
-        return self.get(key, False)
-
-    def is_pressed(self, key):
-        '''
-        Verify if a key or button is pressed.
-        '''
-        return self[key]
-
-class KeyboardState(AbstractInputState):
-    '''
-    Keyboard input handler.
-
-    A KeyboardState object intercepts the keyboard events and keep the pressed 
-    keys. You must register a KeyboardState instance as an window handler, 
-    e.g., ``game.push_handlers(keyboardstate)``.
-    '''
-    def on_key_press(self, symbol, modifiers):
-        '''
-        Key press event.
-        '''
-        self[symbol] = True
-
-    def on_key_release(self, symbol, modifiers):
-        '''
-        Key release event.
-        '''
-        if symbol in self:
-            del self[symbol]
-
-class MouseState(AbstractInputState):
-    '''
-    Mouse input handler.
-
-    A MouseState object intercepts all mouse events and keep the pressed 
-    buttons, position and scroll values. You must register a MouseState 
-    instance as an window handler, e.g., ``game.push_handlers(mousestate)``.
-
-    :Ivariables:
-        x : float
-            Last position of mouse cursor in axis X.
-        y : float
-            Last position of mouse cursor in axis Y.     
-        in_screen : bool
-            A flag to tell if cursor is over game screen or out of it.
-        scroll_value : int
-            Acumuled value os scroll whell.
-    '''
-
+@singleton
+class KeyboardState(object):
     def __init__(self):
-        super(MouseState, self).__init__()
+        self.state = ()
+        self.previous_state = ()
 
-        self.x = 0
-        self.y = 0
-        self.in_screen = False
-        self.scroll_value = 0
+    def update(self):
+        self.previous_state = self.state
+        self.state = pygame.key.get_pressed()
+    
+    def __getitem__(self, key):
+        return self.state[key]
+    
+    def is_any_down(self):
+        return any(self.state)
 
-    def __get_position(self):
+    def is_any_clicked(self):
+        return any(self.state[i] and not self.previous_state[i] for i in xrange(len(self.previous_state)))
+
+    def is_down(self, key):
+        return self.state[key]
+
+    def is_up(self, key):
+        return not self.state[key]
+
+    def is_clicked(self, key):
+        return self.state[key] and not self.previous_state[key]
+
+@singleton
+class MouseState(object):
+    def __init__(self):
+        self.previous_state = ()
+        self.state = ()
+        self.x = 0.0
+        self.y = 0.0
+
+    def get_position(self):
         return Vector2(self.x, self.y)
-    position = property(__get_position)
+    position = property(get_position)
 
-    def on_mouse_motion(self, x, y, dx, dy):
-        '''
-        Mouse motion event.
-        '''
-        self.x, self.y = x, y
+    def update(self):
+        self.previous_state = self.state
+        self.state = pygame.mouse.get_pressed()
+        self.x, self.y = pygame.mouse.get_pos()
 
-    def on_mouse_press(self, x, y, button, modifiers):
-        '''
-        Mouse press event.
-        '''
-        self[button] =  True
-
-    def on_mouse_release(self, x, y, button, modifiers):
-        '''
-        Mouse release event.
-        '''
-        if button in self:
-            del self[button]
-
-    def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
-        '''
-        Mouse drag event.
-        '''
-        self.x, self.y = x, y
-
-    def on_mouse_enter(self, x, y):
-        '''
-        Mouse enter event.
-        '''
-        self.in_screen = True
+    def __getitem__(self, button):
+        return self.state[button]
     
-    def on_mouse_leave(self, x, y):
-        '''
-        Mouse leave event.
-        '''
-        self.in_screen = False
+    def is_any_down(self):
+        return any(self.state)
+
+    def is_any_clicked(self):
+        return any(self.state[i] and not self.previous_state[i] for i in xrange(len(self.previous_state)))
+
+    def is_down(self, button):
+        return self.state[button]
+
+    def is_up(self, button):
+        return not self.state[button]
     
-    def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
-        '''
-        Mouse scroll event.
-        '''
-        self.scroll_value += scroll_y
+    def is_clicked(self, key):
+        return self.state[key] and not self.previous_state[key]

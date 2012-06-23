@@ -19,46 +19,35 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''
-First version of robi scaffolding
-'''
+__all__ = ['Clock']
 
-import sys, os
+import pygame
+from batma.util import singleton
 
-game = '''
-import batma
+@singleton
+class Clock(object):
+    def __init__(self):
+        self.__clock = pygame.time.Clock()
+        self.__time_passed = 0
 
-class MyGame(batma.Game):
-    def initialize(self):
-        batma.add_resource_path('resources')
-    
-    def load_content(self):
-        pass
+    def tick(self, framerate=0):
+        time_passed = self.__clock.tick(framerate)
+        self.__time_passed += time_passed
+        return time_passed
 
-    def update(self, tick):
-        pass
+    def tick_busy_loop(self, framerate=0):
+        time_passed = self.__clock.tick(framerate)
+        self.__time_passed += time_passed
+        return time_passed
 
-    def draw(self):
-        pass
+    def get_time(self):
+        return self.__clock.get_time()
 
-game = MyGame()
-batma.run()
-'''
+    def get_rawtime(self):
+        return self.__clock.get_rawtime()
 
-cwd = os.getcwd()
+    def get_fps(self):
+        return self.__clock.get_fps()
 
-def robi():
-    if len(sys.argv) > 1:
-        project_name = sys.argv[1].replace(' ', '')
-    else:
-        project_name = raw_input('Project name: ').replace(' ', '')
-    
-    project_dir = os.path.join(cwd, project_name)
-    resource_dir = os.path.join(project_dir, 'resources')
-    game_file = os.path.join(project_dir, project_name+'.py')
-
-    os.mkdir(project_dir)
-    os.mkdir(resource_dir)
-    f = open(game_file, 'w')
-    f.write(game)
-    f.close()
+    def get_ticks(self):
+        return self.__time_passed

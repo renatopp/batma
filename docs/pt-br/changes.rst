@@ -3,7 +3,7 @@
 .. _changes:
 
 ==========================
-Mudanças recentes do Batma
+Mudanças recentes no Batma
 ==========================
 
 .. include:: ../../CHANGES.rst

@@ -3,7 +3,7 @@
 __author__ = 'Renato de Pontes Pereira'
 __author_email__ = 'renato.ppontes@gmail.com'
 __version__ = '0.1'
-__date__ = '2011 09 25'
+__date__ = '2012 06 23'
 
 try:
     import setuptools
@@ -22,9 +22,9 @@ setup(
     version = __version__,
     author = __author__,
     license='MIT License',
-    description = '2D game engine inspired on XNA and cocos2d',
+    description = '2D game engine inspired on XNA',
     long_description=long_description,
-    url = 'http://renatopp.com/batma',
+    url = 'http://renatopp.github.com/batma',
     download_url = 'https://github.com/renatopp/batma',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -41,11 +41,11 @@ setup(
         ('Topic :: Software Development :: Libraries :: Python Modules'),
         ('Topic :: Games/Entertainment'),
     ],
-    keywords='2d game engine opengl batma cocos2d xna pyglet',
+    keywords='2d game engine sdl batma xna pygame',
     packages = find_packages(),
-    install_requires=['pyglet>=1.1.4',],
-    entry_points="""
-      [console_scripts]
-      robi = batma.scaffolds:robi
-      """
+    install_requires=['pygame>=1.9.1',],
+    # entry_points="""
+    #   [console_scripts]
+    #   robi = batma.scaffolds:robi
+    #   """
     )

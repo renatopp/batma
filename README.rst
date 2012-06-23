@@ -2,20 +2,19 @@
 Batma 2D
 ========
 
-Batma is a pyglet based game engine, inpired by XNA's structure and cocos2d's 
-features. The Batma's goal is provide an intuitive structure for game 
-development and other graphical applications.
+Batma is a pygame based game engine, inspired by XNA's structure. Providing an
+intuitive framework for game development and other graphical applications.
 
 
 --------
 Features
 --------
 
-  - Automatic import regular image atlas in a list of images
-  - Animated Sprites creation from image atlas or gifs
-  - Easy-to-use pyglet components, e.g., sprites, texts and resource locations
-  - Input state for keyboard and mouse (also inspired by XNA)
-  - Primitives drawning (opengl defaults + circle)
+- Input state for keyboard and mouse;
+- Sprites and Texts with easy rotation, scaling, positioning;
+- 2D and 3D math library;
+- Scheduling of user defined functions;
+- Scene based;
 
 
 -------------
@@ -24,7 +23,7 @@ Game Workflow
 
 Inspired by XNA, a Batma game follows almost the same structure::
 
-    class MyGame(batma.Game):
+    class MyGame(batma.Scene):
         def initialize(self):
             """Initializes game components, such screen properties"""
             ...
@@ -32,6 +31,9 @@ Inspired by XNA, a Batma game follows almost the same structure::
         def load_content(self):
             """Load game assets, such as sprites, fonts and sound effects"""
             ...
+
+        def unload_content(self):
+            '''Unload game assets'''
         
         def update(self, tick):
             """Called each frame, add all the game logic here"""
@@ -42,15 +44,15 @@ Inspired by XNA, a Batma game follows almost the same structure::
             ...
     
     game = MyGame()
-    batma.run()
+    batma.run(game)
 
 
 ------------
 Requirements
 ------------
 
-  - Python 2.6 or newer; Not tested in 3.x
-  - Pyglet 1.1.4 or newer
+- Python 2.7+; Not tested in 3.x
+- PyGame 1.9.1+;
 
 
 ----------
@@ -60,25 +62,3 @@ Installing
 Installing from source::
 
     python setup.py install
-
-
-----
-TODO
-----
-
-  - Sprite Collision
-  - Maps
-
-    - Camera
-    - TileMap
-    - IsometricMap
-    - HexMap
-
-  - Particles
-
-    - ParticleEngine
-    - Particles
-
-  - GUI
-  - Genre specific modules (e.g. rpg, adventure, action, etc...)
-  - Scaffolding system called "robi" lol 

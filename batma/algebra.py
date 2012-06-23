@@ -19,7 +19,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
+__all__ = ['Vector2', 'Vector3']
+
 import math
+import random
 import operator
 from batma.util import classproperty
 
@@ -48,6 +51,17 @@ class Vector2(list):
     @classmethod
     def One(cls):
         return Vector2(1.0, 1.0)
+
+    @classproperty
+    @classmethod
+    def Random(cls):
+        return Vector2(random.random(), random.random())
+
+    @classproperty
+    @classmethod
+    def NormRandom(cls):
+        return Vector2(random.random(), random.random()).normalize()
+
 
     def __copy__(self):
         return Vector2(self.x, self.y)
@@ -262,6 +276,17 @@ class Vector3(list):
     @classmethod
     def One(cls):
         return Vector3(1.0, 1.0, 1.0)
+
+    @classproperty
+    @classmethod
+    def Random(cls):
+        return Vector3(random.random(), random.random(), random.random())
+
+    @classproperty
+    @classmethod
+    def NormRandom(cls):
+        return Vector3(random.random(), random.random(), random.random()).normalize()
+
 
     def __copy__(self):
         return Vector3(self.x, self.y, self.z)

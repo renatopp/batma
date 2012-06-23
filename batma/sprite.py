@@ -19,222 +19,146 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''
-Module for sprites handling.
+__all__ = ['Sprite']
 
-Batma sprites are divided into two categories: `Sprite` and `AnimatedSprite`. 
-The main difference is AnimatedSprite must be manually animated via 
-``update_frame`` method.
+import pygame
+import batma
 
-There are some ways to create sprites:
+class Sprite(pygame.sprite.Sprite):
+    def __init__(self, image, position=(0, 0), rotation=0, scale=1, anchor='center'):
+        super(Sprite, self).__init__()
 
-    - **Static sprites**:
-        
-        - Passing a ``pyglet.image.Image`` to `Sprite`.
-        - Passing a string with filename of image source to `Sprite`.
+        self.image = pygame.surface.Surface((0, 0))
+        self.original_image = self.image
+        self.rect = pygame.Rect(0, 0, 0, 0)
 
-    - **Animated sprites**:
+        self.__anchor = batma.Vector2(0, 0)
+        self.__untransformed_nor_anchor = batma.Vector2(0, 0)
 
-        - Passing a ``pyglet.image.Animation`` to `Sprite` (aumatically 
-          animated).
-        - Passing a list of ``pyglet.image.Texture`` to `AnimatedSprite` 
-          (manually animated).
-        - Passing a string with filename of atlas image source and parameter to 
-          `AnimatedSprite` (manually animated).
+        self.__position = None
+        self.__scale = None
+        self.__rotation = None
 
-'''
+        self.__is_scale_pending = False
+        self.__is_rotation_pending = False
 
-import pyglet
-from batma.node import BatmaNode
-from batma.resource import load_image
-from batma.resource import load_atlas
-from batma.resource import _anchor_image
-from batma.resource import _anchor_animation
-
-class Sprite(BatmaNode, pyglet.sprite.Sprite):
-    '''
-    Sprite class for static and automatically animated sprites.
-    '''
-
-    def __init__(self, image, position=(0, 0), rotation=0, 
-                                               scale=1, 
-                                               opacity=255, 
-                                               color=(255, 255, 255), 
-                                               anchor=None,
-                                               batch=None,
-                                               group=None):
-        '''
-        Create a sprite.
-
-        :Parameters:
-            image : string or image
-                Name of the image resource or a pyglet image.
-            position : tuple
-                Position of the anchor. Defaults to (0,0).
-            rotation : float
-                The rotation (degrees). Defaults to 0.
-            scale : float
-                The zoom factor. Defaults to 1.
-            opacity : int
-                The opacity (0=transparent, 255=opaque). Defaults to 255.
-            color : tuple
-                The color to colorize the child (RGB 3-tuple). Defaults to 
-                (255,255,255).
-            anchor : (float, float)
-                (x,y)-point from where the image will be positions, rotated and 
-                scaled in pixels. For example (image.width/2, image.height/2) 
-                is the center (default).
-        '''
         if isinstance(image, basestring):
-            image = load_image(image)
+            image = pygame.image.load(image).convert_alpha()
 
-        BatmaNode.__init__(self)
-        pyglet.sprite.Sprite.__init__(self, image, batch=batch, group=group)
+        self.set_position(position)
+        self.set_scale(scale)
+        self.set_rotation(rotation)
+        self.apply_texture(image)
 
-        anchor = anchor or "center"
+    def apply_texture(self, image):
+        self.image = image
+        self.original_image = image.copy()
+        self.anchor = batma.Vector2(image.get_width()/2.0, image.get_height()/2.0)
+        self.rect.x = self.position[0]-self.anchor[0]
+        self.rect.y = self.position[1]-self.anchor[1]
+        self.rect.width = self.image.get_width()
+        self.rect.height = self.image.get_height()
 
-        if isinstance(self.image, (pyglet.image.Animation, list, tuple)):
-            _anchor_animation(self.image, anchor)
-        else:
-            _anchor_image(self.image, anchor)
+        self.__is_scale_pending = True
+        self.__is_rotation_pending = True
 
-        self.position = position
-        self.rotation = rotation
-        self.scale = scale
-        self.opacity = opacity
-        self.color = color
-
-        self.__must_update = True
-
+    def get_anchor(self):
+        return self.__anchor
+    def set_anchor(self, value):
+        self.__anchor = value
+        self.__untransformed_nor_anchor = batma.Vector2(
+            self.__anchor[0]/self.original_image.get_width(),
+            self.__anchor[1]/self.original_image.get_height()
+        )
+        self.__update_rect()
+    anchor = property(get_anchor, set_anchor)
 
     def get_x(self):
-        return self._x
-    def set_x(self, x):
-        BatmaNode.set_x(self, x)
-        self.__must_update = True
-    x = property(get_x, set_x)       
-    
+        return self.__position.x
+    def set_x(self, value):
+        self.__position.x = value
+    x = property(get_x, set_x)
 
     def get_y(self):
-        return self._y
-    def set_y(self, y):
-        BatmaNode.set_y(self, y)
-        self.__must_update = True
+        return self.__position.y
+    def set_y(self, value):
+        self.__position.y = value
     y = property(get_y, set_y)
 
-
-    def get_scale(self):
-        return self._scale
-    def set_scale(self, factor):
-        BatmaNode.set_scale(self, factor)
-        self.__must_update = True
-    scale = property(get_scale, set_scale)
-
+    def get_position(self):
+        # return batma.Vector2(self.rect.centerx, self.rect.centery)
+        return self.__position
+    def set_position(self, value):
+        self.__position = batma.Vector2(value[0], value[1])
+        self.__update_rect()
+    position = property(get_position, set_position)
 
     def get_rotation(self):
-        return self._rotation
-    def set_rotation(self, angle):
-        BatmaNode.set_rotation(self, angle)
-        self.__must_update = True
+        return self.__rotation
+    def set_rotation(self, value):
+        self.__rotation = value%360
+        self.__is_rotation_pending = True
     rotation = property(get_rotation, set_rotation)
 
+    def get_scale(self):
+        return self.__scale
+    def set_scale(self, value):
+        if isinstance(value, (int, long, float)):
+            value = batma.Vector2(value, value)
+        self.__scale = value
+        self.__is_scale_pending = True
+    scale = property(get_scale, set_scale)
+
+    def __update_rect(self):
+        self.rect.x = self.position[0] - self.anchor[0]
+        self.rect.y = self.position[1] - self.anchor[1]
+
+    def __resize_surface_extents(self):
+        """Handles surface cleanup once a scale or rotation operation has been performed."""
+        self.anchor[0] = self.image.get_width() * self.__untransformed_nor_anchor[0]
+        self.anchor[1] = self.image.get_height() * self.__untransformed_nor_anchor[1]
+        self.__update_rect()
+        self.rect.width = self.image.get_width()
+        self.rect.height = self.image.get_height()
+
+    def __execute_scale(self, image):
+        """Execute the scaling operation"""
+        size_to_scale_from = image.get_size()
+        x = size_to_scale_from[0] * self.__scale[0]
+        y = size_to_scale_from[1] * self.__scale[1]
+        scaled_value = (int(x), int(y))
+        self.image = pygame.transform.scale(image, scaled_value)
+        self.__resize_surface_extents()
+
+    def __execute_rotation(self):
+        """Executes the rotating operation"""
+        self.image = pygame.transform.rotate(self.original_image, -self.__rotation)
+        self.__resize_surface_extents()
+
+    def __handle_scale_rotation(self):
+        if self.__is_rotation_pending == True:
+            self.__execute_rotation()
+            self.__is_rotation_pending = False
+
+            #Scale the image using the recently rotated surface to keep the orientation correct
+            if self.scale != (1, 1):
+                self.__execute_scale(self.image)
+                self.__is_scale_pending = False
+
+        #The image is not rotating while scaling, thus use the untransformed image to scale.
+        if self.__is_scale_pending == True:
+            image = self.original_image
+
+            if self.rotation != 0:
+                self.__execute_rotation()
+                self.__is_rotation_pending = False
+                image = self.image
+
+            self.__execute_scale(image)
+            self.__is_scale_pending = False
 
     def draw(self):
-        if self.__must_update: 
-            self._update_position()
-            self.__must_update = False
+        self.__handle_scale_rotation()
+        batma.display.screen.blit(self.image, self.rect)
 
-        pyglet.gl.glPushMatrix()
-        for rotation, position, anchor in self._parent_rotations.values():
-            pyglet.gl.glTranslatef(position[0]+anchor[0], position[1]+anchor[1], 0)
-            pyglet.gl.glRotatef(-rotation, 0, 0, 1)
-            pyglet.gl.glTranslatef(-(position[0]+anchor[0]), -(position[1]+anchor[1]), 0)
-        
-        pyglet.sprite.Sprite.draw(self)
-        
-        pyglet.gl.glPopMatrix()
 
-    
-class AnimatedSprite(pyglet.sprite.Sprite):
-    '''
-    Sprite class for manually animated sprites.
-    '''
-
-    def __init__(self, image, rows=None, cols=None, initial_frame=0, 
-                                                    total_frames=None, 
-                                                    position=(0, 0), 
-                                                    rotation=0, 
-                                                    scale=1, 
-                                                    opacity=255, 
-                                                    color=(255, 255, 255), 
-                                                    anchor=None,
-                                                    batch=None,
-                                                    group=None):
-        '''
-        Create an animated sprite.
-
-        :Parameters:
-            image : string or image
-                Name of the atlas image resource or a list of images.
-            rows : int
-                Row number of atlas image. Ignore this if image is an 
-                animation.
-            cols : int
-                Column number of atlas image. Ignore this if image is an 
-                animation.
-            initial_frame : int
-                Initial frame of animation. Ignore this if image is an 
-                animation.
-            total_frames : int
-                How much frames starting from ``initial_frame`` the animation 
-                will have. If None, will use until end of atlas. Ignore this if
-                image is an animation.
-            position : tuple
-                Position of the anchor. Defaults to (0,0).
-            rotation : float
-                The rotation (degrees). Defaults to 0.
-            scale : float
-                The zoom factor. Defaults to 1.
-            opacity : int
-                The opacity (0=transparent, 255=opaque). Defaults to 255.
-            color : tuple
-                The color to colorize the child (RGB 3-tuple). Defaults to 
-                (255,255,255).
-            anchor : (float, float)
-                (x,y)-point from where the image will be positions, rotated and 
-                scaled in pixels. For example (image.width/2, image.height/2) 
-                is the center (default).
-        '''
-        if isinstance(image, basestring):
-            atlas = load_atlas(image, rows, cols)
-        else:
-            atlas = image
-        
-        self.frames = atlas
-        self._initial_frame = initial_frame
-        if not total_frames:
-            self._total_frames = len(atlas) - initial_frame
-            
-        self._frame_index = initial_frame
-        
-        super(AnimatedSprite, self).__init__(self.frames[initial_frame],
-                                             batch=batch,
-                                             group=group)
-        anchor = anchor or "center"
-        _anchor_animation(self.frames, anchor)
-
-        self.position = position
-        self.rotation = rotation
-        self.scale = scale
-        self.opacity = opacity
-        self.color = color
-    
-    def update_frame(self):
-        """
-        Update the image sequence, setting the next image of animation.
-        """
-        self._frame_index += 1
-        if self._frame_index >= self._initial_frame+self._total_frames:
-            self._frame_index = self._initial_frame
-
-        self.image = self.frames[self._frame_index]

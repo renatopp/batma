@@ -2,16 +2,20 @@
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import batma
 
-class Game(batma.Game):
+class Game(batma.Scene):
     def initialize(self):
         pass
     
     def load_content(self):
-        self.label = batma.Label(u'Hello World!', (320, 240))
+        self.label = batma.Text(u'Hello World!', batma.display.center)
+        self.label.scale = 1
+
+    def unload_content(self):
+        pass
 
     def update(self, tick):
         pass
@@ -20,4 +24,4 @@ class Game(batma.Game):
         self.label.draw()
 
 game = Game()
-batma.run()
+batma.run(game)

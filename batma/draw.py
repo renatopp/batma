@@ -19,126 +19,41 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-"""Draw directives
+import pygame
+import batma
 
-All methods of this module draw directly on screen.
+def rect(rect, color=None, width=0):
+    color = color or batma.display.default_color
+    pygame.draw.rect(batma.display.screen, color, rect, width)
 
-Example of usage::
+def polygon(points, color=None, width=0):
+    color = color or batma.display.default_color
+    pygame.draw.polygon(batma.display.screen, color, points, width)
 
-    draw.point(Vector2(10, 20))
-    draw.line(Vector2(0, 0), Vector2(640, 480))
-    draw.circle((320, 240), 20)
-    draw.triangle([200, 200], [250, 300], [300, 200])
-"""
+def circle(pos, radius, color=None, width=0):
+    color = color or batma.display.default_color
+    pygame.draw.circle(batma.display.screen, color, pos, radius, width)
 
-import pyglet
-import math
-import batma.colors
-from batma.algebra import Vector2
+def ellipse(rect, color=None, width=0):
+    color = color or batma.display.default_color
+    pygame.draw.ellipse(batma.display.screen, color, rect, width)
 
-def __draw(vertices, mode, width=1, color=batma.colors.BLACK, alpha=1):
-    pyglet.gl.glLineWidth(width)
-    pyglet.gl.glColor4f(color[0]/255.0, color[1]/255.0, color[2]/255.0, alpha)
-    v = []
-    for vertex in vertices:
-        v.append(vertex[0])
-        v.append(vertex[1])
+def arc(rect, start_angle, stop_angle, color=None, width=1):
+    color = color or batma.display.default_color
+    pygame.draw.arc(batma.display.screen, color, rect, start_angle, stop_angle, width)
 
-    pyglet.graphics.draw(len(vertices), mode, ('v2f', v))
+def line(start_pos, end_pos, color=None, width=1):
+    color = color or batma.display.default_color
+    pygame.draw.line(batma.display.screen, color, start_pos, end_pos, width)
 
-def point(*vertices, **kwargs):
-    '''Receive a list of vertices and draw the points.
+def lines(points, closed, color=None, width=1):
+    color = color or batma.display.default_color
+    pygame.draw.lines(batma.display.screen, color, closed, points, width)
 
-    This function uses the GL_POINT mode to draw.
+def aaline(start_pos, end_pos, color=None, blend=1):
+    color = color or batma.display.default_color
+    pygame.draw.aaline(batma.display.screen, color, start_pos, end_pos, blend)
 
-    :param vertices: list of vertices, it can be a tuple, list or 
-                     :py:class:`batma.algebra.Vector2`.
-    :param width: an integer with the points width.
-    :param color: the color of points. E.g. (0, 0, 255) or 
-                  :py:const:`batma.colors.BLUE`.
-    '''
-    __draw(vertices, pyglet.gl.GL_POINTS, **kwargs)
-
-def line(*vertices, **kwargs):
-    '''Receive a list of vertices and draw the lines. 
-
-    This function uses the GL_LINE mode to draw.
-
-    Vertices list length always must be multiple of 2. E.g.::
-
-        line((point1), (point2), (point1), (point2)) # draw 2 lines
-
-    :param vertices: list of vertices, it can be a tuple, list or 
-                     :py:class:`batma.algebra.Vector2`.
-    :param width: an integer with the lines width.
-    :param color: the color of lines. E.g. (0, 0, 255) or 
-                  :py:const:`batma.colors.BLUE`.
-    '''
-    __draw(vertices, pyglet.gl.GL_LINES, **kwargs)
-
-def line_strip(*vertices, **kwargs):
-    '''Receive a list of vertices and draw the lines. 
-
-    This function uses the GL_LINE_STRIP mode to draw.
-
-    :param vertices: list of vertices, it can be a tuple, list or 
-                     :py:class:`batma.algebra.Vector2`.
-    :param width: an integer with the lines width.
-    :param color: the color of lines. E.g. (0, 0, 255) or 
-                  :py:const:`batma.colors.BLUE`.
-    '''
-    __draw(vertices, pyglet.gl.GL_LINE_STRIP, **kwargs)
-
-def line_loop(*vertices, **kwargs):
-    '''Receive a list of vertices and draw the lines. 
-
-    This function uses the GL_LINE_LOOP mode to draw.
-
-    :param vertices: list of vertices, it can be a tuple, list or 
-                     :py:class:`batma.algebra.Vector2`.
-    :param width: an integer with the lines width.
-    :param color: the color of lines. E.g. (0, 0, 255) or 
-                  :py:const:`batma.colors.BLUE`.
-    '''
-    __draw(vertices, pyglet.gl.GL_LINE_LOOP, **kwargs)
-
-def triangle(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_TRIANGLES, **kwargs)
-
-def triangle_strip(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_TRIANGLE_STRIP, **kwargs)
-
-def triangle_fan(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_TRIANGLE_FAN, **kwargs)
-
-def quad(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_QUADS, **kwargs)
-
-def quad_strip(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_QUAD_STRIP, **kwargs)
-
-def polygon(*vertices, **kwargs):
-    __draw(vertices, pyglet.gl.GL_POLYGON, **kwargs)
-
-
-def circle(center, radius, faces=16, fill=False, **kwargs):
-    vertices = []
-    angle, step = 0, math.pi/faces
-    while angle < 2*math.pi:
-        d = Vector2(radius*math.sin(angle), radius*math.cos(angle))
-        vertices.append(center+d)
-        angle += step
-    
-    if fill:
-        polygon(*vertices, **kwargs)
-    else:
-        line_loop(*vertices, **kwargs)
-
-
-def rectangle(p1, p2, fill=False, **kwargs):
-    vertices = [p1, Vector2(p1[0], p2[1]), p2, Vector2(p2[0], p1[1])]
-
-    if fill:
-        polygon(*vertices, **kwargs)
-    else:
-        line_loop(*vertices, **kwargs)
+def aalines(points, closed, color=None, blend=1):
+    color = color or batma.display.default_color
+    pygame.draw.aalines(batma.display.screen, color, closed, points, blend)

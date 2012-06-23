@@ -19,66 +19,73 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''
-Interface classes for pyglet's text manipulation components.
-'''
+__all__ = ['Text']
 
-import pyglet
-from batma.node import BatmaNode
+import pygame
+import batma
 
-class TextElement(BatmaNode):
-    """
-    Base class for all cocos text
+class Text(batma.sprite.Sprite):
+    def __init__(self, text, position=(0, 0), scale=1.0, rotation=0.0,
+                        color=None, font_name=None, font_size=36, antialias=True):
+        self.__text = text
+        self.__color = color or batma.display.default_color
+        self.__font_name = font_name
+        self.__font_size = font_size
+        self.__antialias = antialias
+        self.__font = None
 
-    Provides the CocosNode interfase and a pyglet Batch to store parts
-    Functionality other that the one common to all cococsnodes, except 'opacity', is
-    provided by the member 'element' , which is the underlying pyglet object.
-    """
-    def __init__(self, text=u'', position=(0,0), **kwargs):
-        super(TextElement, self).__init__()
-        self.position = position
-        self.args = []
-        self.kwargs = kwargs
-        kwargs['text']=text
-        self.element = self.klass(**self.kwargs)
+        image = self.__load_font()
+        super(Text, self).__init__(image, position, scale, rotation)
+        
+        self.__is_render_pending = False
 
     def get_text(self):
-        return self.element.text
+        return self.__text
     def set_text(self, value):
-        self.element.text = value
+        self.__text = value
+        self.__is_render_pending = True
     text = property(get_text, set_text)
 
+    def get_color(self):
+        return self.__color
+    def set_color(self, value):
+        self.__color = value
+        self.__is_render_pending = True
+    color = property(get_color, set_color)
+
+    def get_font_name(self):
+        return self.__font_name
+    def set_font_name(self, value):
+        self.__font_name = value
+        self.__is_render_pending = True
+    font_name = property(get_font_name, set_font_name)
+
+    def get_font_size(self):
+        return self.__font_size
+    def set_font_size(self, value):
+        self.__font_size = value
+        self.__is_render_pending = True
+    font_size = property(get_font_size, set_font_size)
+
+    def get_antialias(self):
+        return self.__antialias
+    def set_antialias(self, value):
+        self.__antialias = value
+        self.__is_render_pending = True
+    antialias = property(get_antialias, set_antialias)
+
+    def __load_font(self):
+        self.__font = pygame.font.Font(self.font_name, self.font_size)
+        return self.__font.render(self.text, self.antialias, self.color)
+
+    def __handle_render(self):
+        image = self.__load_font()
+        super(Text, self).apply_texture(image)
+
     def draw(self):
-        pyglet.gl.glPushMatrix()
-        self.transform()
-        self.element.draw()
-        pyglet.gl.glPopMatrix()
+        if self.__is_render_pending:
+            self.__handle_render()
+            self.__is_scale_pending = True
+            self.__is_rotation_pending = True
 
-
-class Label(TextElement):
-    klass = pyglet.text.Label
-
-    def __init__(self, text='', position=(0, 0), color=(0, 0, 0), **kwargs):
-        if len(color) == 3:
-            color = color+(255,)
-        kwargs['text'] = text
-        kwargs['color'] = color
-        kwargs['position'] = position
-        kwargs['font_name'] = kwargs.get('font_name', 'Times New Roman')
-        kwargs['font_size'] = kwargs.get('font_size', 36)
-        kwargs['anchor_x'] = kwargs.get('anchor_x', 'center')
-        kwargs['anchor_y'] = kwargs.get('anchor_y', 'center')
-
-        super(Label, self).__init__(**kwargs)
-
-
-class HTMLLabel(TextElement):
-    klass = pyglet.text.HTMLLabel
-
-    def __init__(self, text='', position=(0, 0), **kwargs):
-        kwargs['text'] = text
-        kwargs['position'] = position
-        kwargs['anchor_x'] = kwargs.get('anchor_x', 'center')
-        kwargs['anchor_y'] = kwargs.get('anchor_y', 'center')
-
-        super(HTMLLabel, self).__init__(**kwargs)
+        super(Text, self).draw()
