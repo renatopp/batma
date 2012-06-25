@@ -1,0 +1,138 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Instalando o Batma &mdash; Batma 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Primeiros Passos" href="index.html" />
+    <link rel="next" title="Seu primeiro programa no Batma" href="hello_world.html" />
+    <link rel="prev" title="Introdução" href="introduction.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../index.html">
+          <span>Batma 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Instalando o Batma</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="introduction.html">Introdução</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="hello_world.html">Seu primeiro programa no Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="instalando-o-batma">
+<h1><a class="toc-backref" href="#id2">Instalando o Batma</a><a class="headerlink" href="#instalando-o-batma" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="indice">
+<p class="topic-title first">Índice</p>
+<ul class="simple">
+<li><a class="reference internal" href="#instalando-o-batma" id="id2">Instalando o Batma</a><ul>
+<li><a class="reference internal" href="#dependencias" id="id3">Dependências</a></li>
+<li><a class="reference internal" href="#instalacao" id="id4">Instalação</a><ul>
+<li><a class="reference internal" href="#instalar-usando-o-easy-install" id="id5">Instalar usando o easy_install</a></li>
+<li><a class="reference internal" href="#instalar-usando-o-setup-py" id="id6">Instalar usando o setup.py</a></li>
+<li><a class="reference internal" href="#instalar-pelo-jeito-dificil" id="id7">Instalar pelo jeito difícil</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testando-sua-instalacao" id="id8">Testando sua instalação</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="dependencias">
+<h2><a class="toc-backref" href="#id3">Dependências</a><a class="headerlink" href="#dependencias" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Python 2.7 <em>~duh~</em> (não foi testado no 2.6 ou menores)
+(<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>PyGame 1.9.1
+(<a class="reference external" href="http://pyglet.org/">http://pyglet.org/</a>)</li>
+</ul>
+</div>
+<div class="section" id="instalacao">
+<h2><a class="toc-backref" href="#id4">Instalação</a><a class="headerlink" href="#instalacao" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="instalar-usando-o-easy-install">
+<h3><a class="toc-backref" href="#id5">Instalar usando o easy_install</a><a class="headerlink" href="#instalar-usando-o-easy-install" title="Permalink to this headline">¶</a></h3>
+<p>Via <strong>easy_install</strong> é o jeito mais fácil de instalar o Batma, ele também vai
+instalar a PyGame se não encontrá-lo no sistema:</p>
+<div class="highlight-python"><pre>easy_install batma</pre>
+</div>
+</div>
+<div class="section" id="instalar-usando-o-setup-py">
+<h3><a class="toc-backref" href="#id6">Instalar usando o setup.py</a><a class="headerlink" href="#instalar-usando-o-setup-py" title="Permalink to this headline">¶</a></h3>
+<p>Faça o download do <a class="reference external" href="http://renatopp.github.com/batma/">último release do Batma</a>,
+descompacte em algum diretório e execute:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="instalar-pelo-jeito-dificil">
+<h3><a class="toc-backref" href="#id7">Instalar pelo jeito difícil</a><a class="headerlink" href="#instalar-pelo-jeito-dificil" title="Permalink to this headline">¶</a></h3>
+<p>Faça o download do <a class="reference external" href="http://renatopp.github.com/batma/">último release do Batma</a>,
+descompacte em algum diretório e execute:</p>
+<p><strong>No Windows</strong>:</p>
+<div class="highlight-python"><pre>set PYTHONPATH c:\caminho\para\o\batma\;%PYTHONPATH%</pre>
+</div>
+<p><strong>Linux, Mac OS X ou Windows usando cygwin</strong>:</p>
+<div class="highlight-python"><pre>set PYTHONPATH /camingo/para/o/batma/:$PYTHONPATH
+export PYTHONPATH</pre>
+</div>
+</div>
+</div>
+<div class="section" id="testando-sua-instalacao">
+<h2><a class="toc-backref" href="#id8">Testando sua instalação</a><a class="headerlink" href="#testando-sua-instalacao" title="Permalink to this headline">¶</a></h2>
+<p>Se tudo correu bem, abra o terminal (no windows o cmd) e digite:</p>
+<div class="highlight-python"><pre>$ python -c "import batma"</pre>
+</div>
+<p>Se nada acontecer é porque está tudo funcionando.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="introduction.html">Introdução</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="hello_world.html">Seu primeiro programa no Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012, Renato de Pontes Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

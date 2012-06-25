@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.maths.mathematic &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../../../index.html" />
+    <link rel="up" title="batma" href="../../batma.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../../../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.maths.mathematic</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <h1>Source code for batma.maths.mathematic</h1><div class="highlight"><pre>
+<span class="c"># Copyright (c) 2011 Renato de Pontes Pereira, renato.ppontes at gmail dot com</span>
+<span class="c"># </span>
+<span class="c"># Permission is hereby granted, free of charge, to any person obtaining a copy </span>
+<span class="c"># of this software and associated documentation files (the &quot;Software&quot;), to deal </span>
+<span class="c"># in the Software without restriction, including without limitation the rights </span>
+<span class="c"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell </span>
+<span class="c"># copies of the Software, and to permit persons to whom the Software is </span>
+<span class="c"># furnished to do so, subject to the following conditions:</span>
+<span class="c">#</span>
+<span class="c"># The above copyright notice and this permission notice shall be included in all </span>
+<span class="c"># copies or substantial portions of the Software.</span>
+<span class="c">#</span>
+<span class="c"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR </span>
+<span class="c"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, </span>
+<span class="c"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE </span>
+<span class="c"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER </span>
+<span class="c"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, </span>
+<span class="c"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE </span>
+<span class="c"># SOFTWARE.</span>
+
+<span class="kn">from</span> <span class="nn">batma.util</span> <span class="kn">import</span> <span class="n">is_iterable</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c"># Constants</span>
+<span class="c"># pi, e</span>
+<span class="n">pi_over_2</span> <span class="o">=</span> <span class="n">pi</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="n">pi_over_4</span> <span class="o">=</span> <span class="n">pi</span><span class="o">/</span><span class="mf">4.0</span>
+<span class="n">two_pi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<span class="n">log10e</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">log2e</span> <span class="o">=</span> <span class="n">log</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">clamp</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">min_value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">):</span>
+<div class="viewcode-block" id="clamp"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.clamp">[docs]</a>    <span class="sd">&#39;&#39;&#39;Restricts a value to be within a specified range&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">min_value</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">max_value</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">lerp</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span></div>
+<div class="viewcode-block" id="lerp"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.lerp">[docs]</a>    <span class="sd">&#39;&#39;&#39;Linearly interpolates between two values&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">value1</span> <span class="o">+</span> <span class="p">(</span><span class="n">value2</span><span class="o">-</span><span class="n">value1</span><span class="p">)</span><span class="o">*</span><span class="n">amount</span>
+
+<span class="k">def</span> <span class="nf">smoothstep</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="n">amount</span><span class="p">):</span></div>
+<div class="viewcode-block" id="smoothstep"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.smoothstep">[docs]</a>    <span class="sd">&#39;&#39;&#39;Interpolates between two values using a cubic equation&#39;&#39;&#39;</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">amount</span><span class="o">*</span><span class="n">amount</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">amount</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">value2</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">value1</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">v</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">hermite</span><span class="p">(</span><span class="n">p0</span><span class="p">,</span> <span class="n">r0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span></div>
+<div class="viewcode-block" id="hermite"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.hermite">[docs]</a>    <span class="sd">&#39;&#39;&#39;Performs a Hermite spline interpolation&#39;&#39;&#39;</span>
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">t</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">t3</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">*</span> <span class="n">t</span>
+    <span class="n">_3t2</span> <span class="o">=</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">t2</span>
+    <span class="n">_2t3</span> <span class="o">=</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">t3</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">p0</span><span class="o">*</span><span class="p">(</span><span class="n">_2t3</span><span class="o">-</span><span class="n">_3t2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p1</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="n">_2t3</span><span class="o">+</span><span class="n">_3t2</span><span class="p">)</span> <span class="o">+</span> <span class="n">r0</span><span class="o">*</span><span class="p">(</span><span class="n">t3</span><span class="o">-</span><span class="mf">2.0</span><span class="o">*</span><span class="n">t2</span><span class="o">+</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">r1</span><span class="o">*</span><span class="p">(</span><span class="n">t3</span><span class="o">-</span><span class="n">t2</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">catmullrom</span><span class="p">(</span><span class="n">p_1</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span></div>
+<div class="viewcode-block" id="catmullrom"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.catmullrom">[docs]</a>    <span class="sd">&#39;&#39;&#39;Performs a Catmull-Rom interpolation using the specified positions&#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">(</span>
+          <span class="n">t</span><span class="o">*</span><span class="p">((</span><span class="mi">2</span><span class="o">-</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>   <span class="o">*</span> <span class="n">p_1</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">t</span><span class="o">*</span><span class="n">t</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">p0</span>
+        <span class="o">+</span> <span class="n">t</span><span class="o">*</span><span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">3</span><span class="o">*</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">p1</span>
+        <span class="o">+</span> <span class="p">(</span><span class="n">t</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">t</span><span class="o">*</span><span class="n">t</span>         <span class="o">*</span> <span class="n">p2</span> <span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+<span class="k">def</span> <span class="nf">wrap_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span></div>
+<div class="viewcode-block" id="wrap_angle"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.wrap_angle">[docs]</a>    <span class="sd">&#39;&#39;&#39;Reduces a given angle to a value between pi and -pi&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">angle</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fmod</span><span class="p">(</span><span class="n">angle</span><span class="o">+</span><span class="n">pi</span><span class="p">,</span> <span class="n">two_pi</span><span class="p">)</span> <span class="o">-</span> <span class="n">pi</span><span class="p">;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">fmod</span><span class="p">(</span><span class="n">angle</span><span class="o">-</span><span class="n">pi</span><span class="p">,</span> <span class="n">two_pi</span><span class="p">)</span> <span class="o">+</span> <span class="n">pi</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">):</span></div>
+<div class="viewcode-block" id="distance"><a class="viewcode-back" href="../../../api/batma.math.html#batma.maths.mathematic.distance">[docs]</a>    <span class="sd">&#39;&#39;&#39;Calculates the absolute value of the difference of two values&#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">value1</span><span class="p">):</span> <span class="n">value1</span> <span class="o">=</span> <span class="p">[</span><span class="n">value1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">is_iterable</span><span class="p">(</span><span class="n">value2</span><span class="p">):</span> <span class="n">value2</span> <span class="o">=</span> <span class="p">[</span><span class="n">value2</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">v1</span><span class="o">-</span><span class="n">v2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">v1</span><span class="p">,</span> <span class="n">v2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">)))</span>
+</pre></div></div>
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../../../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

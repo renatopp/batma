@@ -1,0 +1,137 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.iter — Iterators &mdash; Batma 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma 1.0 documentation" href="../index.html" />
+    <link rel="next" title="batma.keys — Keyboard Keys" href="batma.keys.html" />
+    <link rel="prev" title="batma.interpolation — Interpolation" href="batma.interpolation.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.iter — Iterators</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.interpolation.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.interpolation</span></tt> &#8212; Interpolation</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.keys.html"><tt class="docutils literal"><span class="pre">batma.keys</span></tt> &#8212; Keyboard Keys</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-batma.iter">
+<span id="batma-iter-iterators"></span><h1><tt class="docutils literal"><span class="pre">batma.iter</span></tt> &#8212; Iterators<a class="headerlink" href="#module-batma.iter" title="Permalink to this headline">¶</a></h1>
+<p>This module extends the python builtin <tt class="docutils literal"><span class="pre">itertool</span></tt> module.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="batma.iter.bounce">
+<tt class="descclassname">batma.iter.</tt><tt class="descname">bounce</tt><big>(</big><em>iterable</em><big>)</big><a class="reference internal" href="../_modules/batma/iter.html#bounce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.iter.bounce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an iterator returning elements from the <tt class="docutils literal"><span class="pre">iterable</span></tt>. When the iterable
+is exhausted, the process is repeated in reverse order. This is a shortcut
+for:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">bounce</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">batma</span><span class="o">.</span><span class="n">iter</span><span class="o">.</span><span class="n">bounce</span><span class="p">([</span><span class="s">&#39;ABC&#39;</span><span class="p">])</span> <span class="c"># --&gt; A B C C B A</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.iter.cycle_bounce">
+<tt class="descclassname">batma.iter.</tt><tt class="descname">cycle_bounce</tt><big>(</big><em>iterable</em><big>)</big><a class="reference internal" href="../_modules/batma/iter.html#cycle_bounce"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.iter.cycle_bounce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Its a combination of <tt class="docutils literal"><span class="pre">cycle</span></tt> and <tt class="docutils literal"><span class="pre">bounce</span></tt> functions, shortcut for:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">cycle_bounce</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">cycle</span><span class="p">(</span><span class="n">bounce</span><span class="p">(</span><span class="n">iterable</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">batma</span><span class="o">.</span><span class="n">iter</span><span class="o">.</span><span class="n">cycle_bounce</span><span class="p">([</span><span class="s">&#39;ABC&#39;</span><span class="p">])</span> <span class="c"># --&gt; A B C C B A A B C C B A ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="itertools-builtin-functions">
+<h2>Itertools Builtin Functions<a class="headerlink" href="#itertools-builtin-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="batma.iter.cycle">
+<tt class="descclassname">batma.iter.</tt><tt class="descname">cycle</tt><big>(</big><em>iterable</em><big>)</big><a class="headerlink" href="#batma.iter.cycle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an iterator returning elements from the iterable and saving a copy of
+each. When the iterable is exhausted, return elements from the saved copy.
+Repeats indefinitely. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">batma</span><span class="o">.</span><span class="n">iter</span><span class="o">.</span><span class="n">cycle</span><span class="p">([</span><span class="s">&#39;ABC&#39;</span><span class="p">])</span> <span class="c"># --&gt; A B C A B C A B ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.iter.chain">
+<tt class="descclassname">batma.iter.</tt><tt class="descname">chain</tt><big>(</big><em>*iterable</em><big>)</big><a class="headerlink" href="#batma.iter.chain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an iterator that returns elements from the first iterable until it is
+exhausted, then proceeds to the next iterable, until all of the iterables
+are exhausted. Used for treating consecutive sequences as a single sequence.
+Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">batma</span><span class="o">.</span><span class="n">iter</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="s">&#39;ABC&#39;</span><span class="p">,</span> <span class="s">&#39;DEF&#39;</span><span class="p">)</span> <span class="c"># --&gt; A B C D E F</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Consults the full list of iterators in <a class="reference external" href="http://docs.python.org/library/itertools.html">Itertools documentation</a>.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.interpolation.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.interpolation</span></tt> &#8212; Interpolation</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.keys.html"><tt class="docutils literal"><span class="pre">batma.keys</span></tt> &#8212; Keyboard Keys</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012, Renato de Pontes Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

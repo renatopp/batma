@@ -1,0 +1,11 @@
+:mod:`batma.draw` --- Drawing Primitives
+========================================
+
+.. module:: batma.graphics.draw
+   :synopsis: Contains commonly used precalculated values.
+
+
+.. automodule:: batma.graphics.draw
+    :synopsis:
+    :members:
+    :undoc-members:

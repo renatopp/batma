@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.5. Seu primeiro programa no Batma &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>1.5. Seu primeiro programa no Batma</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="seu-primeiro-programa-no-batma">
+<h1><a class="toc-backref" href="#id1">1.5. Seu primeiro programa no Batma</a><a class="headerlink" href="#seu-primeiro-programa-no-batma" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="indice">
+<p class="topic-title first">Índice</p>
+<ul class="simple">
+<li><a class="reference internal" href="#seu-primeiro-programa-no-batma" id="id1">1.5. Seu primeiro programa no Batma</a><ul>
+<li><a class="reference internal" href="#hello-world" id="id2">Hello World</a></li>
+<li><a class="reference internal" href="#hello-sprites" id="id3">Hello Sprites</a></li>
+<li><a class="reference internal" href="#primitivas-e-eventos" id="id4">Primitivas e eventos</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Como todo projeto deve ter seu próprio <em>&#8220;Hello World&#8221;</em>, essa seção apresenta alguns exemplos básicos da utilização do Batma. Esse documento usa como base o template criado pelo Robi, você pode gerar o seu ou simplesmente copiar o seguinte trecho de código:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">batma</span>
+
+<span class="k">class</span> <span class="nc">MyGame</span><span class="p">(</span><span class="n">batma</span><span class="o">.</span><span class="n">Game</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="n">game</span> <span class="o">=</span> <span class="n">MyGame</span><span class="p">()</span>
+<span class="n">batma</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="hello-world">
+<h2><a class="toc-backref" href="#id2">Hello World</a><a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Comece criando um novo arquivo chamado <tt class="docutils literal"><span class="pre">hello_world.py</span></tt>, com o template básico (citado no começo).</li>
+<li>Nós vamos utilizar um <tt class="docutils literal"><span class="pre">Label</span></tt>, elemento para exibição de texto. Como ele é um elemento gráfico, é necessário criá-lo no método <tt class="docutils literal"><span class="pre">load_content</span></tt>:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">batma</span><span class="o">.</span><span class="n">Label</span><span class="p">(</span><span class="s">&#39;Hello, World!&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Aqui criamos uma Label com o texto &#8220;Hello, World!&#8221; e a posição setada para o centro da janela.</p>
+<ol class="arabic simple" start="3">
+<li>Com o objeto criado, basta mandar desenhá-lo, isso é feito no método <tt class="docutils literal"><span class="pre">draw</span></tt>:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">raw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Agora basta executar o exemplo, rode <tt class="docutils literal"><span class="pre">python</span> <span class="pre">hello_world.py</span></tt> ou dois cliques no windows.</li>
+</ol>
+<p>Resultado:</p>
+<a class="reference internal image-reference" href="guide\_static\hello_world_batma.png"><img alt="Hello World com Batma" class="align-center" src="guide\_static\hello_world_batma.png" /></a>
+<p><tt class="xref download docutils literal"><span class="pre">Arquivo</span> <span class="pre">do</span> <span class="pre">exemplo:</span> <span class="pre">hello_world.py</span></tt></p>
+</div>
+<div class="section" id="hello-sprites">
+<h2><a class="toc-backref" href="#id3">Hello Sprites</a><a class="headerlink" href="#hello-sprites" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Crie um novo arquivo chamado <tt class="docutils literal"><span class="pre">hello_sprites.py</span></tt>, com o template básico (citado no começo).</li>
+<li>Agora será criado um <tt class="docutils literal"><span class="pre">Sprite</span></tt> utilizando a imagem <tt class="xref download docutils literal"><span class="pre">python_logo.png</span></tt>. Salve essa imagem no mesmo diretório do arquivo principal (Para mais informações sobre diretóricos dos recursos leia <tt class="xref doc docutils literal"><span class="pre">resources</span></tt>).</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span> <span class="o">=</span> <span class="n">batma</span><span class="o">.</span><span class="n">Sprite</span><span class="p">(</span><span class="s">&#39;python_logo.png&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>O segundo argumento do sprite seta sua posição para o sentro da janela.</p>
+<ol class="arabic simple" start="3">
+<li>Com o objeto criado, basta mandar desenhá-lo, isso é feito no método <tt class="docutils literal"><span class="pre">draw</span></tt>:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">sprite</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Agora basta executar o exemplo, rode <tt class="docutils literal"><span class="pre">python</span> <span class="pre">hello_world.py</span></tt> ou dois cliques no windows.</li>
+</ol>
+<p>Resultado:</p>
+<a class="reference internal image-reference" href="guide\_static\hello_sprites_batma.png"><img alt="Hello World exmaplo com sprite no Batma" class="align-center" src="guide\_static\hello_sprites_batma.png" /></a>
+<p><tt class="xref download docutils literal"><span class="pre">Arquivo</span> <span class="pre">do</span> <span class="pre">exemplo:</span> <span class="pre">hello_sprites.py</span></tt></p>
+</div>
+<div class="section" id="primitivas-e-eventos">
+<h2><a class="toc-backref" href="#id4">Primitivas e eventos</a><a class="headerlink" href="#primitivas-e-eventos" title="Permalink to this headline">¶</a></h2>
+<p>Agora vamos utilizar duas funcionalidades do Batma: desenhar primitivas e tratar eventos.</p>
+<ol class="arabic simple">
+<li>Crie um novo arquivo chamado <tt class="docutils literal"><span class="pre">primitives_events.py</span></tt>, com o template básico (citado no começo).</li>
+<li>Dessa vez não será necessário carregar nenhum elemento, todas as funções do módulo <tt class="docutils literal"><span class="pre">batma.draw</span></tt> desenha diretamente na tela, então:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mouse</span><span class="o">.</span><span class="n">position</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Execute o exemplo, você verá um círculo de raio 40 acompanhando a posição do mouse.</li>
+<li>Podemos melhorar o exemplo, vamos começar passando a posição e o raio do círculo para uma varíavel:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">circle_position</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">circle_radius</span> <span class="o">=</span> <span class="mi">40</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li>Agora vamos atualizar os valores dessas variáveis no método <tt class="docutils literal"><span class="pre">update</span></tt>.</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">circle_position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouse</span><span class="o">.</span><span class="n">position</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">[</span><span class="n">batma</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">UP</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circle_radius</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">keyboard</span><span class="p">[</span><span class="n">batma</span><span class="o">.</span><span class="n">keys</span><span class="o">.</span><span class="n">DOWN</span><span class="p">]:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">circle_radius</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>A cada chamada ao <tt class="docutils literal"><span class="pre">update</span></tt> a variável que guarda a posição do círculo (<tt class="docutils literal"><span class="pre">self.circle_position</span></tt>) é atualizada com a posição atual do mouse (<tt class="docutils literal"><span class="pre">self.mouse.position</span></tt>). Também é verificado se a tecla <tt class="docutils literal"><span class="pre">&lt;UP&gt;</span></tt> do teclado está sendo pressionada (<tt class="docutils literal"><span class="pre">self.keyboard[batma.keys.UP]</span></tt>), se estiver a variável que guarda o raio é atualizada (<tt class="docutils literal"><span class="pre">self.circle_radius</span></tt>), o mesmo acontece com a tecla <tt class="docutils literal"><span class="pre">&lt;DOWN&gt;</span></tt>.</p>
+<ol class="arabic simple" start="6">
+<li>Agora atualize a chamada da função <tt class="docutils literal"><span class="pre">batma.draw.circle</span></tt>:</li>
+</ol>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">draw</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">circle_position</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">circle_radius</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li>Execute o exemplo:</li>
+</ol>
+<a class="reference internal image-reference" href="guide\_static\primitives_events_batma.png"><img alt="Exemplo de uso de primitivas e eventos" class="align-center" src="guide\_static\primitives_events_batma.png" /></a>
+<p><tt class="xref download docutils literal"><span class="pre">Arquivo</span> <span class="pre">do</span> <span class="pre">exemplo:</span> <span class="pre">primitives_events.py</span></tt></p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        <a class="uplink" href="../index.html">Contents</a>
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

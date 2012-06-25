@@ -1,0 +1,159 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.colors — Colors &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" />
+    <link rel="next" title="batma.draw — Drawing Primitives" href="batma.graphics.draw.html" />
+    <link rel="prev" title="core.scene — Scenes" href="batma.core.scene.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.colors — Colors</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.core.scene.html"><tt class="docutils literal"><span class="pre">core.scene</span></tt> &#8212; Scenes</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.graphics.draw.html"><tt class="docutils literal"><span class="pre">batma.draw</span></tt> &#8212; Drawing Primitives</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-batma.graphics.colors">
+<span id="batma-colors-colors"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">batma.colors</span></tt> &#8212; Colors<a class="headerlink" href="#module-batma.graphics.colors" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-batma.graphics.colors"></span><dl class="class">
+<dt id="batma.graphics.colors.Color">
+<em class="property">class </em><tt class="descclassname">batma.graphics.colors.</tt><tt class="descname">Color</tt><a class="headerlink" href="#batma.graphics.colors.Color" title="Permalink to this definition">¶</a></dt>
+<dd><p>pygame.Color(name): Return Color
+pygame.Color(r, g, b, a): Return Color
+pygame.Color(rgbvalue): Return Color
+pygame object for color representations</p>
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.a">
+<tt class="descname">a</tt><a class="headerlink" href="#batma.graphics.colors.Color.a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.a: Return int
+Gets or sets the alpha value of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.b">
+<tt class="descname">b</tt><a class="headerlink" href="#batma.graphics.colors.Color.b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.b: Return int
+Gets or sets the blue value of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.cmy">
+<tt class="descname">cmy</tt><a class="headerlink" href="#batma.graphics.colors.Color.cmy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.cmy: Return tuple
+Gets or sets the CMY representation of the Color.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="batma.graphics.colors.Color.correct_gamma">
+<tt class="descname">correct_gamma</tt><big>(</big><big>)</big><a class="headerlink" href="#batma.graphics.colors.Color.correct_gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.correct_gamma (gamma): Return Color
+Applies a certain gamma value to the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.g">
+<tt class="descname">g</tt><a class="headerlink" href="#batma.graphics.colors.Color.g" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.g: Return int
+Gets or sets the green value of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.hsla">
+<tt class="descname">hsla</tt><a class="headerlink" href="#batma.graphics.colors.Color.hsla" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.hsla: Return tuple
+Gets or sets the HSLA representation of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.hsva">
+<tt class="descname">hsva</tt><a class="headerlink" href="#batma.graphics.colors.Color.hsva" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.hsva: Return tuple
+Gets or sets the HSVA representation of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.i1i2i3">
+<tt class="descname">i1i2i3</tt><a class="headerlink" href="#batma.graphics.colors.Color.i1i2i3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.i1i2i3: Return tuple
+Gets or sets the I1I2I3 representation of the Color.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="batma.graphics.colors.Color.normalize">
+<tt class="descname">normalize</tt><big>(</big><big>)</big><a class="headerlink" href="#batma.graphics.colors.Color.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.normalize(): Return tuple
+Returns the normalized RGBA values of the Color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="batma.graphics.colors.Color.r">
+<tt class="descname">r</tt><a class="headerlink" href="#batma.graphics.colors.Color.r" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.r: Return int
+Gets or sets the red value of the Color.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="batma.graphics.colors.Color.set_length">
+<tt class="descname">set_length</tt><big>(</big><big>)</big><a class="headerlink" href="#batma.graphics.colors.Color.set_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color.set_length(len)
+Set the number of elements in the Color to 1,2,3, or 4.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.core.scene.html"><tt class="docutils literal"><span class="pre">core.scene</span></tt> &#8212; Scenes</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.graphics.draw.html"><tt class="docutils literal"><span class="pre">batma.draw</span></tt> &#8212; Drawing Primitives</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

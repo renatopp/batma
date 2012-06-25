@@ -1,0 +1,99 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introdução &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Primeiros Passos" href="getting_started.html" />
+    <link rel="next" title="Instalando o Batma" href="installing.html" />
+    <link rel="prev" title="Primeiros Passos" href="getting_started.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Introdução</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="getting_started.html">Primeiros Passos</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="installing.html">Instalando o Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="introducao">
+<h1>Introdução<a class="headerlink" href="#introducao" title="Permalink to this headline">¶</a></h1>
+<p>O <strong>Batma</strong> é um framework para criação de jogos e aplicações gráficas 2D, construído em cima do framework <a class="reference external" href="http://pyglet.org">Pyglet</a> e inspirado no funcionamento do <a class="reference external" href="http://create.msdn.com">XNA</a> e <a class="reference external" href="http://cocos2d.org">Cocos2d</a>. O Batma tem a vantagem de possuir todos recursos disponíveis na Pyglet com um fluxo de dados simples e intuitivo herdado do XNA somado a toda diversão do Python.</p>
+<p>Algumas características do Batma:</p>
+<ul class="simple">
+<li>Manipulação simples e fácil de <strong>sprites</strong>, incluindo <strong>sprites animados</strong>;</li>
+<li>Simples interface para utilização de <strong>textos</strong>;</li>
+<li>Manipulação de alto nível para <strong>desenhar primitivas</strong> como linhas, retângulos ou círculos;</li>
+<li>Organização hierárquica dos elementos da tela;</li>
+<li>Use, modifique e distribua, todo código está sob a <strong>Licença MIT</strong>;</li>
+</ul>
+<div class="section" id="o-fluxo-do-jogo">
+<h2>O fluxo do jogo<a class="headerlink" href="#o-fluxo-do-jogo" title="Permalink to this headline">¶</a></h2>
+<img alt="Game data flow" class="align-center" src="../_images/flow_horizontal.png" />
+<p>O fluxo de um jogo feito com o Batma pode ser dividido basicamente em 4 passos:</p>
+<dl class="docutils">
+<dt><strong>initialize</strong></dt>
+<dd>É o primeiro método executado quando um jogo é iniciado, é onde você pode fazer todas as inicializações que não precisam de recursos gráficos. A definição dos diretórios de recursos deve ser feita aqui (veja <a class="reference internal" href="resources.html"><em>Gerenciando os recursos</em></a>). Esse método é chamado apenas uma vez e no começo do jogo.</dd>
+<dt><strong>load_content</strong></dt>
+<dd>Esse método é executado logo depois do <tt class="docutils literal"><span class="pre">initialize</span></tt>, também é chamado apenas uma vez e no começo do jogo. Aqui você pode carregar todo conteúdo gráfico, como imagens, fontes e sons. Antes de tentar carregar qualquer arquivo você deve ler <a class="reference internal" href="resources.html"><em>Gerenciando os recursos</em></a>.</dd>
+<dt><strong>update</strong></dt>
+<dd>Esse é o método usado para atualizar o estado do jogo, por exemplo atualizar contadores, verificar pontuações, verificar eventos do teclado e mouse, mover os objetos, etc.</dd>
+<dt><strong>draw</strong></dt>
+<dd>Aqui fica todas as chamadas de funções e métodos para desenhar na tela. Note que este método e o <tt class="docutils literal"><span class="pre">update</span></tt> são chamados repetidamente até o final do jogo.</dd>
+</dl>
+<p>Nas próximas seções você verá na prática como esse fluxo funciona.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="getting_started.html">Primeiros Passos</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="installing.html">Instalando o Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+:mod:`graphics.text` --- Text
+=============================
+
+.. module:: batma.graphics.text
+   :synopsis: Nope.
+
+.. automodule:: batma.graphics.text
+    :synopsis:
+    :members:
+    :undoc-members:

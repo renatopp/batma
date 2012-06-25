@@ -1,0 +1,10 @@
+:mod:`batma.time` --- Timing Functions
+======================================
+
+.. module:: batma.time
+   :synopsis: Nope.
+
+.. automodule:: batma.time
+    :synopsis:
+    :members:
+    :undoc-members:

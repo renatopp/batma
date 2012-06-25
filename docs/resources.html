@@ -1,0 +1,118 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Gerenciando os recursos &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="index.html" />
+    <link rel="up" title="Primeiros Passos" href="getting_started.html" />
+    <link rel="next" title="Seu primeiro programa no Batma" href="hello_world.html" />
+    <link rel="prev" title="Criando novos projetos" href="projects.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>Gerenciando os recursos</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="projects.html">Criando novos projetos</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="hello_world.html">Seu primeiro programa no Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="gerenciando-os-recursos">
+<h1>Gerenciando os recursos<a class="headerlink" href="#gerenciando-os-recursos" title="Permalink to this headline">¶</a></h1>
+<p>Basicamente, podemos definir <em>&#8220;recurso&#8221;</em> como qualquer arquivo que não seja o código, por exemplo imagens, fontes e músicas. Para usar esses recursos no Batma é necessário especificar os diretórios onde eles se encontram. Nenhum arquivo fora dos diretórios de recursos pode ser carregado no jogo.</p>
+<p>Para projetos pequenos, apenas um diretório para todos os recursos pode ser suficiente, mas com jogos ou aplicações maiores é interessante dividir os recursos em mais de um diretório, por exemplo <tt class="docutils literal"><span class="pre">resources/sprites</span></tt>, <tt class="docutils literal"><span class="pre">resources/sons</span></tt>, <tt class="docutils literal"><span class="pre">resources/fontes</span></tt> entre outros.</p>
+<img alt="Batma data flow" class="align-center" src="_images/flow_horizontal_resources.png" />
+<p>O registro dos diretórios de recursos deve ser feito no método <tt class="docutils literal"><span class="pre">initialize</span></tt> para que o conteúdo deles seja indexado antes de seu uso (como pode ser observado na imagem acima). Isso é feito utilizando usado a função <tt class="xref py py-func docutils literal"><span class="pre">batma.resource.add_resource_path()</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c"># Adicionando um por um:</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources&#39;</span><span class="p">)</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources/imagens&#39;</span><span class="p">)</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources/fontes&#39;</span><span class="p">)</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources/sons&#39;</span><span class="p">)</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources/whatever&#39;</span><span class="p">)</span>
+
+    <span class="c"># Ou adicionando tudo de uma vez:</span>
+    <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_patch</span><span class="p">(</span><span class="s">&#39;resources&#39;</span><span class="p">,</span> <span class="s">&#39;resources/imagens&#39;</span><span class="p">,</span> <span class="s">&#39;resources/fontes&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="tipos-de-arquivos-suportados">
+<h2>Tipos de arquivos suportados<a class="headerlink" href="#tipos-de-arquivos-suportados" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Media</th>
+<th class="head">Tipos suportados</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Imagens</td>
+<td>bmp, dds, exif, gif, jpg, jpeg, jp2, jpx, pcx, png, pnm, ras, tga, tif, tiff, xbm, xpm</td>
+</tr>
+<tr><td>Audio</td>
+<td>au, mp2, mp3, ogg/vorbis, wav, wma</td>
+</tr>
+<tr><td>Videos</td>
+<td>avi, divX, h.263, h.264, mpeg, mpeg-2, ogg/theora, xvid, wmv</td>
+</tr>
+<tr><td>Fontes</td>
+<td>ttf (TrueType e OpenType, pfm, pfb, fnt, dfont, pcf, bdf, sfont, pfr</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="projects.html">Criando novos projetos</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="hello_world.html">Seu primeiro programa no Batma</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

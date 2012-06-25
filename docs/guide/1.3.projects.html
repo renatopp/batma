@@ -1,0 +1,112 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.3. Criando novos projetos &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" />
+    <link rel="up" title="1. Primeiros Passos" href="1.0.getting_started.html" />
+    <link rel="next" title="1.4. Gerenciando os recursos" href="1.4.resources.html" />
+    <link rel="prev" title="1.2. Instalando o Batma" href="1.2.installing.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>1.3. Criando novos projetos</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="1.2.installing.html">1.2. Instalando o Batma</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="1.4.resources.html">1.4. Gerenciando os recursos</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="criando-novos-projetos">
+<h1>1.3. Criando novos projetos<a class="headerlink" href="#criando-novos-projetos" title="Permalink to this headline">¶</a></h1>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Antes de começar, certifique-se de que o pyglet e o Batma estejam instalados corretamente no seu computador, conforme descrito na seção <tt class="xref doc docutils literal"><span class="pre">installing</span></tt>.</p>
+</div>
+<p>O Batma é instalado acompanhado de um ajudante para criação de novos projetos, ele o ajudará criando a estrutura básica para criação de seu jogo ou aplicação. Esse ajudante é chamado <strong>Robi</strong> (<em>lol</em>) e deve ser usado via linha de comando:</p>
+<div class="highlight-python"><pre>$ robi &lt;nome do projeto&gt;</pre>
+</div>
+<p>Substitua o <tt class="docutils literal"><span class="pre">&lt;nome</span> <span class="pre">do</span> <span class="pre">projeto&gt;</span></tt> e crie um projeto chamado &#8220;mygame&#8221;, o Robi vai criar a seguinte estrutura de arquivos:</p>
+<div class="highlight-python"><pre>mygame/
+    mygame.py
+    resources/</pre>
+</div>
+<p>O diretório <tt class="docutils literal"><span class="pre">resources</span></tt> será utilizado para colocar todas as imagens, sons, fontes e outros recursos do seu jogo. Note também que o robi criou um arquivo python (<tt class="docutils literal"><span class="pre">.py</span></tt>) com o mesmo nome do projeto, abra-o e você verá o seguinte conteúdo:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">batma</span>
+
+<span class="k">class</span> <span class="nc">MyGame</span><span class="p">(</span><span class="n">batma</span><span class="o">.</span><span class="n">Game</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">batma</span><span class="o">.</span><span class="n">add_resource_path</span><span class="p">(</span><span class="s">&#39;resources&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tick</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+<span class="n">game</span> <span class="o">=</span> <span class="n">MyGame</span><span class="p">()</span>
+<span class="n">batma</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Observe que os 4 métodos vistos no <tt class="xref doc docutils literal"><span class="pre">introduction</span></tt> já foram criados.</p>
+</div>
+<p>Execute o seu jogo pelo terminal com <tt class="docutils literal"><span class="pre">python</span> <span class="pre">mygame.py</span></tt>, ou no windows com dois cliques no arquivo.</p>
+<img alt="An empty Batma game" class="align-center" src="guide\_static\empty_batma.png" />
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="1.2.installing.html">1.2. Instalando o Batma</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="1.4.resources.html">1.4. Gerenciando os recursos</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

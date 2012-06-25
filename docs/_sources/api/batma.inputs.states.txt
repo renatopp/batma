@@ -1,0 +1,10 @@
+:mod:`inputs.states` --- Input States
+=====================================
+
+.. module:: batma.inputs.states
+   :synopsis: Nope.
+
+.. automodule:: batma.inputs.states
+    :synopsis:
+    :members:
+    :undoc-members:

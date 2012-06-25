@@ -1,0 +1,10 @@
+:mod:`core.display` --- Display
+===============================
+
+.. module:: batma.core.display
+   :synopsis: Nope.
+
+.. automodule:: batma.core.display
+    :synopsis:
+    :members:
+    :undoc-members:

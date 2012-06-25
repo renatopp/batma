@@ -1,0 +1,10 @@
+:mod:`batma.colors` --- Colors
+==============================
+
+.. module:: batma.graphics.colors
+   :synopsis: Contains colors constant.
+
+.. automodule:: batma.graphics.colors
+    :synopsis:
+    :members:
+    :undoc-members:

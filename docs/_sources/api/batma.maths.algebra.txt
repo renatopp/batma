@@ -1,0 +1,10 @@
+:mod:`maths.algebra` --- Vectors
+================================
+
+.. module:: batma.maths.algebra
+   :synopsis: Nope.
+
+.. automodule:: batma.maths.algebra
+    :synopsis:
+    :members:
+    :undoc-members:

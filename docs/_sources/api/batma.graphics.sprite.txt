@@ -1,0 +1,11 @@
+:mod:`graphics.sprite` --- Sprites
+==================================
+
+.. module:: batma.graphics.sprite
+   :synopsis: Nope.
+
+
+.. automodule:: batma.graphics.sprite
+    :synopsis:
+    :members:
+    :undoc-members:

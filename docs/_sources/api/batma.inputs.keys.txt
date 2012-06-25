@@ -1,0 +1,10 @@
+:mod:`batma.keys` --- Keyborad Keys
+===================================
+
+.. module:: batma.inputs.keys
+   :synopsis: Nope.
+
+.. automodule:: batma.inputs.keys
+    :synopsis:
+    :members:
+    :undoc-members:

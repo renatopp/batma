@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.math — Math Helpers &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" />
+    <link rel="next" title="batma.time — Timing Functions" href="batma.time.html" />
+    <link rel="prev" title="maths.algebra — Vectors" href="batma.maths.algebra.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.math — Math Helpers</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.maths.algebra.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">maths.algebra</span></tt> &#8212; Vectors</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.time.html"><tt class="docutils literal"><span class="pre">batma.time</span></tt> &#8212; Timing Functions</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-batma.maths.mathematic">
+<span id="batma-math-math-helpers"></span><h1><tt class="xref py py-mod docutils literal"><span class="pre">batma.math</span></tt> &#8212; Math Helpers<a class="headerlink" href="#module-batma.maths.mathematic" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="constants">
+<h2>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="batma.maths.mathematic.e">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">e</tt><a class="headerlink" href="#batma.maths.mathematic.e" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the mathematical constant e.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.log10e">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">log10e</tt><a class="headerlink" href="#batma.maths.mathematic.log10e" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the log base ten of e.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.log2e">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">log2e</tt><a class="headerlink" href="#batma.maths.mathematic.log2e" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the log base two of e.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.pi">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">pi</tt><a class="headerlink" href="#batma.maths.mathematic.pi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the value of pi.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.pi_over_2">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">pi_over_2</tt><a class="headerlink" href="#batma.maths.mathematic.pi_over_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the value of pi divided by two.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.pi_over_4">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">pi_over_4</tt><a class="headerlink" href="#batma.maths.mathematic.pi_over_4" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the value of pi divided by four.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="batma.maths.mathematic.two_pi">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">two_pi</tt><a class="headerlink" href="#batma.maths.mathematic.two_pi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents the value of pi times two.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="batma.maths.mathematic.catmullrom">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">catmullrom</tt><big>(</big><em>value1</em>, <em>value2</em>, <em>value3</em>, <em>value4</em>, <em>amount</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#catmullrom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.catmullrom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a Catmull-Rom interpolation using the specified positions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.clamp">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">clamp</tt><big>(</big><em>value</em>, <em>min_value</em>, <em>max_value</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#clamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.clamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restricts a value to be within a specified range. Returns <tt class="docutils literal"><span class="pre">min_value</span></tt> if
+<tt class="docutils literal"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">min_value</span></tt>, <tt class="docutils literal"><span class="pre">max_value</span></tt> if <tt class="docutils literal"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">max_value</span></tt>, otherwise x.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.distance">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">distance</tt><big>(</big><em>value1</em>, <em>value2</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the absolute value of the difference of two values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.hermite">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">hermite</tt><big>(</big><em>value1</em>, <em>tangent1</em>, <em>value2</em>, <em>tangent2</em>, <em>amount</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#hermite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.hermite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs a Hermite spline interpolation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.inversesqrt">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">inversesqrt</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#batma.maths.mathematic.inversesqrt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="docutils literal"><span class="pre">1/sqrt(value)</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.lerp">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">lerp</tt><big>(</big><em>value1</em>, <em>value2</em>, <em>amount</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#lerp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.lerp" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method performs the linear interpolation based on the following
+formula.</p>
+<p><tt class="docutils literal"><span class="pre">value1</span> <span class="pre">+</span> <span class="pre">(value2</span> <span class="pre">-</span> <span class="pre">value1)</span> <span class="pre">*</span> <span class="pre">amount</span></tt></p>
+<p>Passing amount a value of 0 will cause value1 to be returned, a value of 1
+will cause value2 to be returned.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.mod">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">mod</tt><big>(</big><em>a</em>, <em>b</em><big>)</big><a class="headerlink" href="#batma.maths.mathematic.mod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <tt class="docutils literal"><span class="pre">a%b</span></tt>. This is just an equivalent for the %-operator.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.sign">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">sign</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#batma.maths.mathematic.sign" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns -1 with a negative argument, +1 with a positive argument, and 0
+if its argument is zero.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.smoothstep">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">smoothstep</tt><big>(</big><em>value1</em>, <em>value2</em>, <em>amount</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#smoothstep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.smoothstep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolates between two values using a cubic equation.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.step">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">step</tt><big>(</big><em>value</em>, <em>threshold</em><big>)</big><a class="headerlink" href="#batma.maths.mathematic.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 0 if <tt class="docutils literal"><span class="pre">value</span> <span class="pre">&lt;</span> <span class="pre">threshold</span></tt>, otherwise 1.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.maths.mathematic.wrap_angle">
+<tt class="descclassname">batma.maths.mathematic.</tt><tt class="descname">wrap_angle</tt><big>(</big><em>angle</em><big>)</big><a class="reference internal" href="../_modules/batma/maths/mathematic.html#wrap_angle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#batma.maths.mathematic.wrap_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reduces a given angle to a value between π and -π.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="math-builtin-functions">
+<h2>Math Builtin Functions<a class="headerlink" href="#math-builtin-functions" title="Permalink to this headline">¶</a></h2>
+<p>Visit <a class="reference external" href="http://docs.python.org/library/math.html">python docs</a> for more
+informations.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="22%" />
+<col width="25%" />
+<col width="28%" />
+</colgroup>
+<tbody valign="top">
+<tr><td><tt class="docutils literal"><span class="pre">abs(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">cosh(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">fsum(iterable)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">min(args)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">acos(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">degrees(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">gamma(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">modf(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">acosh(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">erf(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">hypot(x,</span> <span class="pre">y)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">pow(x,</span> <span class="pre">y[,</span> <span class="pre">z])</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">asin(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">erfc(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">isinf(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">radians(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">asinh(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">exp(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">isnan(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">round(x[,</span> <span class="pre">n])</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">atan(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">expm1(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">ldexp(x,</span> <span class="pre">i)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">sin(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">atan2(y,</span> <span class="pre">x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">fabs(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">lgamma(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">sinh(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">atanh(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">factorial(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">log(x[,</span> <span class="pre">base])</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">sqrt(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">ceil(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">floor(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">log10(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">tan(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">copysign(x,</span> <span class="pre">y)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">fmod(x,</span> <span class="pre">y)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">log1p(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">tanh(x)</span></tt></td>
+</tr>
+<tr><td><tt class="docutils literal"><span class="pre">cos(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">frexp(x)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">max(args)</span></tt></td>
+<td><tt class="docutils literal"><span class="pre">trunc(x)</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.maths.algebra.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">maths.algebra</span></tt> &#8212; Vectors</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.time.html"><tt class="docutils literal"><span class="pre">batma.time</span></tt> &#8212; Timing Functions</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

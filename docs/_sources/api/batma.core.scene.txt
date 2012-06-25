@@ -1,0 +1,10 @@
+:mod:`core.scene` --- Scenes
+============================
+
+.. module:: batma.core.scene
+   :synopsis: Nope.
+
+.. automodule:: batma.core.scene
+    :synopsis:
+    :members:
+    :undoc-members:

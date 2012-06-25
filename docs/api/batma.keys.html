@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.keys — Keyboard Keys &mdash; Batma 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma 1.0 documentation" href="../index.html" />
+    <link rel="next" title="batma.math — Math Helpers" href="batma.math.html" />
+    <link rel="prev" title="batma.iter — Iterators" href="batma.iter.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.keys — Keyboard Keys</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.iter.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.iter</span></tt> &#8212; Iterators</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.math.html"><tt class="docutils literal"><span class="pre">batma.math</span></tt> &#8212; Math Helpers</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-batma.keys">
+<span id="batma-keys-keyboard-keys"></span><h1><tt class="docutils literal"><span class="pre">batma.keys</span></tt> &#8212; Keyboard Keys<a class="headerlink" href="#module-batma.keys" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="key-constants">
+<h2>Key Constants<a class="headerlink" href="#key-constants" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="45%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Constant</th>
+<th class="head">Pygame Equivalent</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>A</td>
+<td>pygame.K_a</td>
+</tr>
+<tr class="row-odd"><td>AMPERSAND</td>
+<td>pygame.K_AMPERSAND</td>
+</tr>
+<tr class="row-even"><td>ASTERISK</td>
+<td>pygame.K_ASTERISK</td>
+</tr>
+<tr class="row-odd"><td>AT</td>
+<td>pygame.K_AT</td>
+</tr>
+<tr class="row-even"><td>B</td>
+<td>pygame.K_b</td>
+</tr>
+<tr class="row-odd"><td>BACKQUOTE</td>
+<td>pygame.K_BACKQUOTE</td>
+</tr>
+<tr class="row-even"><td>BACKSLASH</td>
+<td>pygame.K_BACKSLASH</td>
+</tr>
+<tr class="row-odd"><td>BACKSPACE</td>
+<td>pygame.K_BACKSPACE</td>
+</tr>
+<tr class="row-even"><td>BREAK</td>
+<td>pygame.K_BREAK</td>
+</tr>
+<tr class="row-odd"><td>C</td>
+<td>pygame.K_c</td>
+</tr>
+<tr class="row-even"><td>CAPSLOCK</td>
+<td>pygame.K_CAPSLOCK</td>
+</tr>
+<tr class="row-odd"><td>CARET</td>
+<td>pygame.K_CARET</td>
+</tr>
+<tr class="row-even"><td>CLEAR</td>
+<td>pygame.K_CLEAR</td>
+</tr>
+<tr class="row-odd"><td>COLON</td>
+<td>pygame.K_COLON</td>
+</tr>
+<tr class="row-even"><td>COMMA</td>
+<td>pygame.K_COMMA</td>
+</tr>
+<tr class="row-odd"><td>D</td>
+<td>pygame.K_d</td>
+</tr>
+<tr class="row-even"><td>DELETE</td>
+<td>pygame.K_DELETE</td>
+</tr>
+<tr class="row-odd"><td>DOLLAR</td>
+<td>pygame.K_DOLLAR</td>
+</tr>
+<tr class="row-even"><td>DOUBLEQUOTE</td>
+<td>pygame.K_QUOTEDBL</td>
+</tr>
+<tr class="row-odd"><td>DOWN</td>
+<td>pygame.K_DOWN</td>
+</tr>
+<tr class="row-even"><td>E</td>
+<td>pygame.K_e</td>
+</tr>
+<tr class="row-odd"><td>END</td>
+<td>pygame.K_END</td>
+</tr>
+<tr class="row-even"><td>EQUALS</td>
+<td>pygame.K_EQUALS</td>
+</tr>
+<tr class="row-odd"><td>ESCAPE</td>
+<td>pygame.K_ESCAPE</td>
+</tr>
+<tr class="row-even"><td>EURO</td>
+<td>pygame.K_EURO</td>
+</tr>
+<tr class="row-odd"><td>EXCLAIMATION</td>
+<td>pygame.K_EXCLAIM</td>
+</tr>
+<tr class="row-even"><td>F</td>
+<td>pygame.K_f</td>
+</tr>
+<tr class="row-odd"><td>F1</td>
+<td>pygame.K_F1</td>
+</tr>
+<tr class="row-even"><td>F10</td>
+<td>pygame.K_F10</td>
+</tr>
+<tr class="row-odd"><td>F11</td>
+<td>pygame.K_F11</td>
+</tr>
+<tr class="row-even"><td>F12</td>
+<td>pygame.K_F12</td>
+</tr>
+<tr class="row-odd"><td>F13</td>
+<td>pygame.K_F13</td>
+</tr>
+<tr class="row-even"><td>F14</td>
+<td>pygame.K_F14</td>
+</tr>
+<tr class="row-odd"><td>F15</td>
+<td>pygame.K_F15</td>
+</tr>
+<tr class="row-even"><td>F2</td>
+<td>pygame.K_F2</td>
+</tr>
+<tr class="row-odd"><td>F3</td>
+<td>pygame.K_F3</td>
+</tr>
+<tr class="row-even"><td>F4</td>
+<td>pygame.K_F4</td>
+</tr>
+<tr class="row-odd"><td>F5</td>
+<td>pygame.K_F5</td>
+</tr>
+<tr class="row-even"><td>F6</td>
+<td>pygame.K_F6</td>
+</tr>
+<tr class="row-odd"><td>F7</td>
+<td>pygame.K_F7</td>
+</tr>
+<tr class="row-even"><td>F8</td>
+<td>pygame.K_F8</td>
+</tr>
+<tr class="row-odd"><td>F9</td>
+<td>pygame.K_F9</td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td>pygame.K_g</td>
+</tr>
+<tr class="row-odd"><td>GREATER</td>
+<td>pygame.K_GREATER</td>
+</tr>
+<tr class="row-even"><td>H</td>
+<td>pygame.K_h</td>
+</tr>
+<tr class="row-odd"><td>HASH</td>
+<td>pygame.K_HASH</td>
+</tr>
+<tr class="row-even"><td>HELP</td>
+<td>pygame.K_HELP</td>
+</tr>
+<tr class="row-odd"><td>HOME</td>
+<td>pygame.K_HOME</td>
+</tr>
+<tr class="row-even"><td>I</td>
+<td>pygame.K_i</td>
+</tr>
+<tr class="row-odd"><td>INSERT</td>
+<td>pygame.K_INSERT</td>
+</tr>
+<tr class="row-even"><td>J</td>
+<td>pygame.K_j</td>
+</tr>
+<tr class="row-odd"><td>K</td>
+<td>pygame.K_k</td>
+</tr>
+<tr class="row-even"><td>L</td>
+<td>pygame.K_l</td>
+</tr>
+<tr class="row-odd"><td>LALT</td>
+<td>pygame.K_LALT</td>
+</tr>
+<tr class="row-even"><td>LCTRL</td>
+<td>pygame.K_LCTRL</td>
+</tr>
+<tr class="row-odd"><td>LEFT</td>
+<td>pygame.K_LEFT</td>
+</tr>
+<tr class="row-even"><td>LEFTBRACKET</td>
+<td>pygame.K_LEFTBRACKET</td>
+</tr>
+<tr class="row-odd"><td>LEFTPAREN</td>
+<td>pygame.K_LEFTPAREN</td>
+</tr>
+<tr class="row-even"><td>LESS</td>
+<td>pygame.K_LESS</td>
+</tr>
+<tr class="row-odd"><td>LMETA</td>
+<td>pygame.K_LMETA</td>
+</tr>
+<tr class="row-even"><td>LSHIFT</td>
+<td>pygame.K_LSHIFT</td>
+</tr>
+<tr class="row-odd"><td>LSUPER</td>
+<td>pygame.K_LSUPER</td>
+</tr>
+<tr class="row-even"><td>M</td>
+<td>pygame.K_m</td>
+</tr>
+<tr class="row-odd"><td>MENU</td>
+<td>pygame.K_MENU</td>
+</tr>
+<tr class="row-even"><td>MINUS</td>
+<td>pygame.K_MINUS</td>
+</tr>
+<tr class="row-odd"><td>MODE</td>
+<td>pygame.K_MODE</td>
+</tr>
+<tr class="row-even"><td>N</td>
+<td>pygame.K_n</td>
+</tr>
+<tr class="row-odd"><td>NP_0</td>
+<td>pygame.K_KP0</td>
+</tr>
+<tr class="row-even"><td>NP_1</td>
+<td>pygame.K_KP1</td>
+</tr>
+<tr class="row-odd"><td>NP_2</td>
+<td>pygame.K_KP2</td>
+</tr>
+<tr class="row-even"><td>NP_3</td>
+<td>pygame.K_KP3</td>
+</tr>
+<tr class="row-odd"><td>NP_4</td>
+<td>pygame.K_KP4</td>
+</tr>
+<tr class="row-even"><td>NP_5</td>
+<td>pygame.K_KP5</td>
+</tr>
+<tr class="row-odd"><td>NP_6</td>
+<td>pygame.K_KP6</td>
+</tr>
+<tr class="row-even"><td>NP_7</td>
+<td>pygame.K_KP7</td>
+</tr>
+<tr class="row-odd"><td>NP_8</td>
+<td>pygame.K_KP8</td>
+</tr>
+<tr class="row-even"><td>NP_9</td>
+<td>pygame.K_KP9</td>
+</tr>
+<tr class="row-odd"><td>NP_DIVIDE</td>
+<td>pygame.K_KP_DIVIDE</td>
+</tr>
+<tr class="row-even"><td>NP_ENTER</td>
+<td>pygame.K_KP_ENTER</td>
+</tr>
+<tr class="row-odd"><td>NP_EQUALS</td>
+<td>pygame.K_KP_EQUALS</td>
+</tr>
+<tr class="row-even"><td>NP_MINUS</td>
+<td>pygame.K_KP_MINUS</td>
+</tr>
+<tr class="row-odd"><td>NP_MULTIPLY</td>
+<td>pygame.K_KP_MULTIPLY</td>
+</tr>
+<tr class="row-even"><td>NP_PERIOD</td>
+<td>pygame.K_KP_PERIOD</td>
+</tr>
+<tr class="row-odd"><td>NP_PLUS</td>
+<td>pygame.K_KP_PLUS</td>
+</tr>
+<tr class="row-even"><td>NUM_0</td>
+<td>pygame.K_0</td>
+</tr>
+<tr class="row-odd"><td>NUM_1</td>
+<td>pygame.K_1</td>
+</tr>
+<tr class="row-even"><td>NUM_2</td>
+<td>pygame.K_2</td>
+</tr>
+<tr class="row-odd"><td>NUM_3</td>
+<td>pygame.K_3</td>
+</tr>
+<tr class="row-even"><td>NUM_4</td>
+<td>pygame.K_4</td>
+</tr>
+<tr class="row-odd"><td>NUM_5</td>
+<td>pygame.K_5</td>
+</tr>
+<tr class="row-even"><td>NUM_6</td>
+<td>pygame.K_6</td>
+</tr>
+<tr class="row-odd"><td>NUM_7</td>
+<td>pygame.K_7</td>
+</tr>
+<tr class="row-even"><td>NUM_8</td>
+<td>pygame.K_8</td>
+</tr>
+<tr class="row-odd"><td>NUM_9</td>
+<td>pygame.K_9</td>
+</tr>
+<tr class="row-even"><td>NUMLOCK</td>
+<td>pygame.K_NUMLOCK</td>
+</tr>
+<tr class="row-odd"><td>O</td>
+<td>pygame.K_o</td>
+</tr>
+<tr class="row-even"><td>P</td>
+<td>pygame.K_p</td>
+</tr>
+<tr class="row-odd"><td>PAGEDOWN</td>
+<td>pygame.K_PAGEDOWN</td>
+</tr>
+<tr class="row-even"><td>PAGEUP</td>
+<td>pygame.K_PAGEUP</td>
+</tr>
+<tr class="row-odd"><td>PAUSE</td>
+<td>pygame.K_PAUSE</td>
+</tr>
+<tr class="row-even"><td>PERIOD</td>
+<td>pygame.K_PERIOD</td>
+</tr>
+<tr class="row-odd"><td>PLUS</td>
+<td>pygame.K_PLUS</td>
+</tr>
+<tr class="row-even"><td>POWER</td>
+<td>pygame.K_POWER</td>
+</tr>
+<tr class="row-odd"><td>PRINT</td>
+<td>pygame.K_PRINT</td>
+</tr>
+<tr class="row-even"><td>Q</td>
+<td>pygame.K_q</td>
+</tr>
+<tr class="row-odd"><td>QUESTION</td>
+<td>pygame.K_QUESTION</td>
+</tr>
+<tr class="row-even"><td>QUOTE</td>
+<td>pygame.K_QUOTE</td>
+</tr>
+<tr class="row-odd"><td>R</td>
+<td>pygame.K_r</td>
+</tr>
+<tr class="row-even"><td>RALT</td>
+<td>pygame.K_RALT</td>
+</tr>
+<tr class="row-odd"><td>RCTRL</td>
+<td>pygame.K_RCTRL</td>
+</tr>
+<tr class="row-even"><td>RETURN</td>
+<td>pygame.K_RETURN</td>
+</tr>
+<tr class="row-odd"><td>RIGHT</td>
+<td>pygame.K_RIGHT</td>
+</tr>
+<tr class="row-even"><td>RIGHTBRACKET</td>
+<td>pygame.K_RIGHTBRACKET</td>
+</tr>
+<tr class="row-odd"><td>RIGHTPAREN</td>
+<td>pygame.K_RIGHTPAREN</td>
+</tr>
+<tr class="row-even"><td>RMETA</td>
+<td>pygame.K_RMETA</td>
+</tr>
+<tr class="row-odd"><td>RSHIFT</td>
+<td>pygame.K_RSHIFT</td>
+</tr>
+<tr class="row-even"><td>RSUPER</td>
+<td>pygame.K_RSUPER</td>
+</tr>
+<tr class="row-odd"><td>S</td>
+<td>pygame.K_s</td>
+</tr>
+<tr class="row-even"><td>SCROLLOCK</td>
+<td>pygame.K_SCROLLOCK</td>
+</tr>
+<tr class="row-odd"><td>SEMICOLON</td>
+<td>pygame.K_SEMICOLON</td>
+</tr>
+<tr class="row-even"><td>SLASH</td>
+<td>pygame.K_SLASH</td>
+</tr>
+<tr class="row-odd"><td>SPACE</td>
+<td>pygame.K_SPACE</td>
+</tr>
+<tr class="row-even"><td>SYSREQ</td>
+<td>pygame.K_SYSREQ</td>
+</tr>
+<tr class="row-odd"><td>T</td>
+<td>pygame.K_t</td>
+</tr>
+<tr class="row-even"><td>TAB</td>
+<td>pygame.K_TAB</td>
+</tr>
+<tr class="row-odd"><td>U</td>
+<td>pygame.K_u</td>
+</tr>
+<tr class="row-even"><td>UNDERSCORE</td>
+<td>pygame.K_UNDERSCORE</td>
+</tr>
+<tr class="row-odd"><td>UP</td>
+<td>pygame.K_UP</td>
+</tr>
+<tr class="row-even"><td>V</td>
+<td>pygame.K_v</td>
+</tr>
+<tr class="row-odd"><td>W</td>
+<td>pygame.K_w</td>
+</tr>
+<tr class="row-even"><td>X</td>
+<td>pygame.K_x</td>
+</tr>
+<tr class="row-odd"><td>Y</td>
+<td>pygame.K_y</td>
+</tr>
+<tr class="row-even"><td>Z</td>
+<td>pygame.K_z</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.iter.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.iter</span></tt> &#8212; Iterators</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.math.html"><tt class="docutils literal"><span class="pre">batma.math</span></tt> &#8212; Math Helpers</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012, Renato de Pontes Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

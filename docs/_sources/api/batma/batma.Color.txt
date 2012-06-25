@@ -1,0 +1,4 @@
+``batma.Color`` --- Color
+=========================
+
+.. py:class:: batma.Color

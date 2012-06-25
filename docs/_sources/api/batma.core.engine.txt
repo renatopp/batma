@@ -1,0 +1,10 @@
+:mod:`core.engine` --- Engine
+=============================
+
+.. module:: batma.core.engine
+   :synopsis: Nope.
+
+.. automodule:: batma.core.engine
+    :synopsis:
+    :members:
+    :undoc-members:

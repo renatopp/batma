@@ -1,0 +1,116 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2. Instalando o Batma &mdash; Batma v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma v1.0 documentation" href="../index.html" />
+    <link rel="up" title="1. Primeiros Passos" href="1.0.getting_started.html" />
+    <link rel="next" title="1.3. Criando novos projetos" href="1.3.projects.html" />
+    <link rel="prev" title="1.1. Introdução" href="1.1.introduction.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma v1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>1.2. Instalando o Batma</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="1.1.introduction.html">1.1. Introdução</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="1.3.projects.html">1.3. Criando novos projetos</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="instalando-o-batma">
+<h1>1.2. Instalando o Batma<a class="headerlink" href="#instalando-o-batma" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dependencias">
+<h2>Dependências<a class="headerlink" href="#dependencias" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Python 2.6 <em>~duh~</em> (não foi testado no 2.5 ou menores)
+(<a class="reference external" href="http://www.python.org">http://www.python.org</a>)</li>
+<li>Pyglet 1.1.4
+(<a class="reference external" href="http://pyglet.org/">http://pyglet.org/</a>)</li>
+</ul>
+</div>
+<div class="section" id="instalacao">
+<h2>Instalação<a class="headerlink" href="#instalacao" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="instalar-usando-o-easy-install">
+<h3>Instalar usando o easy_install<a class="headerlink" href="#instalar-usando-o-easy-install" title="Permalink to this headline">¶</a></h3>
+<p>Via <strong>easy_install</strong> é o jeito mais fácil de instalar o Batma, ele também vai instalar o pyglet se não encontrá-lo no sistema:</p>
+<div class="highlight-python"><pre>easy_install batma</pre>
+</div>
+</div>
+<div class="section" id="instalar-usando-o-setup-py">
+<h3>Instalar usando o setup.py<a class="headerlink" href="#instalar-usando-o-setup-py" title="Permalink to this headline">¶</a></h3>
+<p>Faça o download do último release do Batma [LINK AQUI!], descompacte em algum diretório e execute:</p>
+<div class="highlight-python"><pre>python setup.py install</pre>
+</div>
+</div>
+<div class="section" id="instalar-pelo-jeito-dificil">
+<h3>Instalar pelo jeito difícil<a class="headerlink" href="#instalar-pelo-jeito-dificil" title="Permalink to this headline">¶</a></h3>
+<p>Faça o download do último release do Batma [LINK AQUI!], descompacte em algum diretório e execute:</p>
+<p><strong>No Windows</strong>:</p>
+<div class="highlight-python"><pre>set PYTHONPATH c:\camingo\para\o\batma\;%PYTHONPATH%</pre>
+</div>
+<p><strong>Linux, Mac OS X ou Windows usando cygwin</strong>:</p>
+<div class="highlight-python"><pre>set PYTHONPATH /camingo/para/o/batma/:$PYTHONPATH
+export PYTHONPATH</pre>
+</div>
+</div>
+</div>
+<div class="section" id="testando-sua-instalacao">
+<h2>Testando sua instalação<a class="headerlink" href="#testando-sua-instalacao" title="Permalink to this headline">¶</a></h2>
+<p>Se tudo correu bem, abra o terminal (no windows o cmd) e digite:</p>
+<div class="highlight-python"><pre>$ python -c "import batma"</pre>
+</div>
+<p>Se nada acontecer é porque está tudo funcionando.</p>
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="1.1.introduction.html">1.1. Introdução</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="1.3.projects.html">1.3. Criando novos projetos</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2011, Renato Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

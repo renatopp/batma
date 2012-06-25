@@ -1,0 +1,136 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>batma.draw — Drawing Primitives &mdash; Batma 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/haiku.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/print.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/theme_extras.js"></script>
+    <link rel="top" title="Batma 1.0 documentation" href="../index.html" />
+    <link rel="next" title="batma.interpolation — Interpolation" href="batma.interpolation.html" />
+    <link rel="prev" title="batma.colors — Colors" href="batma.colors.html" /> 
+  </head>
+  <body>
+      <div class="header"><h1 class="heading"><a href="../index.html">
+          <span>Batma 1.0 documentation</span></a></h1>
+        <h2 class="heading"><span>batma.draw — Drawing Primitives</span></h2>
+      </div>
+      <div class="topnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.colors.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.colors</span></tt> &#8212; Colors</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.interpolation.html"><tt class="docutils literal"><span class="pre">batma.interpolation</span></tt> &#8212; Interpolation</a>&#160;&#160;»
+        </p>
+
+      </div>
+      <div class="content">
+        
+        
+  <div class="section" id="module-batma.draw">
+<span id="batma-draw-drawing-primitives"></span><h1><tt class="docutils literal"><span class="pre">batma.draw</span></tt> &#8212; Drawing Primitives<a class="headerlink" href="#module-batma.draw" title="Permalink to this headline">¶</a></h1>
+<p>Draw several shapes. Most of the primitives take a <tt class="docutils literal"><span class="pre">width</span></tt> argument to represent the size of stroke around the edge of the shape. If a width of 0 is passed the function will actually solid fill the entire shape.</p>
+<p>All shapes use the <tt class="docutils literal"><span class="pre">batma.engine.default_color</span></tt> by default if the agurment is None.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="batma.draw.rect">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">rect</tt><big>(</big><em>rect</em>, <em>color=None</em>, <em>width=0</em><big>)</big><a class="headerlink" href="#batma.draw.rect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a rectangular shape. The given Rect is the area of the rectangle.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.polygon">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">polygon</tt><big>(</big><em>points</em>, <em>color=None</em>, <em>width=0</em><big>)</big><a class="headerlink" href="#batma.draw.polygon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a polygonal shape. The pointlist argument is the vertices of the polygon. For aapolygon, use aalines with the &#8216;closed&#8217; parameter.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.circle">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">circle</tt><big>(</big><em>pos</em>, <em>radius</em>, <em>color=None</em>, <em>width=0</em><big>)</big><a class="headerlink" href="#batma.draw.circle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a circular shape. The pos argument is the center of the circle, and radius is the size.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.ellipse">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">ellipse</tt><big>(</big><em>rect</em>, <em>color=None</em>, <em>width=0</em><big>)</big><a class="headerlink" href="#batma.draw.ellipse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an elliptical shape. The given rectangle is the area that the circle will fill.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.arc">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">arc</tt><big>(</big><em>rect</em>, <em>start_angle</em>, <em>stop_angle</em>, <em>color=None</em>, <em>width=1</em><big>)</big><a class="headerlink" href="#batma.draw.arc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an elliptical arc. The rect argument is the area that the ellipse will fill. The two angle arguments are the initial and final angle in radians, with the zero on the right.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.line">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">line</tt><big>(</big><em>start_pos</em>, <em>end_pos</em>, <em>color=None</em>, <em>width=1</em><big>)</big><a class="headerlink" href="#batma.draw.line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a straight line segment. There are no endcaps, the ends are squared off for thick lines.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.lines">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">lines</tt><big>(</big><em>points</em>, <em>closed</em>, <em>color=None</em>, <em>width=1</em><big>)</big><a class="headerlink" href="#batma.draw.lines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw a sequence of lines. The pointlist argument is a series of points that are connected by a line. If the closed argument is true an additional line segment is drawn between the first and last points.</p>
+<p>This does not draw any endcaps or miter joints. Lines with sharp corners and wide line widths can have improper looking corners.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.aaline">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">aaline</tt><big>(</big><em>start_pos</em>, <em>end_pos</em>, <em>color=None</em>, <em>blend=1</em><big>)</big><a class="headerlink" href="#batma.draw.aaline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws an anti-aliased line. This will respect the clipping rectangle. A bounding box of the affected area is returned returned as a rectangle. If blend is true, the shades will be be blended with existing pixel shades instead of overwriting them. This function accepts floating point values for the end points.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="batma.draw.aalines">
+<tt class="descclassname">batma.draw.</tt><tt class="descname">aalines</tt><big>(</big><em>points</em>, <em>closed</em>, <em>color=None</em>, <em>blend=1</em><big>)</big><a class="headerlink" href="#batma.draw.aalines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a sequence. You must pass at least two points in the sequence of points. The closed argument is a simple boolean and if true, a line will be draw between the first and last points. The boolean blend argument set to true will blend the shades with existing shades instead of overwriting them. This function accepts floating point values for the end points.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+      </div>
+      <div class="bottomnav">
+      
+        <p>
+        «&#160;&#160;<a href="batma.colors.html"><tt class="docutils literal docutils literal docutils literal"><span class="pre">batma.colors</span></tt> &#8212; Colors</a>
+        &#160;&#160;::&#160;&#160;
+        <a class="uplink" href="../index.html">Contents</a>
+        &#160;&#160;::&#160;&#160;
+        <a href="batma.interpolation.html"><tt class="docutils literal"><span class="pre">batma.interpolation</span></tt> &#8212; Interpolation</a>&#160;&#160;»
+        </p>
+
+      </div>
+
+    <div class="footer">
+        &copy; Copyright 2012, Renato de Pontes Pereira.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

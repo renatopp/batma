@@ -1,0 +1,4 @@
+``batma.Clock`` --- Clock
+=========================
+
+.. py:class:: batma.Clock

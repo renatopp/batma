@@ -1,0 +1,10 @@
+:mod:`batma.buttons` --- Mouse Buttons
+======================================
+
+.. module:: batma.inputs.buttons
+   :synopsis: Nope.
+
+.. automodule:: batma.inputs.buttons
+    :synopsis:
+    :members:
+    :undoc-members:
