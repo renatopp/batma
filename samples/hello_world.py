@@ -12,7 +12,6 @@ class Game(batma.Scene):
     
     def load_content(self):
         self.label = batma.Text(u'Hello World!', batma.display.center)
-        self.label.scale = 1
 
     def unload_content(self):
         pass

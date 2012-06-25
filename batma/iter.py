@@ -19,43 +19,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''Utilities functions'''
+from itertools import *
 
-def frange(start, stop=None, step=1):
-    '''Return a list of floats'''
-    return [x for x in xfrange(start, stop, step)]
+def bounce(iterable):
+    return chain(iterable, reversed(iterable))
 
-def xfrange(start, stop=None, step=1):
-    '''Return a generator of floats'''
-    step = float(step)
-    if stop is None:
-        start, stop = 0, start
-
-    i = start
-    while i < stop:
-        yield i
-        i += step
+def cycle_bounce(iterable):
+    return cycle(bounce(iterable))
 
 
-def is_iterable(value):
-    '''Verify if a ``value`` is an iterable'''
-    try:
-        iter(value)
-    except TypeError:
-        return False
-
-    return True
-
-def singleton(cls):
-    '''Singleton decorator'''
-    instances = {}
-    def getinstance(*args, **kwargs):
-        if cls not in instances:
-            instances[cls] = cls(*args, **kwargs)
-        return instances[cls]
-    return getinstance
-
-class classproperty(property):
-    '''Decorator for class property'''
-    def __get__(self, cls, owner):
-        return self.fget.__get__(None, owner)()

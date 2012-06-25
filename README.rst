@@ -12,7 +12,7 @@ Features
 
 - Input state for keyboard and mouse;
 - Sprites and Texts with easy rotation, scaling, positioning;
-- 2D and 3D math library;
+- 2D and 3D math library, including interpolation utilities;
 - Scheduling of user defined functions;
 - Scene based;
 

@@ -19,26 +19,73 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-from batma.algebra import *
-from batma.clock import *
-from batma.display import *
-from batma.engine import *
-from batma.scene import *
-from batma.input import *
-from batma.sprite import *
-from batma.text import *
-from batma import buttons
-from batma import colors
-from batma import draw
-from batma import keys
+'''Batma's main module.
 
+Batma 2D game engine provides an intuitive structure for game development and 
+other graphical applications.
+
+Main features:
+
+- Input state for keyboard and mouse;
+- Sprites and Texts with easy rotation, scaling, positioning;
+- 2D and 3D math library;
+- Scheduling of user defined functions;
+- Scene based;
+'''
+
+__version__ = "0.1"
+__author__ = "Renato de Pontes Pereira"
+version = __version__
+
+__all__ = []
+
+# Import CORE =================================================================
+from batma.core.engine import *
+from batma.core.display import *
+from batma.core.scene import *
+# =============================================================================
+
+# Import GRAPHICS =============================================================
+from batma.graphics.colors import *
+from batma.graphics.sprite import *
+from batma.graphics.text import *
+from batma.graphics import colors
+from batma.graphics import draw
+# =============================================================================
+
+# Import INPUTS ===============================================================
+from batma.inputs.states import *
+from batma.inputs import buttons
+from batma.inputs import keys
+# =============================================================================
+
+# Import MATHS ================================================================
+from batma.maths.algebra import *
+from batma.maths.interpolation import *
+from batma.maths import interpolation
+from batma.maths import mathematic as math
+# =============================================================================
+
+# Import TIMES ================================================================
+from batma.time import *
+# =============================================================================
+
+# Import ITER =================================================================
+from batma import iter
+# =============================================================================
+
+# GLOBALS =====================================================================
 mouse = MouseState()
 keyboard = KeyboardState()
 display = Display()
 engine = Engine()
 clock = Clock()
+timer = Timer()
+game = None
+# =============================================================================
 
 def run(*args, **kwargs):
+    '''Start the game and set up the engine'''
     engine.apply_config(*args, **kwargs)
     engine.start()
 

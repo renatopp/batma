@@ -1,9 +1,5 @@
-:tocdepth: 2
+:tocdepth: 1
 
 .. _changes:
-
-==========================
-Mudanças recentes no Batma
-==========================
 
 .. include:: ../../CHANGES.rst

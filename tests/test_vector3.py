@@ -1,11 +1,11 @@
 import unittest
 import sys
 import os
-sys.path.append(os.path.join(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 class Test_Vector3(unittest.TestCase):
     def get_target(self, *args, **kwargs):
-        from batma.algebra import Vector3
+        from batma.maths.algebra import Vector3
         return Vector3(*args, **kwargs)
 
     def test_init_no_param(self):
@@ -21,7 +21,7 @@ class Test_Vector3(unittest.TestCase):
         assert v.z == 2
 
     def test_init_propertys(self):
-        from batma.algebra import Vector3
+        from batma.maths.algebra import Vector3
         
         v = Vector3.Zero
         assert v.x == 0

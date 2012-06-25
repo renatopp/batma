@@ -7,20 +7,49 @@
 Batma ~le guia de programação~
 ==============================
 
-Esse é guia de programação oficial, a documentação para escrever aplicações usando o Batma engine.
+Esse é guia de programação oficial, a documentação para escrever aplicações usando a Batma engine.
 
 .. image:: _static/le_batma.png
    :alt: Le batma engine
    :align: center
    :width: 150
 
+----------------
+O Que Há de Novo
+----------------
+
+.. toctree::
+   :maxdepth: 2
+ 
+   changes
+
+
+---------------
+Guia do Usuário
+---------------
+
 .. toctree::
    :maxdepth: 2
 
-   getting_started
-   graphics
-   events
-   changes
+   guide/getting_start/index.rst
+
+
+------------
+API (Inglês)
+------------
+
+.. toctree::
+   :maxdepth: 1
+
+   api/batma
+   api/batma.buttons
+   api/batma.colors
+   api/batma.draw
+   api/batma.interpolation
+   api/batma.iter
+   api/batma.keys
+   api/batma.math
+   api/batma.util
 
 
 ------------------
@@ -30,22 +59,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-
-------------
-API (Inglês)
-------------
-
-.. toctree::
-   :maxdepth: 2
-
-   api/batma
-   api/batma.algebra
-   api/batma.colors
-   api/batma.draw
-   api/batma.engine
-   api/batma.input
-   api/batma.resource
-   api/batma.scaffolds
-   api/batma.sprite
-   api/batma.text
-   api/batma.util
