@@ -31,9 +31,9 @@ class Color(pygame.Color):
     @classmethod
     def Random(cls):
         return Color(
-            random.randint(0, 256),
-            random.randint(0, 256),
-            random.randint(0, 256)
+            random.randint(0, 255),
+            random.randint(0, 255),
+            random.randint(0, 255)
         )
 
 

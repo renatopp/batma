@@ -26,19 +26,35 @@ import batma
 from batma.maths.algebra import Vector2
 from batma.util import singleton
 
-@singleton
-class KeyboardState(object):
+class InputState(object):
     def __init__(self):
         self.state = ()
         self.previous_state = ()
+        self.map = {}
 
     def update(self):
-        self.previous_state = self.state
-        self.state = pygame.key.get_pressed()
-    
+        pass
+
+    def __get(self, key, state):
+        if isinstance(key, basestring):
+            if key not in self.map:
+                raise KeyError('Invalid Map Indice: "%s".'%key)
+
+            keys = self.map[key]
+            for k in keys:
+                if isinstance(k, (tuple, list)):
+                    if all(state[i] for i in k):
+                        return True
+                else:
+                    if state[k]: return True
+
+            return False
+        else:
+            return state[key]
+
     def __getitem__(self, key):
-        return self.state[key]
-    
+        return self.__get(key, self.state)
+
     def is_any_down(self):
         return any(self.state)
 
@@ -46,19 +62,37 @@ class KeyboardState(object):
         return any(self.state[i] and not self.previous_state[i] for i in xrange(len(self.previous_state)))
 
     def is_down(self, key):
-        return self.state[key]
+        return self.__get(key, self.state)
 
     def is_up(self, key):
-        return not self.state[key]
+        return not self.__get(key, self.state)
 
     def is_clicked(self, key):
-        return self.state[key] and not self.previous_state[key]
+        return self.__get(key, self.state) and not self.__get(key, self.previous_state)
+
+
 
 @singleton
-class MouseState(object):
+class KeyboardState(InputState):
     def __init__(self):
-        self.previous_state = ()
-        self.state = ()
+        InputState.__init__(self)
+        self.map = {
+            'up': [batma.keys.UP, batma.keys.W],
+            'down': [batma.keys.DOWN, batma.keys.S],
+            'left': [batma.keys.LEFT, batma.keys.A],
+            'right': [batma.keys.RIGHT, batma.keys.D],
+            'jump': [batma.keys.SPACE],
+            'quit': [batma.keys.ESCAPE, (batma.keys.LALT, batma.keys.F4)]
+        }
+
+    def update(self):
+        self.previous_state = self.state
+        self.state = pygame.key.get_pressed()
+
+@singleton
+class MouseState(InputState):
+    def __init__(self):
+        InputState.__init__(self)
         self.x = 0.0
         self.y = 0.0
 
@@ -70,21 +104,3 @@ class MouseState(object):
         self.previous_state = self.state
         self.state = pygame.mouse.get_pressed()
         self.x, self.y = pygame.mouse.get_pos()
-
-    def __getitem__(self, button):
-        return self.state[button]
-    
-    def is_any_down(self):
-        return any(self.state)
-
-    def is_any_clicked(self):
-        return any(self.state[i] and not self.previous_state[i] for i in xrange(len(self.previous_state)))
-
-    def is_down(self, button):
-        return self.state[button]
-
-    def is_up(self, button):
-        return not self.state[button]
-    
-    def is_clicked(self, key):
-        return self.state[key] and not self.previous_state[key]

@@ -21,7 +21,9 @@
 
 __all__ = ['GameObject']
 
+import pygame
 import weakref
+import batma
 from batma.maths.algebra import Vector2
 
 class GameObject(object):
@@ -33,17 +35,22 @@ class GameObject(object):
         cls.__ID += 1
         return id
 
-    def __init__(self, position=(0, 0), rotation=0.0, scale=1.0):
+    def __init__(self, position=(0, 0), rotation=0.0, scale=1.0, anchor='center'):
         self.id = GameObject.new_id()
 
-        self.__x = None
-        self.__y = None
-        self.__rotation = None
-        self.__scale = None
-        self.__anchor_x = None
-        self.__anchor_y = None
-        self.__anchor_name_x = None
-        self.__anchor_name_y = None
+        self.__x = 0
+        self.__y = 0
+        self.__rotation = 0
+        self.__scale = 1
+
+        # anchor
+        self.__anchor_x = 0
+        self.__anchor_y = 0
+        self.__anchor_name_x = 'custom'
+        self.__anchor_name_y = 'custom'
+        # ------
+
+        self.rect = pygame.Rect(0, 0, 0, 0)
 
         self.__children = []
         self.__parent = None
@@ -53,12 +60,18 @@ class GameObject(object):
         self.visible = True
         self.tag = ''
 
+        self.set_position(position)
+        self.set_rotation(rotation)
+        self.set_scale(scale)
+        self.set_anchor(anchor)
+
+
     # PARENTING ===============================================================
-    def add(self, child, cascade=True):
+    def add_child(self, child, cascade=True):
         if cascade: child.set_parent(self, False)
         self.__children.append(weakref.ref(child))
 
-    def remove(self, child, cascade=True):
+    def remove_child(self, child, cascade=True):
         if cascade: child.set_parent(None, False)
         self.__children.remove(weakref.ref(child))
 
@@ -81,9 +94,9 @@ class GameObject(object):
     def set_parent(self, value, cascade=True):
         if cascade:
             if self.parent is not None : 
-                self.parent.remove(self, False)
+                self.parent.remove_child(self, False)
             if value is not None:
-                value.add(self, False)
+                value.add_child(self, False)
 
         if value is not None:
             self.__parent = weakref.ref(value)
@@ -95,18 +108,19 @@ class GameObject(object):
         return child in self.get_children()
     # =========================================================================
 
-
     # SPATIAL =================================================================
     def get_x(self):
         return self.__x
     def set_x(self, value):
         self.__x = value
+        self.rect.x = self.__x - self.__anchor_x
     x = property(get_x, set_x)
 
     def get_y(self):
         return self.__y
     def set_y(self, value):
         self.__y = value
+        self.rect.y = self.__y - self.__anchor_y
     y = property(get_y, set_y)
 
     def get_position(self):
@@ -120,14 +134,16 @@ class GameObject(object):
         return self.__rotation
     def set_rotation(self, value):
         self.__rotation = value%360
+        self._do_rotation()
     rotation = property(get_rotation, set_rotation)
 
     def get_scale(self):
         return self.__scale
     def set_scale(self, value):
         if isinstance(value, (int, long, float)):
-            value = batma.Vector2(value, value)
+            value = Vector2(value, value)
         self.__scale = value
+        self._do_scaling()
     scale = property(get_scale, set_scale)
 
     def get_anchor_x(self):
@@ -135,9 +151,18 @@ class GameObject(object):
     def set_anchor_x(self, value):
         if isinstance(value, basestring):
             self.__anchor_name_x = value
+            value = value.lower()
+            if value == 'topleft' or value == 'bottomleft':
+                self.__anchor_x = 0
+            elif value == 'topright' or value == 'bottomright': 
+                self.__anchor_x = self.rect.width
+            else:
+                self.__anchor_x = self.rect.width/2.0
         else:
             self.__anchor_x = value
             self.__anchor_name_x = 'custom'
+
+        self.rect.x = self.__x - self.__anchor_x
     anchor_x = property(get_anchor_x, set_anchor_x)
 
     def get_anchor_y(self):
@@ -145,23 +170,65 @@ class GameObject(object):
     def set_anchor_y(self, value):
         if isinstance(value, basestring):
             self.__anchor_name_y = value
+            value = value.lower()
+            if value == 'topleft' or value == 'topright':
+                self.__anchor_y = 0
+            elif value == 'bottomleft' or value == 'bottomright': 
+                self.__anchor_y = self.rect.height
+            else:
+                self.__anchor_y = self.rect.height/2.0
         else:
             self.__anchor_y = value
             self.__anchor_name_y = 'custom'
+
+        self.rect.y = self.__y - self.__anchor_y
     anchor_y = property(get_anchor_y, set_anchor_y)
 
     def get_anchor(self):
         return Vector2(self.__anchor_x, self.__anchor_y)
     def set_anchor(self, value):
-        if isinstance(value, basestring): value = [value, value]
+        if isinstance(value, basestring):
+            value = [value, value]
         self.anchor_x = value[0]
         self.anchor_y = value[1]
     anchor = property(get_anchor, set_anchor)
 
     def get_anchor_name(self):
-        return (self.anchor_name_x, self.anchor_name_y)
+        return (self.__anchor_name_x, self.__anchor_name_y)
     anchor_name = property(get_anchor_name)
+
+    def reapply_anchor(self):
+        if self.__anchor_name_x == 'custom':
+            self.set_anchor_x(self.__anchor_x)
+        else:
+            self.set_anchor_x(self.__anchor_name_x)
+
+        if self.__anchor_name_y == 'custom':
+            self.set_anchor_y(self.__anchor_y)
+        else:
+            self.set_anchor_y(self.__anchor_name_y)
     # =========================================================================
+
+    # TRANSFORMATIONS =========================================================
+    def _do_rotation(self): pass
+
+    def _do_scaling(self): pass
+    # =========================================================================
+
+
+    def update(self):
+        pass
+
+    def draw(self, surface):
+        if self.visible:
+            if self.static:
+                rect = self.rect
+            else:
+                rect = self.rect.copy()
+                rect.x = rect.x-batma.camera.x
+                rect.y = rect.y-batma.camera.y
+
+            batma.display.draw(surface, rect)
 
     def __repr__(self): return '<GameObject %d>'%self.id
 
@@ -169,6 +236,6 @@ if __name__ == '__main__':
     a = GameObject()
     b = GameObject()
 
-    a.add(b)
+    a.add_child(b)
 
     print b in a

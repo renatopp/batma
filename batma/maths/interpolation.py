@@ -86,7 +86,7 @@ class Interpolation(object):
     Performs a given interpolation ``function`` from ``initial`` to ``final``
     in ``n`` steps.
     '''
-    def __init__(self, function, initial, final, n=100, flag=None):
+    def __init__(self, function, initial=0, final=0, n=100, flag=None):
         self.__initial = initial
         self.__final = final
         self.__step = 1.0/n

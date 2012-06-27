@@ -124,3 +124,6 @@ class Display(object):
         self.__caption = value
         pygame.display.set_caption(value)
     caption = property(get_caption, set_caption)
+
+    def draw(self, obj, rect):
+        self.screen.blit(obj, rect)

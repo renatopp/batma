@@ -25,8 +25,10 @@ import pygame
 import batma
 
 class Text(batma.graphics.sprite.Sprite):
-    def __init__(self, text, position=(0, 0), scale=1.0, rotation=0.0,
-                        color=None, font_name=None, font_size=36, antialias=True):
+    def __init__(self, text, position=(0, 0), rotation=0.0, scale=1.0, 
+                       anchor='center', color=None, font_name=None, 
+                       font_size=48, antialias=True):
+
         self.__text = text
         self.__color = color or batma.display.default_color
         self.__font_name = font_name
@@ -34,58 +36,54 @@ class Text(batma.graphics.sprite.Sprite):
         self.__antialias = antialias
         self.__font = None
 
-        image = self.__load_font()
-        super(Text, self).__init__(image, position, scale, rotation)
+        image = self._load_font()
+        super(Text, self).__init__(image, position, rotation, scale, anchor)
+        self.static = True
         
-        self.__is_render_pending = False
+        self._render()
+        self.set_rotation(rotation)
+        self.set_scale(scale)
+        self.set_anchor(anchor)
 
     def get_text(self):
         return self.__text
     def set_text(self, value):
         self.__text = value
-        self.__is_render_pending = True
+        self._render()
     text = property(get_text, set_text)
 
     def get_color(self):
         return self.__color
     def set_color(self, value):
         self.__color = value
-        self.__is_render_pending = True
+        self._render()
     color = property(get_color, set_color)
 
     def get_font_name(self):
         return self.__font_name
     def set_font_name(self, value):
         self.__font_name = value
-        self.__is_render_pending = True
+        self._render()
     font_name = property(get_font_name, set_font_name)
 
     def get_font_size(self):
         return self.__font_size
     def set_font_size(self, value):
         self.__font_size = value
-        self.__is_render_pending = True
+        self._render()
     font_size = property(get_font_size, set_font_size)
 
     def get_antialias(self):
         return self.__antialias
     def set_antialias(self, value):
         self.__antialias = value
-        self.__is_render_pending = True
+        self._render()
     antialias = property(get_antialias, set_antialias)
 
-    def __load_font(self):
+    def _load_font(self):
         self.__font = pygame.font.Font(self.font_name, self.font_size)
         return self.__font.render(self.text, self.antialias, self.color)
 
-    def __handle_render(self):
-        image = self.__load_font()
+    def _render(self):
+        image = self._load_font()
         super(Text, self).apply_texture(image)
-
-    def draw(self):
-        if self.__is_render_pending:
-            self.__handle_render()
-            self.__is_scale_pending = True
-            self.__is_rotation_pending = True
-
-        super(Text, self).draw()

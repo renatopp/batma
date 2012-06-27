@@ -23,6 +23,7 @@ __all__ = ['Engine']
 
 import pygame
 import batma
+from batma.core.camera import Camera
 from batma.util import singleton
 
 @singleton
@@ -34,9 +35,7 @@ class Engine(object):
     # =========================================================================    
     def __game_loop(self):
         text_fps = batma.graphics.text.Text('', font_size=62)
-        text_fps.anchor = [0, 0]
         text_fps.position = (70, batma.display.height-30)
-        text_fps.scale = 1
 
         batma.game._initialize()
         batma.game._load_content()
@@ -74,6 +73,8 @@ class Engine(object):
         pygame.init()
         pygame.font.init()
         batma.display.apply_config(*args, **kwargs)
+        
+        batma.camera = Camera()
     # =========================================================================
 
     # =========================================================================

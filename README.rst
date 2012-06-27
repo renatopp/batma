@@ -15,6 +15,8 @@ Features
 - 2D and 3D math library, including interpolation utilities;
 - Scheduling of user defined functions;
 - Scene based;
+- Input mapping;
+- Camera support (prototype);
 
 
 -------------

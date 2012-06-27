@@ -43,6 +43,7 @@ __all__ = []
 from batma.core.engine import *
 from batma.core.display import *
 from batma.core.scene import *
+from batma.core.camera import *
 # =============================================================================
 
 # Import GRAPHICS =============================================================
@@ -81,11 +82,12 @@ display = Display()
 engine = Engine()
 clock = Clock()
 timer = Timer()
+camera = None
 game = None
 # =============================================================================
 
 def run(*args, **kwargs):
-    '''Start the game and set up the engine'''
+    '''Set up the engine and starts the game'''
     engine.apply_config(*args, **kwargs)
     engine.start()
 
