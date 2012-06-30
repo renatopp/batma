@@ -47,7 +47,7 @@ class Engine(object):
                 if event.type == pygame.QUIT:
                     self.stop()
                 else:
-                    batma.timer.update(event)
+                    batma.clock.update_schedule(event)
 
             batma.keyboard.update()
             batma.mouse.update()
@@ -60,7 +60,7 @@ class Engine(object):
             if batma.display.show_fps:
                 text_fps.text = '%.2f'%batma.clock.get_fps()
                 text_fps.draw()
-
+                
             pygame.display.flip()
 
         batma.game._unload_content()
@@ -68,6 +68,7 @@ class Engine(object):
 
     # =========================================================================
     def apply_config(self, game, *args, **kwargs):
+        '''Apply new configuration to engine'''
         batma.game = game
 
         pygame.init()
@@ -79,6 +80,7 @@ class Engine(object):
 
     # =========================================================================
     def start(self):
+        '''Starts the engine'''
         self.__running = True
         self.__exit = False
 
@@ -87,14 +89,18 @@ class Engine(object):
         self.__game_loop()
 
     def pause(self):
+        '''Pauses the engine'''
         self.__running = False
 
     def resume(self):
+        '''Resume the paused engine'''
         self.__running = True
 
     def stop(self):
+        '''Stop the engine and end the game'''
         self.__exit = True
 
     def is_running(self):
+        '''Verify if engine is paused'''
         return self.__running
     # =========================================================================

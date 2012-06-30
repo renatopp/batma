@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-__all__ = ['Clock', 'Timer']
+__all__ = ['Clock']
 
 import pygame
 import batma
@@ -27,31 +27,87 @@ from batma.util import singleton
 
 @singleton
 class Clock(object):
+    '''Class for calculating and limiting framerate'''
     def __init__(self):
+        self.__userevent = pygame.USEREVENT+1
+        self.__scheduled = {}
+
         self.__clock = pygame.time.Clock()
         self.__time_passed = 0
 
+    def get_time(self):
+        '''Time used in the previous tick'''
+        return self.__clock.get_time()
+    time = property(get_time)
+
+    def get_rawtime(self):
+        '''Actual time used in the previous tick'''
+        return self.__clock.get_rawtime()
+    rawtime = property(get_rawtime)
+
+    def get_fps(self):
+        '''Return the game's framerate (in frames per second)'''
+        return self.__clock.get_fps()
+    fps = property(get_fps)
+
+    def get_ticks(self):
+        '''Return the time passed since the game init'''
+        return self.__time_passed
+    ticks = property(get_ticks)
+
     def tick(self, framerate=0):
+        '''Update the clock'''
         time_passed = self.__clock.tick(framerate)
         self.__time_passed += time_passed
         return time_passed
 
     def tick_busy_loop(self, framerate=0):
+        '''Update the clock with busy loop'''
         time_passed = self.__clock.tick(framerate)
         self.__time_passed += time_passed
         return time_passed
 
-    def get_time(self):
-        return self.__clock.get_time()
 
-    def get_rawtime(self):
-        return self.__clock.get_rawtime()
+    def __schedule(self, callback, time, is_once, *args, **kwargs):
+        self.__userevent += 1
+        id = self.__userevent
 
-    def get_fps(self):
-        return self.__clock.get_fps()
+        function = ScheduledFunction(
+            id=id,
+            function=callback,
+            time=time,
+            is_once=is_once,
+            args=(args, kwargs)
+        )
 
-    def get_ticks(self):
-        return self.__time_passed
+        self.__scheduled[id] = function
+        pygame.time.set_timer(id, time)
+        return id
+
+    def schedule_once(self, callback, time, *args, **kwargs):
+        return self.__schedule(callback, time, True, *args, **kwargs)
+
+    def schedule(self, callback, time, *args, **kwargs):
+        return self.__schedule(callback, time, False, *args, **kwargs)
+
+    def unschedule(self, callback):
+        for id in self.__scheduled:
+            if self.__scheduled[id] == callback:
+                self.unschedule_by_id(id)
+                break
+
+    def unschedule_by_id(self, id):
+        pygame.time.set_timer(id, 0)
+        del self.__scheduled[id]
+
+    def update_schedule(self, event):
+        if event.type in self.__scheduled:
+            callback = self.__scheduled[event.type]
+            callback()
+
+            if callback.is_once:
+                self.unschedule_by_id(callback.id)
+
 
 class ScheduledFunction(object):
     def __init__(self, id, function, time, is_once, args):
@@ -70,52 +126,3 @@ class ScheduledFunction(object):
 
         args, kwargs = self.args
         self.function(time_passed, *args, **kwargs)
-
-@singleton
-class Timer(object):
-    def __init__(self):
-        self.__userevent = pygame.USEREVENT+1
-        self.__scheduled = {}
-
-    def __schedule(self, callback, time, is_once, *args, **kwargs):
-        self.__userevent += 1
-        id = self.__userevent
-
-        function = ScheduledFunction(
-            id=id,
-            function=callback,
-            time=time,
-            is_once=is_once,
-            args=(args, kwargs)
-        )
-
-        self.__scheduled[id] = function
-        pygame.time.set_timer(id, time)
-
-
-    def schedule_once(self, callback, time, *args, **kwargs):
-        self.__schedule(callback, time, True, *args, **kwargs)
-
-    def schedule(self, callback, time, *args, **kwargs):
-        self.__schedule(callback, time, False, *args, **kwargs)
-
-    def unschedule(self, callback):
-        for id in self.__scheduled:
-            if self.__scheduled[id] == callback:
-                self.unschedule_by_id(id)
-                break
-
-    def unschedule_by_id(self, id):
-        pygame.time.set_timer(id, 0)
-        del self.__scheduled[id]
-
-    def update(self, event):
-        if event.type in self.__scheduled:
-            callback = self.__scheduled[event.type]
-            callback()
-
-            if callback.is_once:
-                self.unschedule_by_id(callback.id)
-
-
-

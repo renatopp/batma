@@ -22,7 +22,7 @@ setup(
     version = __version__,
     author = __author__,
     license='MIT License',
-    description = '2D game engine inspired on XNA',
+    description = 'pygame based 2D game engine inspired by XNA',
     long_description=long_description,
     url = 'http://renatopp.github.com/batma',
     download_url = 'https://github.com/renatopp/batma',

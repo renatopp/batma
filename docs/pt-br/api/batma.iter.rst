@@ -4,8 +4,10 @@
 .. module:: batma.iter
    :synopsis: This module extends the builtin itertool module.
 
+:file: ``batma/iter.py``
 
-This module extends the python builtin ``itertool`` module.
+
+This module extends the python built-in ``itertool`` module.
 
 
 Functions
@@ -32,14 +34,18 @@ Functions
        def cycle_bounce(iterable):
            return cycle(bounce(iterable))
 
+
+   Return the elements from the ``iterable``, when exhausted, the process is
+   repeated in the reverse order, repeat indefinitely.
+
    Example::
 
        batma.iter.cycle_bounce(['ABC']) # --> A B C C B A A B C C B A ...
    
 
 
-Itertools Builtin Functions
----------------------------
+Itertools Built-in Functions
+----------------------------
 
 .. function:: cycle(iterable)
 

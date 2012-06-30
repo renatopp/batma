@@ -24,11 +24,35 @@ __all__ = ['Camera']
 import pygame
 import batma
 from batma.maths.algebra import Vector2
+from batma.core.gameobject import GameObject
 
-class Camera(pygame.Rect):
-    def __init__(self, center=None):
-        super(Camera, self).__init__(0, 0, batma.display.width, batma.display.height)
+class Camera(GameObject):
+    '''Represents a 2D camera on the game'''
+    
+    def __init__(self, position=(0, 0), rotation=0, scale=1, anchor='center'):
+        super(Camera, self).__init__(position, rotation, scale, anchor)
+
+        # print  int(batma.display.width*2),  int(batma.display.height*2)
+        self.original_surface = pygame.Surface(
+            (int(batma.display.width*2), int(batma.display.height*2))
+        )
+        self.surface = self.original_surface.copy()
+        # self.rect = batma.display.rect.copy()
+        
+        self.set_rotation(rotation)
+        self.set_scale(scale)
+        self.set_anchor(anchor)
+
+    def _do_rotation(self, cascade=True):
+        pass
+
+    def _do_scaling(self, cascade=True):
+        pass
+
+    def draw(self):
+        pass
+
 
     def __repr__(self):
-        return '<Camera (%d, %d)>'%(self.centerx, self.centery)
+        return '<Camera (%d, %d)>'%(self.rect.center)
     __str__ = __repr__

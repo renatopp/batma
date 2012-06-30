@@ -4,6 +4,8 @@
 .. module:: batma.draw
    :synopsis: Module for drawing shapes.
 
+:file: ``batma/graphics/draw.py``
+
 Draw several shapes. Most of the primitives take a ``width`` argument to 
 represent the size of stroke around the edge of the shape. If a width of 0 is 
 passed the function will actually solid fill the entire shape.

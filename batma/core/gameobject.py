@@ -41,7 +41,7 @@ class GameObject(object):
         self.__x = 0
         self.__y = 0
         self.__rotation = 0
-        self.__scale = 1
+        self.__scale = (1, 1)
 
         # anchor
         self.__anchor_x = 0
@@ -50,6 +50,8 @@ class GameObject(object):
         self.__anchor_name_y = 'custom'
         # ------
 
+        self.original_surface = pygame.Surface((0, 0))
+        self.surface = self.original_surface.copy()
         self.rect = pygame.Rect(0, 0, 0, 0)
 
         self.__children = []
@@ -64,7 +66,6 @@ class GameObject(object):
         self.set_rotation(rotation)
         self.set_scale(scale)
         self.set_anchor(anchor)
-
 
     # PARENTING ===============================================================
     def add_child(self, child, cascade=True):
@@ -210,26 +211,52 @@ class GameObject(object):
     # =========================================================================
 
     # TRANSFORMATIONS =========================================================
-    def _do_rotation(self): pass
 
-    def _do_scaling(self): pass
+    def _do_rotation(self, cascade=True):
+        if self.rotation != 0.0:
+            self.surface = pygame.transform.rotate(self.original_surface, -self.rotation)
+
+        if cascade and self.scale != (1, 1):
+            self._do_scaling()
+        else:
+            self.rect.width = self.surface.get_width()
+            self.rect.height = self.surface.get_height()
+            self.reapply_anchor()
+
+    def _do_scaling(self, cascade=True):
+
+        if cascade and self.rotation != 0.0:
+            self._do_rotation(cascade=False)
+            surface = self.surface
+        else:
+            surface = self.original_surface
+
+        if self.scale != (1, 1):
+            surface_size = surface.get_size()
+            x = surface_size[0] * self.scale[0]
+            y = surface_size[1] * self.scale[1]
+            scaled_value = (int(x), int(y))
+            self.surface = pygame.transform.scale(surface, scaled_value)
+            self.rect.width = self.surface.get_width()
+            self.rect.height = self.surface.get_height()
+            self.reapply_anchor()
     # =========================================================================
-
 
     def update(self):
         pass
 
-    def draw(self, surface):
+    def draw(self):
         if self.visible:
             if self.static:
-                rect = self.rect
+                batma.display.draw(self.surface, self.rect)
             else:
                 rect = self.rect.copy()
-                rect.x = rect.x-batma.camera.x
-                rect.y = rect.y-batma.camera.y
+                rect.x = rect.x-batma.camera.rect.x
+                rect.y = rect.y-batma.camera.rect.y
 
-            batma.display.draw(surface, rect)
-
+                if batma.display.rect.colliderect(rect):
+                    batma.display.draw(self.surface, rect)
+            
     def __repr__(self): return '<GameObject %d>'%self.id
 
 if __name__ == '__main__':

@@ -19,12 +19,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
+'''This module extends the python built-in ``itertool`` module.'''
+
 from itertools import *
 
 def bounce(iterable):
+    '''
+    Return the elements from the ``iterable``, when exhausted, the process is
+    repeated in the reverse order, without repetitions.
+    '''
     return chain(iterable, reversed(iterable))
 
 def cycle_bounce(iterable):
+    '''Combination of ``cycle`` and  ``bounce``.
+
+    Return the elements from the ``iterable``, when exhausted, the process is
+    repeated in the reverse order, repeat indefinitely.
+    '''
     return cycle(bounce(iterable))
 
 

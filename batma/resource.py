@@ -19,11 +19,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
+'''Resource handlers'''
+
 import pygame
 
 def load_image(filename):
-    image = pygame.image.load(full_path).convert_alpha()
-
-    return image
+    '''Load an image from ``filename`` and convert to alpha'''
+    return pygame.image.load(filename).convert_alpha()
+    
 
 

@@ -4,9 +4,12 @@
 .. module:: batma.colors
    :synopsis: Color constants.
 
+:file: ``batma/graphics/colors.py``
 
-Color Constants
----------------
+Module for color constants.
+
+Constants
+---------
 
 ======================= ========================
         Constant               RGBA Value

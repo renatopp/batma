@@ -2,8 +2,11 @@
 ===============================
 
 .. module:: batma.math
-   :synopsis: Contains commonly used precalculated values.
+   :synopsis: Contains commonly used precalculated values and math functions.
 
+:file: ``batma/maths/mathematic.py``
+
+This module provides precalculated values, mathematical functions and an interface for the built-in math library.
 
 Constants
 ---------
@@ -44,7 +47,7 @@ Functions
 .. function:: clamp(value, min_value, max_value)
 
    Restricts a value to be within a specified range. Returns ``min_value`` if 
-   ``x < min_value``, ``max_value`` if ``x > max_value``, otherwise x.
+   ``x < min_value``, ``max_value`` if ``x > max_value``, otherwise ``x``.
 
 
 .. function:: distance(value1, value2)
@@ -79,8 +82,8 @@ Functions
 
 
 
-Math Builtin Functions
-----------------------
+Math Built-in Functions
+-----------------------
 
 Visit `python docs <http://docs.python.org/library/math.html>`_ for more 
 informations.

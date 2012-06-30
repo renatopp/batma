@@ -19,14 +19,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
+'''Module for color constants'''
+
 __all__ = ['Color']
 
-# from pygame import Color
 import pygame
 import random
 from batma.util import classproperty
 
 class Color(pygame.Color):
+    '''Extension of the pygame.Color'''
     @classproperty
     @classmethod
     def Random(cls):

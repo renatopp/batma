@@ -4,6 +4,10 @@
 .. module:: batma.interpolation
    :synopsis: Interpolation functions.
 
+:file: ``batma/maths/interpolation.py``
+
+Module with interpolation functions.
+
 Functions
 ---------
 

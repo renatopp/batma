@@ -74,7 +74,7 @@ class Scene(object):
         for scene in self.__scenes:
             scene._draw()
 
-    def initialize(self):
+    def initialize(self, *args, **kwargs):
         pass
 
     def load_content(self):

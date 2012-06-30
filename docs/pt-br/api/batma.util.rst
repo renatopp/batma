@@ -2,9 +2,11 @@
 ============================
 
 .. module:: batma.util
-   :synopsis: Utilities functions.
+   :synopsis: Module for utility functions.
 
-Utilities functions.
+:file: ``batma/util.py``
+
+Module for utility functions.
 
 Decorators
 ----------

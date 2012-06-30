@@ -19,14 +19,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-'''Utilities functions'''
+'''Utility functions'''
 
 def frange(start, stop=None, step=1):
-    '''Return a list of floats'''
+    '''A range function, that does accept float increments'''
     return [x for x in xfrange(start, stop, step)]
 
 def xfrange(start, stop=None, step=1):
-    '''Return a generator of floats'''
+    '''A xrange function, that does accept float increments.'''
     step = float(step)
     if stop is None:
         start, stop = 0, start
@@ -35,7 +35,6 @@ def xfrange(start, stop=None, step=1):
     while i < stop:
         yield i
         i += step
-
 
 def is_iterable(value):
     '''Verify if a ``value`` is an iterable'''

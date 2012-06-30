@@ -19,10 +19,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
-from batma.util import is_iterable, frange, xfrange
-from math import *
+'''This module provides precalculated values, mathematical functions and an 
+interface for the built-in math library.'''
 
 __all__ = []
+
+from batma.util import is_iterable
+from math import *
 
 # CONSTANTS ===================================================================
 pi = pi

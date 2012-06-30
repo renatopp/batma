@@ -28,9 +28,6 @@ from batma.core.gameobject import GameObject
 
 class Sprite(GameObject):
     def __init__(self, image, position=(0, 0), rotation=0, scale=1, anchor='center'):
-        self.image = None
-        self.original_image = None
-
         super(Sprite, self).__init__(position, rotation, scale, anchor)
 
         self.apply_texture(image)
@@ -40,44 +37,12 @@ class Sprite(GameObject):
 
     def apply_texture(self, image):
         if isinstance(image, basestring):
-            image = pygame.image.load(image).convert_alpha()
+            image = batma.resource.load_image(image)
 
-        self.image = image
-        self.original_image = image.copy()
+        self.surface = image
+        self.original_surface = image.copy()
         
-        self.rect.width = self.image.get_width()
-        self.rect.height = self.image.get_height()
+        self.rect.width = self.surface.get_width()
+        self.rect.height = self.surface.get_height()
         self.reapply_anchor()
 
-    def _do_rotation(self, cascade=True):
-        if self.original_image is None: return
-
-        self.image = pygame.transform.rotate(self.original_image, -self.rotation)
-
-        if cascade and self.scale != (1, 1):
-            self._do_scaling()
-        else:
-            self.rect.width = self.image.get_width()
-            self.rect.height = self.image.get_height()
-            self.reapply_anchor()
-
-    def _do_scaling(self, cascade=True):
-        if self.original_image is None: return
-
-        if cascade and self.rotation != 0.0:
-            self._do_rotation(cascade=False)
-            image = self.image
-        else:
-            image = self.original_image
-
-        image_size = image.get_size()
-        x = image_size[0] * self.scale[0]
-        y = image_size[1] * self.scale[1]
-        scaled_value = (int(x), int(y))
-        self.image = pygame.transform.scale(image, scaled_value)
-        self.rect.width = self.image.get_width()
-        self.rect.height = self.image.get_height()
-        self.reapply_anchor()
-
-    def draw(self):
-        super(Sprite, self).draw(self.image)

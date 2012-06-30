@@ -1,22 +1,19 @@
-.. batma documentation master file, created by
-   sphinx-quickstart on Tue Oct 25 22:11:16 2011.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
 ==============================
 Batma ~le guia de programação~
 ==============================
 
-Esse é guia de programação oficial, a documentação para escrever aplicações usando a Batma engine.
+Esse é guia de programação oficial, a documentação para escrever aplicações 
+usando a Batma engine.
 
 .. image:: _static/le_batma.png
    :alt: Le batma engine
    :align: center
    :width: 150
 
-----------------
-O Que Há de Novo
-----------------
+-----------------
+O que há de novo?
+-----------------
 
 .. toctree::
    :maxdepth: 2
@@ -25,13 +22,13 @@ O Que Há de Novo
 
 
 ---------------
-Guia do Usuário
+Guia do usuário
 ---------------
 
 .. toctree::
    :maxdepth: 2
 
-   guide/getting_start/index.rst
+   guide/getting_start/index
 
 
 ------------
@@ -49,12 +46,13 @@ API (Inglês)
    api/batma.iter
    api/batma.keys
    api/batma.math
+   api/batma.resource
    api/batma.util
 
 
-------------------
-Indices and tables
-------------------
+-----------------
+Índices e tabelas
+-----------------
 
 * :ref:`genindex`
 * :ref:`modindex`

@@ -95,6 +95,11 @@ class MouseState(InputState):
         InputState.__init__(self)
         self.x = 0.0
         self.y = 0.0
+        self.map = {
+            'left': [batma.buttons.LEFT],
+            'middle': [batma.buttons.MIDDLE],
+            'right': [batma.buttons.RIGHT],
+        }
 
     def get_position(self):
         return Vector2(self.x, self.y)

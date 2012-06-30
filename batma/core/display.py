@@ -28,7 +28,12 @@ from batma.util import singleton
 
 @singleton
 class Display(object):
-    def __init__(self, caption=u'Batma Game', size=(640, 480), resizable=False, fullscreen=False, max_fps=60):
+    '''
+    Class to handle and store all informations and functions relative to screen
+    and the game window.
+    '''
+    def __init__(self, caption=u'Batma Game', size=(640, 480), resizable=False, 
+                       fullscreen=False, max_fps=60):
         self.__caption = caption
         self.__width, self.__height = size
         self.__resizable = resizable
@@ -43,34 +48,17 @@ class Display(object):
 
         self.set_caption(caption)
 
-    def init(self):
-        self.__update_mode()
-        
-    def clear(self, color=None):
-        self.__screen.fill(color or self.background_color)
-
-    def apply_config(self, caption=None, size=None, resizable=None, fullscreen=None, max_fps=None):
-        self.__caption = caption or self.__caption
-        self.__width, self.__height = size or self.size
-        self.__fullscreen = fullscreen or self.__fullscreen
-        self.__resizable = resizable or self.__resizable
-        self.max_fps = max_fps or self.max_fps
-
-        self.__update_mode()
-        self.set_caption(self.__caption)
-
-    def __update_mode(self):
-        flags = pygame.HWSURFACE|pygame.DOUBLEBUF
-        if self.resizable:
-            flags = flags|pygame.RESIZABLE
-        if self.fullscreen:
-            flags = flags|pygame.FULLSCREEN
-
-        self.__screen = pygame.display.set_mode((self.width, self.height), flags)
-
     def get_screen(self):
         return self.__screen
     screen = property(get_screen)
+
+    def get_rect(self):
+        return self.__screen.get_rect()
+    rect = property(get_rect)
+
+    def get_center(self):
+        return Vector2(self.__width/2, self.__height/2)
+    center = property(get_center)
 
     def get_show_cursor(self):
         return self.__show_cursor
@@ -114,16 +102,37 @@ class Display(object):
         self.__update_mode()
     size = property(get_size, set_size)
 
-    def get_center(self):
-        return Vector2(self.__width/2, self.__height/2)
-    center = property(get_center)
-
     def get_caption(self):
         return self.__caption
     def set_caption(self, value):
         self.__caption = value
         pygame.display.set_caption(value)
     caption = property(get_caption, set_caption)
+
+    def __update_mode(self):
+        flags = pygame.HWSURFACE|pygame.DOUBLEBUF
+        if self.resizable:
+            flags = flags|pygame.RESIZABLE
+        if self.fullscreen:
+            flags = flags|pygame.FULLSCREEN
+
+        self.__screen = pygame.display.set_mode((self.width, self.height), flags)
+
+    def init(self):
+        self.__update_mode()
+        
+    def clear(self, color=None):
+        self.__screen.fill(color or self.background_color)
+
+    def apply_config(self, caption=None, size=None, resizable=None, fullscreen=None, max_fps=None):
+        self.__caption = caption or self.__caption
+        self.__width, self.__height = size or self.size
+        self.__fullscreen = fullscreen or self.__fullscreen
+        self.__resizable = resizable or self.__resizable
+        self.max_fps = max_fps or self.max_fps
+
+        self.__update_mode()
+        self.set_caption(self.__caption)
 
     def draw(self, obj, rect):
         self.screen.blit(obj, rect)

@@ -23,14 +23,6 @@
 
 Batma 2D game engine provides an intuitive structure for game development and 
 other graphical applications.
-
-Main features:
-
-- Input state for keyboard and mouse;
-- Sprites and Texts with easy rotation, scaling, positioning;
-- 2D and 3D math library;
-- Scheduling of user defined functions;
-- Scene based;
 '''
 
 __version__ = "0.1"
@@ -38,6 +30,10 @@ __author__ = "Renato de Pontes Pereira"
 version = __version__
 
 __all__ = []
+
+# Import from PYGAME ==========================================================
+from pygame import Rect
+# =============================================================================
 
 # Import CORE =================================================================
 from batma.core.engine import *
@@ -75,15 +71,18 @@ from batma.time import *
 from batma import iter
 # =============================================================================
 
+# Import RESOURCE =============================================================
+from batma import resource
+# =============================================================================
+
 # GLOBALS =====================================================================
-mouse = MouseState()
-keyboard = KeyboardState()
+camera = None
+clock = Clock()
 display = Display()
 engine = Engine()
-clock = Clock()
-timer = Timer()
-camera = None
 game = None
+keyboard = KeyboardState()
+mouse = MouseState()
 # =============================================================================
 
 def run(*args, **kwargs):

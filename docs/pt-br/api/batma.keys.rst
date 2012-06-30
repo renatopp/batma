@@ -4,9 +4,12 @@
 .. module:: batma.keys
    :synopsis: Key constants.
 
+:file: ``batma/inputs/keys.py``
 
-Key Constants
--------------
+Module for key constants.
+
+Constants
+---------
 
 ======================= ============================
         Constant             Pygame Equivalent

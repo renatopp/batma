@@ -19,14 +19,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
 # SOFTWARE.
 
+'''Module with interpolation functions'''
+
 __all__ = ['Interpolation']
 
 from batma.util import frange, xfrange
 import batma.maths.mathematic as math
 
+# FLAGS ----
 CYCLE = 1
 BOUNCE = 2
 INVERT = 3
+# ----------
 
 def lerp(value1, value2, amount):
     '''Linearly interpolates between two values'''
