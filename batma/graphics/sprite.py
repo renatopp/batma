@@ -24,13 +24,17 @@ __all__ = ['Sprite']
 import pygame
 import batma
 from batma.core.gameobject import GameObject
+from OpenGL import GL as gl
+from OpenGL import GLU as glu
 
 
 class Sprite(GameObject):
     def __init__(self, image, position=(0, 0), rotation=0, scale=1, anchor='center'):
-        super(Sprite, self).__init__(position, rotation, scale, anchor)
-
+        super(Sprite, self).__init__()
+        self.image = None
         self.apply_texture(image)
+        
+        self.set_position(position)
         self.set_rotation(rotation)
         self.set_scale(scale)
         self.set_anchor(anchor)
@@ -39,10 +43,15 @@ class Sprite(GameObject):
         if isinstance(image, basestring):
             image = batma.resource.load_image(image)
 
-        self.surface = image
-        self.original_surface = image.copy()
-        
-        self.rect.width = self.surface.get_width()
-        self.rect.height = self.surface.get_height()
+        self.image = image
+        self.rect.width = image.width
+        self.rect.height = image.height
         self.reapply_anchor()
 
+    def draw(self):
+        if self.visible:
+            gl.glPushMatrix()
+            gl.glColor4fv(self.color)
+            self.transform()
+            gl.glCallList(self.image.display_list)
+            gl.glPopMatrix()

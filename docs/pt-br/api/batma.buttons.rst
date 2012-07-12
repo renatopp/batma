@@ -1,20 +1,20 @@
-``batma.buttons`` --- Mouse Buttons
-===================================
+``batma.buttons`` --- Botões do Mouse
+=====================================
 
 .. module:: batma.buttons
-   :synopsis: Mouse button constants.
+   :synopsis: Constantes dos botões do mouse.
 
 :file: ``batma/inputs/buttons.py``
 
-Mouse button constants.
+Constantes dos botões do mouse.
 
-Constants
----------
+Constantes
+----------
 
-======== =====
-Constant Value
-======== =====
-LEFT         0 
-MIDDLE       1
-RIGHT        2
-======== =====
+========= =====
+Constante Valor
+========= =====
+LEFT          0 
+MIDDLE        1
+RIGHT         2
+========= =====

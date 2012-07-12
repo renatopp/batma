@@ -25,6 +25,8 @@ import pygame
 import batma
 from batma.maths.algebra import Vector2
 from batma.util import singleton
+from OpenGL import GL as gl
+from OpenGL import GLU as glu
 
 @singleton
 class Display(object):
@@ -110,7 +112,9 @@ class Display(object):
     caption = property(get_caption, set_caption)
 
     def __update_mode(self):
-        flags = pygame.HWSURFACE|pygame.DOUBLEBUF
+        self.set_caption(self.caption)
+
+        flags = pygame.OPENGL|pygame.HWSURFACE|pygame.DOUBLEBUF
         if self.resizable:
             flags = flags|pygame.RESIZABLE
         if self.fullscreen:
@@ -118,11 +122,43 @@ class Display(object):
 
         self.__screen = pygame.display.set_mode((self.width, self.height), flags)
 
+        self.clear()
+        
+        gl.glEnable(gl.GL_LINE_SMOOTH)
+        gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
+
+        self.__set_projection()
+        self.__set_depth()
+        self.__set_blending()
+
+
+    def __set_projection(self):        
+        gl.glViewport(0, 0, self.width, self.height)
+        gl.glMatrixMode(gl.GL_PROJECTION)
+        gl.glLoadIdentity()
+        glu.gluPerspective(60, self.width/float(self.height), 0.1, 3000.0)
+        gl.glMatrixMode(gl.GL_MODELVIEW)
+
+    def __set_depth(self, value=True):
+        if value:
+            gl.glClearDepth(1.0)
+            gl.glEnable(gl.GL_DEPTH_TEST)
+            gl.glDepthFunc(gl.GL_LEQUAL)
+            gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
+        else:
+            gl.glDisable(gl.GL_DEPTH_TEST)
+
+    def __set_blending(self):
+        gl.glEnable(gl.GL_TEXTURE_2D)
+        gl.glEnable(gl.GL_BLEND)
+        gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
+
     def init(self):
         self.__update_mode()
         
     def clear(self, color=None):
-        self.__screen.fill(color or self.background_color)
+        gl.glClearColor(*self.background_color)
+        gl.glClear(gl.GL_COLOR_BUFFER_BIT|gl.GL_DEPTH_BUFFER_BIT)
 
     def apply_config(self, caption=None, size=None, resizable=None, fullscreen=None, max_fps=None):
         self.__caption = caption or self.__caption

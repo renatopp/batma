@@ -25,34 +25,60 @@ import pygame
 import batma
 from batma.maths.algebra import Vector2
 from batma.core.gameobject import GameObject
+from OpenGL import GL as gl
+from OpenGL import GLU as glu
 
-class Camera(GameObject):
+class Camera(object):
     '''Represents a 2D camera on the game'''
     
-    def __init__(self, position=(0, 0), rotation=0, scale=1, anchor='center'):
-        super(Camera, self).__init__(position, rotation, scale, anchor)
+    def __init__(self):
+        self.__center_x = 0
+        self.__center_y = 0
+        self.__eye_x = 0
+        self.__eye_y = 0
+        self.__eye_z = 0
+        self.__up_vector_x = 0
+        self.__up_vector_y = 0
+        self.__up_vector_z = 0
 
-        # print  int(batma.display.width*2),  int(batma.display.height*2)
-        self.original_surface = pygame.Surface(
-            (int(batma.display.width*2), int(batma.display.height*2))
+        self.reset()
+
+    def get_center(self):
+        return batma.Vector2(self.__center_x, self.__center_y)
+    def set_center(self, value):
+        self.__center_x, self.__center_y = value
+    center = property(get_center, set_center)
+
+    def get_eye(self):
+        return batma.Vector3(self.__eye_x, self.__eye_y, self.__eye_z)
+    def set_eye(self, value):
+        self.__eye_x, self.__eye_y, self.__eye_z = value
+    eye = property(get_eye, set_eye)
+
+    def get_up_vector(self):
+        return batma.Vector3(self.__up_vector_x, self.__up_vector_y, self.__up_vector_z)
+    def set_up_vector(self, value):
+        self.__up_vector_x, self.__up_vector_y, self.__up_vector_z = value
+    up_vector = property(get_up_vector, set_up_vector)    
+
+    def reset(self):
+        width, height = batma.display.size
+        self.eye = (width/2.0, height/2.0, height/1.1566)
+        self.center = (width/2.0, height/2.0)
+        self.up_vector = (0, 1, 0)
+
+    def look_at(self, position):
+        self.center = position
+        self.eye = position[0], position[1], self.__eye_z
+
+    def locate(self):
+        gl.glLoadIdentity()
+        glu.gluLookAt(
+            self.__eye_x, self.__eye_y, self.__eye_z,
+            self.__center_x, self.__center_y, 0,
+            self.__up_vector_x, self.__up_vector_y, self.__up_vector_z
         )
-        self.surface = self.original_surface.copy()
-        # self.rect = batma.display.rect.copy()
-        
-        self.set_rotation(rotation)
-        self.set_scale(scale)
-        self.set_anchor(anchor)
-
-    def _do_rotation(self, cascade=True):
-        pass
-
-    def _do_scaling(self, cascade=True):
-        pass
-
-    def draw(self):
-        pass
-
 
     def __repr__(self):
-        return '<Camera (%d, %d)>'%(self.rect.center)
+        return '<Camera (%d, %d)>'%(self.position)
     __str__ = __repr__

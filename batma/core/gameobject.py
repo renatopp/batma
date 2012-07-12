@@ -25,18 +25,19 @@ import pygame
 import weakref
 import batma
 from batma.maths.algebra import Vector2
+from OpenGL import GL as gl
 
 class GameObject(object):
     __ID = 1
 
     @classmethod
-    def new_id(cls):
+    def _new_id(cls):
         id = cls.__ID
         cls.__ID += 1
         return id
 
-    def __init__(self, position=(0, 0), rotation=0.0, scale=1.0, anchor='center'):
-        self.id = GameObject.new_id()
+    def __init__(self):
+        self.id = GameObject._new_id()
 
         self.__x = 0
         self.__y = 0
@@ -46,26 +47,20 @@ class GameObject(object):
         # anchor
         self.__anchor_x = 0
         self.__anchor_y = 0
-        self.__anchor_name_x = 'custom'
-        self.__anchor_name_y = 'custom'
+        self.__anchor_name_x = 'center'
+        self.__anchor_name_y = 'center'
         # ------
 
-        self.original_surface = pygame.Surface((0, 0))
-        self.surface = self.original_surface.copy()
-        self.rect = pygame.Rect(0, 0, 0, 0)
+        self.rect = batma.Rect(0, 0, 0, 0)
 
         self.__children = []
         self.__parent = None
 
+        self.color = batma.colors.WHITE
         self.enabled = True
         self.static = False
         self.visible = True
         self.tag = ''
-
-        self.set_position(position)
-        self.set_rotation(rotation)
-        self.set_scale(scale)
-        self.set_anchor(anchor)
 
     # PARENTING ===============================================================
     def add_child(self, child, cascade=True):
@@ -135,7 +130,6 @@ class GameObject(object):
         return self.__rotation
     def set_rotation(self, value):
         self.__rotation = value%360
-        self._do_rotation()
     rotation = property(get_rotation, set_rotation)
 
     def get_scale(self):
@@ -144,7 +138,6 @@ class GameObject(object):
         if isinstance(value, (int, long, float)):
             value = Vector2(value, value)
         self.__scale = value
-        self._do_scaling()
     scale = property(get_scale, set_scale)
 
     def get_anchor_x(self):
@@ -173,9 +166,9 @@ class GameObject(object):
             self.__anchor_name_y = value
             value = value.lower()
             if value == 'topleft' or value == 'topright':
-                self.__anchor_y = 0
-            elif value == 'bottomleft' or value == 'bottomright': 
                 self.__anchor_y = self.rect.height
+            elif value == 'bottomleft' or value == 'bottomright': 
+                self.__anchor_y = 0
             else:
                 self.__anchor_y = self.rect.height/2.0
         else:
@@ -210,53 +203,37 @@ class GameObject(object):
             self.set_anchor_y(self.__anchor_name_y)
     # =========================================================================
 
-    # TRANSFORMATIONS =========================================================
+    def transform(self):
+        gl.glTranslatef(self.x-self.anchor_x, self.y-self.anchor_y, 0)
+        gl.glTranslate(self.anchor_x, self.anchor_y, 0)
 
-    def _do_rotation(self, cascade=True):
         if self.rotation != 0.0:
-            self.surface = pygame.transform.rotate(self.original_surface, -self.rotation)
+            gl.glRotatef(self.rotation, 0, 0, -1)
 
-        if cascade and self.scale != (1, 1):
-            self._do_scaling()
-        else:
-            self.rect.width = self.surface.get_width()
-            self.rect.height = self.surface.get_height()
-            self.reapply_anchor()
+        if self.scale != (1.0, 1.0):
+            gl.glScalef(self.scale[0], self.scale[1], 0)
 
-    def _do_scaling(self, cascade=True):
+        if self.anchor_x or self.anchor_y:
+            gl.glTranslate(-self.anchor_x, -self.anchor_y, 0)
 
-        if cascade and self.rotation != 0.0:
-            self._do_rotation(cascade=False)
-            surface = self.surface
-        else:
-            surface = self.original_surface
 
-        if self.scale != (1, 1):
-            surface_size = surface.get_size()
-            x = surface_size[0] * self.scale[0]
-            y = surface_size[1] * self.scale[1]
-            scaled_value = (int(x), int(y))
-            self.surface = pygame.transform.scale(surface, scaled_value)
-            self.rect.width = self.surface.get_width()
-            self.rect.height = self.surface.get_height()
-            self.reapply_anchor()
-    # =========================================================================
 
     def update(self):
         pass
 
     def draw(self):
-        if self.visible:
-            if self.static:
-                batma.display.draw(self.surface, self.rect)
-            else:
-                rect = self.rect.copy()
-                rect.x = rect.x-batma.camera.rect.x
-                rect.y = rect.y-batma.camera.rect.y
+        pass
+        # if self.static:
+        #     batma.display.draw(self.surface, self.rect)
+        # else:
+        #     rect = self.rect.copy()
+        #     rect.x = rect.x-batma.camera.rect.x
+        #     rect.y = rect.y-batma.camera.rect.y
 
-                if batma.display.rect.colliderect(rect):
-                    batma.display.draw(self.surface, rect)
-            
+        #     if batma.display.rect.colliderect(rect):
+        #         batma.display.draw(self.surface, rect)
+
+        
     def __repr__(self): return '<GameObject %d>'%self.id
 
 if __name__ == '__main__':

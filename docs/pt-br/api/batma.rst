@@ -27,7 +27,6 @@ Classes
    batma/Scene
    batma/Sprite
    batma/Text
-   batma/Timer
    batma/Vector2
    batma/Vector3
 

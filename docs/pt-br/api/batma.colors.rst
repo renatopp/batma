@@ -1,18 +1,18 @@
-``batma.colors`` --- Colors
-===========================
+``batma.colors`` --- Cores
+==========================
 
 .. module:: batma.colors
-   :synopsis: Color constants.
+   :synopsis: Constantes de cores.
 
 :file: ``batma/graphics/colors.py``
 
-Module for color constants.
+Modulo com constantes de cores.
 
-Constants
----------
+Constantes
+----------
 
 ======================= ========================
-        Constant               RGBA Value
+       Constante                  RGBA 
 ======================= ========================
 ALICE_BLUE                  (240, 248, 255, 255)
 ANTIQUE_WHITE               (250, 235, 215, 255)

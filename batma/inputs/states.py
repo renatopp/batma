@@ -109,3 +109,4 @@ class MouseState(InputState):
         self.previous_state = self.state
         self.state = pygame.mouse.get_pressed()
         self.x, self.y = pygame.mouse.get_pos()
+        self.y = batma.display.height-self.y

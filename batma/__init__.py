@@ -46,6 +46,8 @@ from batma.core.camera import *
 from batma.graphics.colors import *
 from batma.graphics.sprite import *
 from batma.graphics.text import *
+from batma.graphics.particle import *
+from batma.graphics import particle
 from batma.graphics import colors
 from batma.graphics import draw
 # =============================================================================

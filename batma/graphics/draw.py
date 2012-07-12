@@ -23,48 +23,104 @@
 
 import pygame
 import batma
+from batma.maths import mathematic as math
+from OpenGL import GL as gl
 
-def rect(rect, color=None, width=0):
-    '''Draws a rectangular shape'''
+def point(position, color=None):
     color = color or batma.display.default_color
-    pygame.draw.rect(batma.display.screen, color, rect, width)
+    gl.glDisable(gl.GL_TEXTURE_2D)
+    
+    gl.glColor4fv(color)
 
-def polygon(points, color=None, width=0):
-    '''Draws a polygonal shape'''
-    color = color or batma.display.default_color
-    pygame.draw.polygon(batma.display.screen, color, points, width)
+    gl.glBegin(gl.GL_POINTS)
+    gl.glVertex2f(*position)
+    gl.glEnd()
+    
+    gl.glEnable(gl.GL_TEXTURE_2D)
 
-def circle(pos, radius, color=None, width=0):
-    '''Draws a circular shape'''
+def points(points, color=None):
     color = color or batma.display.default_color
-    pygame.draw.circle(batma.display.screen, color, pos, radius, width)
+    gl.glDisable(gl.GL_TEXTURE_2D)
+    
+    gl.glColor4fv(color)
 
-def ellipse(rect, color=None, width=0):
-    '''Draws an elliptical shape'''
-    color = color or batma.display.default_color
-    pygame.draw.ellipse(batma.display.screen, color, rect, width)
-
-def arc(rect, start_angle, stop_angle, color=None, width=1):
-    '''Draws an elliptical arc'''
-    color = color or batma.display.default_color
-    pygame.draw.arc(batma.display.screen, color, rect, start_angle, stop_angle, width)
+    gl.glBegin(gl.GL_POINTS)
+    for position in points:
+        gl.glVertex2f(*position)
+    gl.glEnd()
+    
+    gl.glEnable(gl.GL_TEXTURE_2D)
 
 def line(start_pos, end_pos, color=None, width=1):
-    '''Draw a straight line segment'''
     color = color or batma.display.default_color
-    pygame.draw.line(batma.display.screen, color, start_pos, end_pos, width)
+    gl.glDisable(gl.GL_TEXTURE_2D)
 
-def lines(points, closed, color=None, width=1):
-    '''Draw a sequence of lines'''
-    color = color or batma.display.default_color
-    pygame.draw.lines(batma.display.screen, color, closed, points, width)
+    gl.glLineWidth(width)
+    gl.glColor4fv(color)
+    
+    gl.glBegin(gl.GL_LINES)
+    gl.glVertex2f(*start_pos)
+    gl.glVertex2f(*end_pos)
+    gl.glEnd()
+    
+    gl.glEnable(gl.GL_TEXTURE_2D)
 
-def aaline(start_pos, end_pos, color=None, blend=1):
-    '''Draws an anti-aliased line'''
+def lines(points, closed=False, color=None, width=1):
     color = color or batma.display.default_color
-    pygame.draw.aaline(batma.display.screen, color, start_pos, end_pos, blend)
+    gl.glDisable(gl.GL_TEXTURE_2D)
 
-def aalines(points, closed, color=None, blend=1):
-    '''Draws a sequence'''
+    gl.glLineWidth(width)
+    gl.glColor4fv(color)
+    
+    gl.glBegin(gl.GL_LINE_LOOP if closed else gl.GL_LINE_STRIP)
+    for position in points:
+        gl.glVertex2f(*position)
+    gl.glEnd()
+    
+    gl.glEnable(gl.GL_TEXTURE_2D)
+
+def polygon(points, color=None, width=0):
     color = color or batma.display.default_color
-    pygame.draw.aalines(batma.display.screen, color, closed, points, blend)
+    gl.glDisable(gl.GL_TEXTURE_2D)
+
+    gl.glLineWidth(width or 1)
+    gl.glColor4fv(color)
+    
+    gl.glBegin(gl.GL_POLYGON if width==0 else gl.GL_LINE_LOOP)
+    for position in points:
+        gl.glVertex2f(*position)
+    gl.glEnd()
+    
+    gl.glEnable(gl.GL_TEXTURE_2D)
+
+def circle(center, radius, color=None, width=0):
+    points = []
+    x, y = center
+    angle, step = 0, math.pi/18
+
+    while angle < 2*math.pi:
+        dx, dy = (radius*math.sin(angle), radius*math.cos(angle))
+        points.append((x+dx, y+dy))
+        angle += step
+    
+    polygon(points, color, width)
+
+def rect(rect, color=None, width=0):
+    x, y, w, h = rect
+    points = (
+        (x, y),
+        (x+w, y),
+        (x+w, y+h),
+        (x, y+h)
+    )
+    return polygon(points, color, width)
+
+# def ellipse(rect, color=None, width=0):
+#     '''Draws an elliptical shape'''
+#     color = color or batma.display.default_color
+#     pygame.draw.ellipse(batma.display.screen, color, rect, width)
+
+# def arc(rect, start_angle, stop_angle, color=None, width=1):
+#     '''Draws an elliptical arc'''
+#     color = color or batma.display.default_color
+#     pygame.draw.arc(batma.display.screen, color, rect, start_angle, stop_angle, width)

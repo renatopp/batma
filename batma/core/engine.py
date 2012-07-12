@@ -34,18 +34,27 @@ class Engine(object):
 
     # =========================================================================    
     def __game_loop(self):
-        text_fps = batma.graphics.text.Text('', font_size=62)
-        text_fps.position = (70, batma.display.height-30)
+        text_fps = batma.Text(
+            text='', 
+            position=(10, 10), 
+            anchor='bottomleft',
+            font_size=62,
+            color=batma.Color(0.3, 0.3, 0.3, 1)
+        )
+        # text_fps = batma.Sprite(batma.resource.Text('Hello World', fontsize=48), batma.display.center)
+        # text_fps.position = (70, batma.display.height-30)
 
         batma.game._initialize()
         batma.game._load_content()
-
+        
         while not self.__exit:
             time_passed = batma.clock.tick(batma.display.max_fps)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.stop()
+                elif event.type == pygame.VIDEORESIZE:
+                    batma.display.size = event.size
                 else:
                     batma.clock.update_schedule(event)
 
@@ -61,6 +70,7 @@ class Engine(object):
                 text_fps.text = '%.2f'%batma.clock.get_fps()
                 text_fps.draw()
                 
+            batma.camera.locate()
             pygame.display.flip()
 
         batma.game._unload_content()

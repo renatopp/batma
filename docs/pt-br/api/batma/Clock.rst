@@ -74,3 +74,8 @@ Methods
 
    :param framerate: frame limit of the game, 0 to unlimited frames. Default to 0.
    :return: milliseconds since the previous call.
+
+.. function:: timer.schedule_once(callback, time, *args, **kwargs)
+.. function:: timer.schedule(callback, time, *args, **kwargs)
+.. function:: timer.unschedule(callback)
+.. function:: timer.update(event)
