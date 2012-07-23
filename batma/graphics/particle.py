@@ -45,7 +45,7 @@ def pointer_to_numpy(a, ptype=ctypes.c_float):
 
 # Main Class ==================================================================
 class ParticleSystem(GameObject):
-    def __init__(self, total_particles=0, texture=None, duration=0.0, 
+    def __init__(self, total_particles=0, image=None, duration=0.0, 
                        gravity=None, pos_var=None, origin=None, angle=0.0, 
                        angle_var=0.0, speed=0.0, speed_var=0.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -56,21 +56,21 @@ class ParticleSystem(GameObject):
                        position_type=POSITION_GROUPED):
         super(ParticleSystem, self).__init__()
 
-        if texture is None:
-            texture = batma.resource.load_image_texture(
+        if image is None:
+            image = batma.resource.load_image(
                 os.path.join(os.path.dirname(__file__), 'assets', 'fire.png')
-            )[0]
-        elif isinstance(texture, basestring):
-            texture = batma.resource.load_image_texture(texture)[0]
+            )
+        elif isinstance(image, basestring):
+            image = batma.resource.load_image(image)
 
         if emission_rate is None:
             if life != 0 and total_particles != 0:
-                emission_rate = self.total_particles/self.life
+                emission_rate = total_particles/float(life)
             else:
                 emission_rate = 1.0
 
         self.total_particles = total_particles
-        self.texture = texture
+        self.image = image
         self.duration = duration
         self.gravity = gravity or Vector2(0, 0)
         self.pos_var = pos_var or Vector2(0, 0)
@@ -234,7 +234,7 @@ class ParticleSystem(GameObject):
         self.transform()
 
         gl.glPointSize(self.size)
-        gl.glBindTexture(gl.GL_TEXTURE_2D, self.texture)
+        gl.glBindTexture(gl.GL_TEXTURE_2D, self.image.texture)
 
         gl.glEnable(gl.GL_POINT_SPRITE)
         gl.glTexEnvi(gl.GL_POINT_SPRITE, gl.GL_COORD_REPLACE, gl.GL_TRUE)
@@ -275,7 +275,7 @@ class ParticleSystem(GameObject):
 # =============================================================================
 
 class Firework(ParticleSystem):
-    def __init__(self, total_particles=3000, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=3000, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90, 
                        angle_var=20, speed=180, speed_var=50, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -294,7 +294,7 @@ class Firework(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Firework, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -302,7 +302,7 @@ class Firework(ParticleSystem):
         )
 
 class Explosion(ParticleSystem):
-    def __init__(self, total_particles=7000, texture=None, duration=0.1, 
+    def __init__(self, total_particles=7000, image=None, duration=0.1, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=360.0, speed=70.0, speed_var=40.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -312,7 +312,7 @@ class Explosion(ParticleSystem):
                        emission_rate=None, blend_additive=False, 
                        position_type=POSITION_GROUPED):
 
-        gravity = gravity or batma.Vector2(0, -90)
+        gravity = gravity if gravity is not None else batma.Vector2(0, -90)
         pos_var = pos_var or batma.Vector2(0, 0)
         start_color = start_color or batma.Color(0.7, 0.2, 0.1, 1.0)
         start_color_var = start_color_var or batma.Color(0.5, 0.5, 0.5, 0.0)
@@ -321,7 +321,7 @@ class Explosion(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Explosion, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -329,7 +329,7 @@ class Explosion(ParticleSystem):
         )
 
 class Fire(ParticleSystem):
-    def __init__(self, total_particles=250, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=250, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=10.0, speed=60.0, speed_var=20.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -349,7 +349,7 @@ class Fire(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Fire, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -357,7 +357,7 @@ class Fire(ParticleSystem):
         )
 
 class Flower(ParticleSystem):
-    def __init__(self, total_particles=500, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=500, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=360.0, speed=80.0, speed_var=10.0, 
                        tangential_accel=15.0,  tangential_accel_var=0.0, 
@@ -376,7 +376,7 @@ class Flower(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Flower, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -384,7 +384,7 @@ class Flower(ParticleSystem):
         )
 
 class Sun(ParticleSystem):
-    def __init__(self, total_particles=350, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=350, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=360.0, speed=20.0, speed_var=5.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -403,7 +403,7 @@ class Sun(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Sun, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -411,7 +411,7 @@ class Sun(ParticleSystem):
         )
 
 class Spiral(ParticleSystem):
-    def __init__(self, total_particles=500, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=500, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=0.0, speed=150.0, speed_var=0.0, 
                        tangential_accel=45.0,  tangential_accel_var=0.0, 
@@ -430,7 +430,7 @@ class Spiral(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Spiral, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -438,7 +438,7 @@ class Spiral(ParticleSystem):
         )
 
 class Meteor(ParticleSystem):
-    def __init__(self, total_particles=150, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=150, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=360.0, speed=15.0, speed_var=5.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -459,7 +459,7 @@ class Meteor(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Meteor, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -467,7 +467,7 @@ class Meteor(ParticleSystem):
         )
 
 class Galaxy(ParticleSystem):
-    def __init__(self, total_particles=200, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=200, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=360.0, speed=60.0, speed_var=10.0, 
                        tangential_accel=80.0,  tangential_accel_var=0.0, 
@@ -488,7 +488,7 @@ class Galaxy(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Galaxy, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 
@@ -496,7 +496,7 @@ class Galaxy(ParticleSystem):
         )
 
 class Smoke(ParticleSystem):
-    def __init__(self, total_particles=80, texture=None, duration=-1.0, 
+    def __init__(self, total_particles=80, image=None, duration=-1.0, 
                        gravity=None, pos_var=None, origin=None, angle=90.0, 
                        angle_var=10.0, speed=25.0, speed_var=10.0, 
                        tangential_accel=0.0,  tangential_accel_var=0.0, 
@@ -517,7 +517,7 @@ class Smoke(ParticleSystem):
         emission_rate = emission_rate or total_particles/life
 
         super(Smoke, self).__init__(
-            total_particles, texture, duration, gravity, pos_var, origin, angle, 
+            total_particles, image, duration, gravity, pos_var, origin, angle, 
             angle_var, speed, speed_var, tangential_accel, tangential_accel_var, 
             radial_accel, radial_accel_var, size, size_var, life, life_var, 
             start_color, start_color_var, end_color, end_color_var, 

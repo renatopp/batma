@@ -24,14 +24,17 @@ __all__ = ['Scene']
 import pygame
 
 class Scene(object):
-    popup = True
+    '''Scene object'''
+    popup = False
 
     def __init__(self, *args, **kwargs):
         self.__scenes = []
         self.__main_scene = None
         self.__arguments = (args, kwargs)
 
+    # Scene Hierachy ==========================================================
     def add_scene(self, scene):
+        '''Add a new scene child'''
         if scene.popup:
             self.__scenes.append(scene)
         else:
@@ -44,6 +47,7 @@ class Scene(object):
         scene._load_content()
 
     def remove_scene(self, scene=None):
+        '''Remove a scene'''
         if scene is None:
             for s in self.__scenes:
                 s._unload_content()
@@ -51,7 +55,9 @@ class Scene(object):
         else:
             self.__scenes.remove(scene)
             scene._unload_content()
+    # =========================================================================
 
+    # Wrapper for user defined functions ======================================
     def _initialize(self):
         args, kwargs = self.__arguments
         self.initialize(*args, **kwargs)
@@ -73,7 +79,9 @@ class Scene(object):
         self.draw()
         for scene in self.__scenes:
             scene._draw()
+    # =========================================================================
 
+    # User defined functions ==================================================
     def initialize(self, *args, **kwargs):
         pass
 
@@ -88,3 +96,4 @@ class Scene(object):
 
     def draw(self):
         pass
+    # =========================================================================

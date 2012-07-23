@@ -23,10 +23,9 @@ __all__ = ['Display']
 
 import pygame
 import batma
+from batma import gl
 from batma.maths.algebra import Vector2
 from batma.util import singleton
-from OpenGL import GL as gl
-from OpenGL import GLU as glu
 
 @singleton
 class Display(object):
@@ -34,7 +33,7 @@ class Display(object):
     Class to handle and store all informations and functions relative to screen
     and the game window.
     '''
-    def __init__(self, caption=u'Batma Game', size=(640, 480), resizable=False, 
+    def __init__(self, caption=u'Batma Game', size=(640, 480), resizable=False,
                        fullscreen=False, max_fps=60):
         self.__caption = caption
         self.__width, self.__height = size
@@ -44,21 +43,28 @@ class Display(object):
         self.__show_cursor = True
 
         self.background_color = batma.colors.LAVANDER_BLUE
+        self.collider_color = batma.colors.GREEN
         self.default_color = batma.colors.BLACK
+
         self.max_fps = max_fps
         self.show_fps = False
+        self.show_colliders = False
 
         self.set_caption(caption)
 
+    # Properties ==============================================================
     def get_screen(self):
+        '''Get pygame's screen'''
         return self.__screen
     screen = property(get_screen)
 
     def get_rect(self):
+        '''Get screen rect'''
         return self.__screen.get_rect()
     rect = property(get_rect)
 
     def get_center(self):
+        '''Get the center of the screen'''
         return Vector2(self.__width/2, self.__height/2)
     center = property(get_center)
 
@@ -110,65 +116,73 @@ class Display(object):
         self.__caption = value
         pygame.display.set_caption(value)
     caption = property(get_caption, set_caption)
+    # =========================================================================
 
-    def __update_mode(self):
-        self.set_caption(self.caption)
-
-        flags = pygame.OPENGL|pygame.HWSURFACE|pygame.DOUBLEBUF
-        if self.resizable:
-            flags = flags|pygame.RESIZABLE
-        if self.fullscreen:
-            flags = flags|pygame.FULLSCREEN
-
-        self.__screen = pygame.display.set_mode((self.width, self.height), flags)
-
-        self.clear()
-        
-        gl.glEnable(gl.GL_LINE_SMOOTH)
-        gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
-
-        self.__set_projection()
-        self.__set_depth()
-        self.__set_blending()
-
-
-    def __set_projection(self):        
+    # OpenGL directives =======================================================
+    def __gl_set_projection(self):
         gl.glViewport(0, 0, self.width, self.height)
         gl.glMatrixMode(gl.GL_PROJECTION)
         gl.glLoadIdentity()
-        glu.gluPerspective(60, self.width/float(self.height), 0.1, 3000.0)
+        gl.gluPerspective(60, self.width/float(self.height), 0.1, 3000.0)
         gl.glMatrixMode(gl.GL_MODELVIEW)
 
-    def __set_depth(self, value=True):
-        if value:
-            gl.glClearDepth(1.0)
-            gl.glEnable(gl.GL_DEPTH_TEST)
-            gl.glDepthFunc(gl.GL_LEQUAL)
-            gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
-        else:
-            gl.glDisable(gl.GL_DEPTH_TEST)
+    def __gl_set_line_smooth(self):
+        gl.glEnable(gl.GL_LINE_SMOOTH)
+        gl.glHint(gl.GL_LINE_SMOOTH_HINT, gl.GL_NICEST)
 
-    def __set_blending(self):
+    def __gl_set_depth(self):
+        gl.glClearDepth(1.0)
+        gl.glEnable(gl.GL_DEPTH_TEST)
+        gl.glDepthFunc(gl.GL_LEQUAL)
+        gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT, gl.GL_NICEST)
+
+    def __gl_set_blending(self):
         gl.glEnable(gl.GL_TEXTURE_2D)
         gl.glEnable(gl.GL_BLEND)
         gl.glBlendFunc(gl.GL_SRC_ALPHA, gl.GL_ONE_MINUS_SRC_ALPHA)
 
+    def __gl_clear(self, color):
+        gl.glClearColor(*color)
+        gl.glClear(gl.GL_COLOR_BUFFER_BIT|gl.GL_DEPTH_BUFFER_BIT)
+    # =========================================================================
+
+    def __update_mode(self):
+        '''Update the mode (pygame) applying the current configuration'''
+        self.set_caption(self.caption)
+
+        # Pygame flags ========================================================
+        flags = pygame.OPENGL|pygame.HWSURFACE|pygame.DOUBLEBUF
+
+        if self.resizable:
+            flags = flags|pygame.RESIZABLE
+
+        if self.fullscreen:
+            flags = flags|pygame.FULLSCREEN
+        # =====================================================================
+
+        self.__screen = pygame.display.set_mode(self.size, flags)
+        self.__gl_clear(self.background_color)
+        self.__gl_set_projection()
+
     def init(self):
+        '''Initialize the display'''
         self.__update_mode()
+
+        self.__gl_set_line_smooth()
+        self.__gl_set_depth()
+        self.__gl_set_blending()
         
     def clear(self, color=None):
-        gl.glClearColor(*self.background_color)
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT|gl.GL_DEPTH_BUFFER_BIT)
+        '''Clear the screen'''
+        self.__gl_clear(color or self.background_color)
 
-    def apply_config(self, caption=None, size=None, resizable=None, fullscreen=None, max_fps=None):
+    def apply_config(self, caption=None, size=None, resizable=None, 
+                           fullscreen=None, max_fps=None):
+        '''Apply the new configuration of the display'''
+        self.max_fps = max_fps or self.max_fps
         self.__caption = caption or self.__caption
         self.__width, self.__height = size or self.size
         self.__fullscreen = fullscreen or self.__fullscreen
         self.__resizable = resizable or self.__resizable
-        self.max_fps = max_fps or self.max_fps
 
         self.__update_mode()
-        self.set_caption(self.__caption)
-
-    def draw(self, obj, rect):
-        self.screen.blit(obj, rect)

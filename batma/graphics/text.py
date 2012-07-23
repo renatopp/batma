@@ -41,6 +41,7 @@ class Text(Sprite):
         self.__pending_render = False
         self.static = True
 
+        self.collider = None
     def get_text(self):
         return self.__text
     def set_text(self, value):
@@ -77,15 +78,13 @@ class Text(Sprite):
     antialias = property(get_antialias, set_antialias)
 
     def __render(self):
-        image = batma.resource.load_text(
+        self.image = batma.resource.load_text(
             text=self.text, 
             font_size=self.font_size, 
             font_name=self.font_name, 
             color=self.color, 
             antialias=self.antialias
         )
-
-        super(Text, self).apply_texture(image)
 
     def draw(self):
         if self.__pending_render:

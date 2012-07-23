@@ -32,14 +32,18 @@ version = __version__
 __all__ = []
 
 # Import from PYGAME ==========================================================
+import pygame._view
 from pygame import Rect
 # =============================================================================
 
 # Import CORE =================================================================
-from batma.core.engine import *
-from batma.core.display import *
-from batma.core.scene import *
 from batma.core.camera import *
+from batma.core.collision import *
+from batma.core.display import *
+from batma.core.engine import *
+from batma.core.gameobject import *
+from batma.core.group import *
+from batma.core.scene import *
 # =============================================================================
 
 # Import GRAPHICS =============================================================
@@ -76,6 +80,8 @@ from batma import iter
 # Import RESOURCE =============================================================
 from batma import resource
 # =============================================================================
+
+from batma import gl
 
 # GLOBALS =====================================================================
 camera = None

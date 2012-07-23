@@ -32,7 +32,7 @@ class InputState(object):
         self.previous_state = ()
         self.map = {}
 
-    def update(self):
+    def update(self, tick):
         pass
 
     def __get(self, key, state):
@@ -58,8 +58,11 @@ class InputState(object):
     def is_any_down(self):
         return any(self.state)
 
-    def is_any_clicked(self):
+    def is_any_pressed(self):
         return any(self.state[i] and not self.previous_state[i] for i in xrange(len(self.previous_state)))
+
+    def is_any_released(self):
+        return any(not self.state[i] and self.previous_state[i] for i in xrange(len(self.previous_state)))
 
     def is_down(self, key):
         return self.__get(key, self.state)
@@ -67,15 +70,19 @@ class InputState(object):
     def is_up(self, key):
         return not self.__get(key, self.state)
 
-    def is_clicked(self, key):
+    def is_pressed(self, key):
         return self.__get(key, self.state) and not self.__get(key, self.previous_state)
 
+    def is_released(self, key):
+        return not self.__get(key, self.state) and self.__get(key, self.previous_state)
 
 
 @singleton
 class KeyboardState(InputState):
     def __init__(self):
         InputState.__init__(self)
+        self.state = (0,)*323
+        self.previous_state = self.state
         self.map = {
             'up': [batma.keys.UP, batma.keys.W],
             'down': [batma.keys.DOWN, batma.keys.S],
@@ -85,7 +92,7 @@ class KeyboardState(InputState):
             'quit': [batma.keys.ESCAPE, (batma.keys.LALT, batma.keys.F4)]
         }
 
-    def update(self):
+    def update(self, tick):
         self.previous_state = self.state
         self.state = pygame.key.get_pressed()
 
@@ -93,6 +100,8 @@ class KeyboardState(InputState):
 class MouseState(InputState):
     def __init__(self):
         InputState.__init__(self)
+        self.state = (0,)*3
+        self.previous_state = self.state
         self.x = 0.0
         self.y = 0.0
         self.map = {
@@ -105,8 +114,10 @@ class MouseState(InputState):
         return Vector2(self.x, self.y)
     position = property(get_position)
 
-    def update(self):
+    def update(self, tick):
         self.previous_state = self.state
         self.state = pygame.mouse.get_pressed()
-        self.x, self.y = pygame.mouse.get_pos()
-        self.y = batma.display.height-self.y
+        
+        x, y = pygame.mouse.get_pos()
+        self.x = x
+        self.y = batma.display.height - y

@@ -22,65 +22,63 @@
 __all__ = ['GameObject']
 
 import pygame
-import weakref
 import batma
+import weakref
+from batma import gl
+from batma.util import WeakList
 from batma.maths.algebra import Vector2
-from OpenGL import GL as gl
 
 class GameObject(object):
     __ID = 1
 
     @classmethod
-    def _new_id(cls):
+    def __new_id(cls):
         id = cls.__ID
         cls.__ID += 1
         return id
 
-    def __init__(self):
-        self.id = GameObject._new_id()
+    def __init__(self, position=(0, 0), rotation=0.0, scale=(1, 1)):
+        self.id = GameObject.__new_id()
+        self.name = ''
+        self.tags = []
+        self.enabled = True
+        self.visible = True
+        self.static = False
 
-        self.__x = 0
-        self.__y = 0
-        self.__rotation = 0
-        self.__scale = (1, 1)
-
-        # anchor
-        self.__anchor_x = 0
-        self.__anchor_y = 0
-        self.__anchor_name_x = 'center'
-        self.__anchor_name_y = 'center'
-        # ------
-
-        self.rect = batma.Rect(0, 0, 0, 0)
-
-        self.__children = []
+        self.__children = WeakList()
         self.__parent = None
 
-        self.color = batma.colors.WHITE
-        self.enabled = True
-        self.static = False
-        self.visible = True
-        self.tag = ''
+        self.__x, self.__y = position
+        self.__rotation = rotation
+        self.__scale = scale
+
+        self.collider = None
+
+    def __del__(self):
+        del self.collider
 
     # PARENTING ===============================================================
     def add_child(self, child, cascade=True):
         if cascade: child.set_parent(self, False)
-        self.__children.append(weakref.ref(child))
+        # self.__children.append(weakref.ref(child))
+        self.__children.append(child)
 
     def remove_child(self, child, cascade=True):
         if cascade: child.set_parent(None, False)
-        self.__children.remove(weakref.ref(child))
+        # self.__children.remove(weakref.ref(child))
+        self.__children.remove(child)
 
     def get_children(self):
-        result = []
-        for i in reversed(xrange(len(self.__children))):
-            c = self.__children[i]()
-            if c is None:
-                del self.__children[i]
-            else:
-                result.insert(0, c)
+        return self.__children.to_list()
+        # result = []
+        # for i in reversed(xrange(len(self.__children))):
+        #     c = self.__children[i]()
+        #     if c is None:
+        #         del self.__children[i]
+        #     else:
+        #         result.insert(0, c)
 
-        return result
+        # return result
     children = property(get_children)
 
     def get_parent(self):
@@ -104,19 +102,46 @@ class GameObject(object):
         return child in self.get_children()
     # =========================================================================
 
+    # COLLISION ===============================================================
+    def add_circle_collider(self, position=None, radius=None):
+        if position is None:
+            position = self.position
+
+        if radius is None:
+            radius = 1
+
+        self.collider = batma.CircleCollider(position, radius)
+
+    def add_box_collider(self, position=None, half_width=None, half_height=None):
+        if position is None:
+            position = self.position
+
+        if half_width is None:
+            half_width = 1
+
+        if half_height is None:
+            half_height = 1
+
+        self.collider = batma.BoxCollider(position, half_width, half_height)
+    # =========================================================================
+
     # SPATIAL =================================================================
     def get_x(self):
         return self.__x
     def set_x(self, value):
+        if self.collider:
+            delta = value - self.__x
+            self.collider.x += delta
         self.__x = value
-        self.rect.x = self.__x - self.__anchor_x
     x = property(get_x, set_x)
 
     def get_y(self):
         return self.__y
     def set_y(self, value):
+        if self.collider:
+            delta = value - self.__y
+            self.collider.y += delta
         self.__y = value
-        self.rect.y = self.__y - self.__anchor_y
     y = property(get_y, set_y)
 
     def get_position(self):
@@ -140,106 +165,35 @@ class GameObject(object):
         self.__scale = value
     scale = property(get_scale, set_scale)
 
-    def get_anchor_x(self):
-        return self.__anchor_x
-    def set_anchor_x(self, value):
-        if isinstance(value, basestring):
-            self.__anchor_name_x = value
-            value = value.lower()
-            if value == 'topleft' or value == 'bottomleft':
-                self.__anchor_x = 0
-            elif value == 'topright' or value == 'bottomright': 
-                self.__anchor_x = self.rect.width
-            else:
-                self.__anchor_x = self.rect.width/2.0
-        else:
-            self.__anchor_x = value
-            self.__anchor_name_x = 'custom'
-
-        self.rect.x = self.__x - self.__anchor_x
-    anchor_x = property(get_anchor_x, set_anchor_x)
-
-    def get_anchor_y(self):
-        return self.__anchor_y
-    def set_anchor_y(self, value):
-        if isinstance(value, basestring):
-            self.__anchor_name_y = value
-            value = value.lower()
-            if value == 'topleft' or value == 'topright':
-                self.__anchor_y = self.rect.height
-            elif value == 'bottomleft' or value == 'bottomright': 
-                self.__anchor_y = 0
-            else:
-                self.__anchor_y = self.rect.height/2.0
-        else:
-            self.__anchor_y = value
-            self.__anchor_name_y = 'custom'
-
-        self.rect.y = self.__y - self.__anchor_y
-    anchor_y = property(get_anchor_y, set_anchor_y)
-
-    def get_anchor(self):
-        return Vector2(self.__anchor_x, self.__anchor_y)
-    def set_anchor(self, value):
-        if isinstance(value, basestring):
-            value = [value, value]
-        self.anchor_x = value[0]
-        self.anchor_y = value[1]
-    anchor = property(get_anchor, set_anchor)
-
-    def get_anchor_name(self):
-        return (self.__anchor_name_x, self.__anchor_name_y)
-    anchor_name = property(get_anchor_name)
-
-    def reapply_anchor(self):
-        if self.__anchor_name_x == 'custom':
-            self.set_anchor_x(self.__anchor_x)
-        else:
-            self.set_anchor_x(self.__anchor_name_x)
-
-        if self.__anchor_name_y == 'custom':
-            self.set_anchor_y(self.__anchor_y)
-        else:
-            self.set_anchor_y(self.__anchor_name_y)
-    # =========================================================================
-
     def transform(self):
-        gl.glTranslatef(self.x-self.anchor_x, self.y-self.anchor_y, 0)
-        gl.glTranslate(self.anchor_x, self.anchor_y, 0)
+        gl.glTranslatef(self.x, self.y, 0)
 
         if self.rotation != 0.0:
             gl.glRotatef(self.rotation, 0, 0, -1)
 
         if self.scale != (1.0, 1.0):
             gl.glScalef(self.scale[0], self.scale[1], 0)
+    # =========================================================================
 
-        if self.anchor_x or self.anchor_y:
-            gl.glTranslate(-self.anchor_x, -self.anchor_y, 0)
-
-
-
-    def update(self):
+    def update(self, tick):
         pass
 
     def draw(self):
         pass
-        # if self.static:
-        #     batma.display.draw(self.surface, self.rect)
-        # else:
-        #     rect = self.rect.copy()
-        #     rect.x = rect.x-batma.camera.rect.x
-        #     rect.y = rect.y-batma.camera.rect.y
-
-        #     if batma.display.rect.colliderect(rect):
-        #         batma.display.draw(self.surface, rect)
-
         
-    def __repr__(self): return '<GameObject %d>'%self.id
+    def __repr__(self): return '<GameObject "%s">'%(self.name or self.id)
 
 if __name__ == '__main__':
     a = GameObject()
     b = GameObject()
-
+    c = GameObject()
     a.add_child(b)
+    a.add_child(c)
 
-    print b in a
+    print a, ':'
+    print '\t', a.children
+
+    a.remove_child(b)
+
+    print a, ':'
+    print '\t', a.children

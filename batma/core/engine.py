@@ -24,78 +24,107 @@ __all__ = ['Engine']
 import pygame
 import batma
 from batma.core.camera import Camera
-from batma.util import singleton
+from batma.util import singleton, WeakList
 
 @singleton
 class Engine(object):
+    '''Batma Engine object'''
     def __init__(self):
+        self.all_colliders = WeakList()
         self.__running = True
         self.__exit = False
 
-    # =========================================================================    
+    # Game Loop ===============================================================    
     def __game_loop(self):
-        text_fps = batma.Text(
-            text='', 
-            position=(10, 10), 
-            anchor='bottomleft',
-            font_size=62,
-            color=batma.Color(0.3, 0.3, 0.3, 1)
-        )
-        # text_fps = batma.Sprite(batma.resource.Text('Hello World', fontsize=48), batma.display.center)
-        # text_fps.position = (70, batma.display.height-30)
+        '''Game loop'''
 
+        # text_fps for FPS report on screen
+        # text_fps = batma.Text('', 
+        #     position=(10, 10), 
+        #     anchor='bottomleft',
+        #     font_size=62,
+        #     color=batma.Color(0.3, 0.3, 0.3, 1)
+        # )
+
+        # Initialize the game =================================================
         batma.game._initialize()
         batma.game._load_content()
+        # =====================================================================
+        
+        batma.clock.tick(batma.display.max_fps)
         
         while not self.__exit:
-            time_passed = batma.clock.tick(batma.display.max_fps)
+            tick = batma.clock.tick(batma.display.max_fps)
 
+            # Event Update ====================================================
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    #
                     self.stop()
                 elif event.type == pygame.VIDEORESIZE:
+                    # Update the display size with the new window resolution
                     batma.display.size = event.size
                 else:
+                    # User defined schedule functions
                     batma.clock.update_schedule(event)
+            # =================================================================
 
-            batma.keyboard.update()
-            batma.mouse.update()
+            # Input Update ====================================================
+            batma.keyboard.update(tick)
+            batma.mouse.update(tick)
+            # =================================================================
 
-            batma.display.clear()
+            # Game Update and Drawing =========================================
             if self.__running:
-                batma.game._update(time_passed)
-                batma.game._draw()
-
-            if batma.display.show_fps:
-                text_fps.text = '%.2f'%batma.clock.get_fps()
-                text_fps.draw()
+                batma.game._update(tick)
                 
+                # Clear after the update, forcing all drawing call to be
+                # called on game.draw()
+                batma.display.clear()
+                batma.game._draw()
+            # =================================================================
+            
+            # Camera location =================================================
             batma.camera.locate()
+            # =================================================================
+
+            if batma.display.show_colliders:
+                for collider in self.all_colliders.iter():
+                    collider.draw()
+
+            # if batma.display.show_fps:
+            #     text_fps.text = '%.2f'%batma.clock.get_fps()
+            #     text_fps.draw()
+                
             pygame.display.flip()
 
         batma.game._unload_content()
     # =========================================================================
 
-    # =========================================================================
+    # Configuration ===========================================================
     def apply_config(self, game, *args, **kwargs):
         '''Apply new configuration to engine'''
-        batma.game = game
 
+        # Set up the global variables
+        batma.game = game
+        batma.camera = Camera()
+
+        # Pygame initialization
         pygame.init()
         pygame.font.init()
+
+        # Display initialization
         batma.display.apply_config(*args, **kwargs)
-        
-        batma.camera = Camera()
     # =========================================================================
 
-    # =========================================================================
+    # Engine Control ==========================================================
     def start(self):
         '''Starts the engine'''
         self.__running = True
         self.__exit = False
 
         batma.display.init()
-
+        
         self.__game_loop()
 
     def pause(self):
